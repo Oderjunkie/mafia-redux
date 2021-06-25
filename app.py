@@ -33,7 +33,11 @@ def j360map():
 
 @app.route('/api/rooms')
 def rooms():
-    return jsonify(client.mafiaredux.rooms.find())
+    arr = []
+    for el in client.mafiaredux.rooms.find():
+        el.pop('_id')
+        arr.append(el)
+    return jsonify(arr)
 
 def randChar(index):
     return choice('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-')
