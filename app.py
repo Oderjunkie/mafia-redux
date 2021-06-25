@@ -6,6 +6,7 @@ import pymongo
 import os
 
 app = Flask(__name__)
+app.config['MONGO_DBNAME'] = 'mafiaredux'
 app.config['MONGO_URI'] = os.environ['MONGODB']
 socketio = SocketIO(app)
 #client = pymongo.MongoClient(os.environ['MONGODB'])
