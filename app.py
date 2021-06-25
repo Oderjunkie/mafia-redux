@@ -11,7 +11,7 @@ app.config['MONGO_URI'] = os.environ['MONGODB']
 socketio = SocketIO(app)
 #client = pymongo.MongoClient(os.environ['MONGODB'])
 
-mongo = PyMongo(app)
+#mongo = PyMongo(app)
 
 # Index page + scripts
 #######################
