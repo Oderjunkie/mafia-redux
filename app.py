@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify
 from flask_socketio import SocketIO
 from random import choice
 import pymongo
-import config
 import os
 
 app = Flask(__name__)
@@ -35,6 +34,7 @@ def j360map():
 def rooms():
     arr = []
     for el in client.mafiaredux.rooms.find():
+        print(arr)
         el.pop('_id')
         arr.append(el)
     return jsonify(arr)
