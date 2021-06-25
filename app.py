@@ -1,12 +1,16 @@
 from flask import Flask, request, jsonify
 from flask_socketio import SocketIO
+from flask_pymongo import PyMongo
 from random import choice
 import pymongo
 import os
 
 app = Flask(__name__)
+app.config['MONGO_URI'] = os.environ['MONGODB']
 socketio = SocketIO(app)
 #client = pymongo.MongoClient(os.environ['MONGODB'])
+
+mongo = PyMongo(app)
 
 # Index page + scripts
 #######################

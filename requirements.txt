@@ -4,7 +4,6 @@ itsdangerous>=1.1.0
 MarkupSafe>=1.1.1
 Werkzeug>=0.15.6
 Jinja2>=2.10.1
-pymongo[srv]>=3.11.2
 dnspython>=2.0.0
 flask_cors>=3.0.10
 
@@ -12,6 +11,9 @@ Flask-SocketIO>=5.1.0
 python-socketio>=5.0.2
 python-engineio>=4.1.0
 bidict>=0.21.0
+
+flask_pymongo==2.3.0
+PyMongo>=3.3
 
 gunicorn>=19.9.0
 eventlet==0.30.2
