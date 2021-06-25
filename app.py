@@ -24,6 +24,10 @@ def index():
 def script():
     return app.send_static_file('script.js')
 
+@app.route('/style.css')
+def script():
+    return app.send_static_file('style.css')
+
 @app.route('/jquery-3.6.0.min.js')
 def j360js():
     return app.send_static_file('jquery-3.6.0.min.js')
