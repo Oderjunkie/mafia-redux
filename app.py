@@ -25,7 +25,7 @@ def j360js():
     return app.send_static_file('jquery-3.6.0.min.js')
 
 @app.route('/jquery-3.6.0.min.map')
-def j360map():c
+def j360map():
     return app.send_static_file('jquery-3.6.0.min.map')
 
 # Rooms requests
