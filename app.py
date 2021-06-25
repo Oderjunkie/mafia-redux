@@ -6,7 +6,7 @@ import os
 
 app = Flask(__name__)
 socketio = SocketIO(app)
-client = pymongo.MongoClient(os.environ['MONGODB'])
+#client = pymongo.MongoClient(os.environ['MONGODB'])
 
 # Index page + scripts
 #######################
@@ -30,28 +30,28 @@ def j360map():
 # Rooms requests
 #################
 
-@app.route('/api/rooms')
-def rooms():
-    arr = []
-    for el in client.mafiaredux.rooms.find():
-        print(arr)
-        el.pop('_id')
-        arr.append(el)
-    return jsonify(arr)
+##@app.route('/api/rooms')
+##def rooms():
+##    arr = []
+##    for el in client.mafiaredux.rooms.find():
+##        print(arr)
+##        el.pop('_id')
+##        arr.append(el)
+##    return jsonify(arr)
 
 def randChar(index):
     return choice('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-')
 
-@app.route('/api/makeroom', methods=['POST'])
-def makeroom():
-    name = request.form.get('name')
-    listed = request.form.get('listed')
-    roomid = ''.join(map(randChar, range(25)))
-    client.mafiaredux.rooms.insert_one({
-        'roomId': roomid,
-        'name': name,
-        'listed': listed
-    })
+##@app.route('/api/makeroom', methods=['POST'])
+##def makeroom():
+##    name = request.form.get('name')
+##    listed = request.form.get('listed')
+##    roomid = ''.join(map(randChar, range(25)))
+##    client.mafiaredux.rooms.insert_one({
+##        'roomId': roomid,
+##        'name': name,
+##        'listed': listed
+##    })
 
 # Socket.io
 ############
