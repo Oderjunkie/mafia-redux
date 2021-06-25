@@ -1,12 +1,13 @@
 from flask import Flask, request, jsonify
 from flask_socketio import SocketIO
-from config import MONGODBPASS
 from random import choice
 import pymongo
+import config
+import os
 
 app = Flask(__name__)
 socketio = SocketIO(app)
-client = pymongo.MongoClient(MONGODBPASS)
+client = pymongo.MongoClient(os.environ['MONGODB'])
 
 # Index page + scripts
 #######################
@@ -24,7 +25,7 @@ def j360js():
     return app.send_static_file('jquery-3.6.0.min.js')
 
 @app.route('/jquery-3.6.0.min.map')
-def j360map():
+def j360map():c
     return app.send_static_file('jquery-3.6.0.min.map')
 
 # Rooms requests
