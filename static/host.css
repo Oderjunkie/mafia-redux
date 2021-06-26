@@ -19,5 +19,6 @@ body {
     width: 0;
     height: 0;
     border: 1px solid white;
-    transition: height 1s linear 0s;
+    transition: width 1s linear 0s, height 1s linear 0s;
+    overflow: hidden;
 }

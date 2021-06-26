@@ -6,6 +6,9 @@ $(()=>{
         $('.beam').height(0);
     }, 1000);
     setTimeout(()=>{
-        alert('done')
+        $('body').css({'justify-content': 'center'});
+        $('.beam').css({'margin-top': '0px'});
+        $('.beam').css({'width': 'initial'});
+        $('.beam').css({'height': 'initial'});
     }, 2000);
 });
