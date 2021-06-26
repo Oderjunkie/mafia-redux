@@ -1,3 +1,7 @@
+let hasStarted_index = false;
+let hasStarted_host = false;
+let hasStarted_play = false;
+
 function navigateToIndex() {
     $.get('/', function(data, status){
         newdocument = $(new DOMParser().parseFromString(data, 'text/html'));
