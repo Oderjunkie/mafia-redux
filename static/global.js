@@ -5,14 +5,11 @@ let hasStarted_play = false;
 window.onpopstate = function(event) {
     switch (location.pathname) {
         case '/':
-            switchTo(navigateToIndex);
-            break;
+            return switchTo(navigateToIndex)();
         case '/play.html':
-            switchTo(navigateToPlay);
-            break;
+            return switchTo(navigateToPlay)();
         case '/host.html':
-            switchTo(navigateToHost);
-            break;
+            return switchTo(navigateToHost)();
     }
 }
 
