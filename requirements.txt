@@ -14,5 +14,5 @@ bidict>=0.21.0
 pymongo==3.11.2
 dnspython==2.0.0
 
-gunicorn>=19.9.0
+gunicorn==19.9.0
 eventlet==0.30.2
