@@ -79,7 +79,7 @@ footer {
     align-items: center;
     text-align: center;
     user-select: none;
-    transition: transform 1s cubic-bezier(.6,-0.63,.84,.99);
+    transition: transform 1s cubic-bezier(.56,-0.73,.47,1.58);
 }
 
 body[nofooter] footer {
