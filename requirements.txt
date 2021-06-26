@@ -10,4 +10,4 @@ pymongo==3.11.2
 dnspython==2.1.0
 
 gunicorn==19.9.0
-eventlet==0.30.2
+gevent
