@@ -33,9 +33,25 @@ def play():
 def script():
     return app.send_static_file('script.js')
 
+@app.route('/play.js')
+def playjs():
+    return app.send_static_file('play.js')
+
+@app.route('/host.js')
+def hostjs():
+    return app.send_static_file('host.js')
+
 @app.route('/style.css')
 def style():
     return app.send_static_file('style.css')
+
+@app.route('/host.css')
+def hostcss():
+    return app.send_static_file('host.css')
+
+@app.route('/play.css')
+def playcss():
+    return app.send_static_file('play.css')
 
 @app.route('/jquery-3.6.0.min.js')
 def j360js():
