@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from flask_socketio import SocketIO
+#from flask_socketio import SocketIO
 #from flask_pymongo import PyMongo
 from random import choice
 import pymongo
@@ -8,7 +8,7 @@ import os
 app = Flask(__name__)
 #app.config['MONGO_DBNAME'] = 'mafiaredux'
 #app.config['MONGO_URI'] = os.environ['MONGODB']
-socketio = SocketIO(app)
+#socketio = SocketIO(app)
 #client = pymongo.MongoClient(os.environ['MONGODB'])
 client = pymongo.MongoClient(os.environ['MONGODB'])
 
@@ -100,4 +100,5 @@ def manif():
 ############
 
 if __name__ == '__main__':
-    socketio.run(app)
+    #socketio.run(app)
+    #app.run()
