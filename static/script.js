@@ -24,7 +24,7 @@ function clickHandler(action) {
         footerVisible(false);
         imageVisible(false);
         listitemsVisible(false);
-        let items = $('body>*'); // for the rare race condition.
+        let items = $('body *'); // for the rare race condition.
         action();
         setTimeout(()=>items.remove(), 1000);
     }

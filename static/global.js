@@ -24,3 +24,13 @@ function navigateToPlay() {
         }, 1000);
     });
 }
+
+function navigateToHost() {
+    $.get('/host.html', function(data, status){
+        newdocument = $(new DOMParser().parseFromString(data, 'text/html'));
+        setTimeout(()=>{
+            $('body').append(newdocument.find('body').children());
+            $.get('/host.js', (d,s)=>eval(d));
+        }, 1000);
+    });
+}
