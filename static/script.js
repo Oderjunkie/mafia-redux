@@ -14,9 +14,9 @@ function imageVisible(hasimg) {
 
 function listitemsVisible(haslist) {
     if (haslist)
-        $('ul').show();
+        $('ul').show(1000);
     else
-        $('ul').hide();
+        $('ul').hide(1000);
 }
 
 $(()=>{
