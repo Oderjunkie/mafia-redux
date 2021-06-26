@@ -1,5 +1,5 @@
 $(()=>{
-    $('.beam').height('50vh');
+    $('.beam').height('50%');
     setTimeout(()=>{
         $('.beam').css({'margin-top': '50vh'});
         $('body').css({'justify-content': 'flex-start'});
