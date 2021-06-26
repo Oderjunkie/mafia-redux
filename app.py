@@ -36,6 +36,10 @@ def j360js():
 def j360map():
     return app.send_static_file('jquery-3.6.0.min.map')
 
+@app.route('/robots.txt')
+def robots():
+    return app.send_static_file('robots.txt')
+
 # Rooms requests
 #################
 
