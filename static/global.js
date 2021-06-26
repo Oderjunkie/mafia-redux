@@ -29,10 +29,12 @@ function navigateToIndex() {
             history.pushState({}, newdocument.find('title').text(), '/');
             $('body').append(newdocument.find('body').children());
             hasStarted_index = false;
-            $.get('/script.js', (d,s)=>eval(d));
-            footerVisible(true);
-            imageVisible(true);
-            listitemsVisible(true);
+            $.get('/script.js', (d,s)=>{
+                eval(d));
+                footerVisible(true);
+                imageVisible(true);
+                listitemsVisible(true);
+            }
         }, 1000);
     });
 }
