@@ -2,6 +2,20 @@ let hasStarted_index = false;
 let hasStarted_host = false;
 let hasStarted_play = false;
 
+window.onpopstate = function(event) {
+    switch (location.pathname) {
+        case '/':
+            switchTo(navigateToIndex);
+            break;
+        case '/play.html':
+            switchTo(navigateToPlay);
+            break;
+        case '/host.html':
+            switchTo(navigateToHost);
+            break;
+    }
+}
+
 function navigateToIndex() {
     $.get('/', function(data, status){
         newdocument = $(new DOMParser().parseFromString(data, 'text/html'));
@@ -17,6 +31,7 @@ function navigateToIndex() {
             currentstylesheet.remove();
             history.pushState({}, newdocument.find('title').text(), '/');
             $('body').append(newdocument.find('body').children());
+            hasStarted_index = false;
             $.get('/script.js', (d,s)=>eval(d));
             footerVisible(true);
             imageVisible(true);
@@ -36,6 +51,7 @@ function navigateToPlay() {
             currentstylesheet.remove();
             history.pushState({}, newdocument.find('title').text(), '/play.html');
             $('body').append(newdocument.find('body').children());
+            hasStarted_play = false;
             $.get('/play.js', (d,s)=>eval(d));
         }, 1000);
     });
@@ -52,6 +68,7 @@ function navigateToHost() {
             currentstylesheet.remove();
             history.pushState({}, newdocument.find('title').text(), '/host.html');
             $('body').append(newdocument.find('body').children());
+            hasStarted_host = false;
             $.get('/host.js', (d,s)=>eval(d));
         }, 1000);
     });

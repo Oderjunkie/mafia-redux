@@ -38,12 +38,43 @@ function endAnimation() {
         $('body').css({'justify-content': 'flex-end'});
         $('.beam').css({'margin-top': '0px'});
         $('.beam').height(0);
+
         console.log(2);
     }, 2000);
     setTimeout(()=>{
         $('.beam').css({'display': 'none'});
         console.log(1);
     }, 3000);
+}
+
+function switchTo(action) {
+    return function() {
+        $('.beam').width('0');
+        $('.beam').height('0');
+        console.log(4);
+        setTimeout(()=>{
+            $('.beam').css({'margin-top': '50vh'});
+            $('body').css({'justify-content': 'flex-start'});
+            $('.beam').height('50%');
+            console.log(3);
+        }, 1000);
+        setTimeout(()=>{
+            $('body').css({'justify-content': 'flex-end'});
+            $('.beam').css({'margin-top': '0px'});
+            $('.beam').height(0);
+    
+            console.log(2);
+        }, 2000);
+        let items = $('body *'); // for the rare race condition.
+        setTimeout(()=>{
+            $('.beam').css({'display': 'none'});
+            action();
+            console.log(1);
+        }, 3000);
+        setTimeout(()=>{
+            items.remove();
+        }, 4000);
+    }
 }
 
 $(_=>{

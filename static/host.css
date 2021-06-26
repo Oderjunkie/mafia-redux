@@ -18,6 +18,7 @@ body {
 .beam {
     display: none;
     border: 1px solid white;
-    transition: width 1s linear 0s, height 1s linear 0s;
+    transition: width 1s linear 0s, height 1s linear 0s, padding 1s linear 0s;
+    padding: 15px;
     overflow: hidden;
 }

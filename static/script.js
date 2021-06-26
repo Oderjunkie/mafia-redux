@@ -19,7 +19,7 @@ function listitemsVisible(haslist) {
         return $('ul').hide(1000);
 }
 
-function clickHandler(action) {
+function switchTo(action) {
     return function() {
         footerVisible(false);
         imageVisible(false);
@@ -33,7 +33,7 @@ function clickHandler(action) {
 $(_=>{
     if (hasStarted_index) return;
     hasStarted_index = true;
-    $('li.play').click(clickHandler(navigateToPlay));
-    $('li.host').click(clickHandler(navigateToHost));
+    $('li.play').click(switchTo(navigateToPlay));
+    $('li.host').click(switchTo(navigateToHost));
     $('li.about').css({opacity: 0.2}); // plz don click
 });
