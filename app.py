@@ -21,6 +21,14 @@ client = pymongo.MongoClient(os.environ['MONGODB'])
 def index():
     return app.send_static_file('index.html')
 
+@app.route('/host.html')
+def host():
+    return app.send_static_file('host.html')
+
+@app.route('/play.html')
+def play():
+    return app.send_static_file('play.html')
+
 @app.route('/script.js')
 def script():
     return app.send_static_file('script.js')

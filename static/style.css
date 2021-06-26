@@ -17,6 +17,12 @@ aside {
     margin-top: 30px;
     display: flex;
     justify-content: center;
+    transition: margin-top 1s cubic-bezier(0.57, -0.59, 0.45, 1.53) 0s;
+}
+
+aside img {
+    transition: transform 1s cubic-bezier(0.57, -0.59, 0.45, 1.53) 0s;
+    transform: translateY(0%);
 }
 
 ul {
