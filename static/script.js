@@ -1,5 +1,3 @@
-let hasStarted_index = false;
-
 function footerVisible(hasfooter) {
     if (hasfooter)
         return $('body').removeAttr('nofooter').attr('footer', '');
@@ -33,7 +31,8 @@ function clickHandler(action) {
 }
 
 $(_=>{
-    if (hasStarted_index) return else hasStarted_index = true;
+    if (hasStarted_index) return;
+    hasStarted_index = true;
     $('li.play').click(clickHandler(navigateToPlay));
     $('li.host').click(clickHandler(navigateToHost));
     $('li.about').css({opacity: 0.2}); // plz don click

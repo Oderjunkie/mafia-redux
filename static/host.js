@@ -48,6 +48,7 @@ function endAnimation() {
 
 $(_=>{
     console.log(hasStarted_host);
-    if (hasStarted_host) return else hasStarted_host = true;
+    if (hasStarted_host) return;
+    hasStarted_host = true;
     beginAnimation();
 });
