@@ -1,3 +1,5 @@
+let hasStarted_host = false;
+
 function beginAnimation() {
     let width = $('.beam').width();
     let height = $('.beam').height();
@@ -46,6 +48,7 @@ function endAnimation() {
     }, 3000);
 }
 
-$(()=>{
+$(_=>{
+    if (hasStarted_host) return else hasStarted_host = true;
     beginAnimation();
 });
