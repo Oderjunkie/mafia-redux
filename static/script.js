@@ -1,22 +1,22 @@
-function footerVisible(hasfooter) {
+function footerVisible(hasfooter, callback) {
     if (hasfooter)
-        $('body').removeAttr('nofooter').attr('footer','');
+        return $('body').removeAttr('nofooter').attr('footer','');
     else
-        $('body').removeAttr('footer').attr('nofooter','');
+        return $('body').removeAttr('footer').attr('nofooter','');
 }
 
-function imageVisible(hasimg) {
+function imageVisible(hasimg, callback) {
     if (hasimg)
-        $('aside').css({marginTop: 30}).find('img').css({transform: 'translateY(0%)'});
+        return $('aside').css({marginTop: 30}).find('img').css({transform: 'translateY(0%)'}, callback).parent(callback);
     else
-        $('aside').css({marginTop: 0}).find('img').css({transform: 'translateY(-100%)'});
+        return $('aside').css({marginTop: 0}).find('img').css({transform: 'translateY(-100%)'}, callback).parent(callback);
 }
 
-function listitemsVisible(haslist) {
+function listitemsVisible(haslist, callback) {
     if (haslist)
-        $('ul').show(1000);
+        return $('ul').show(1000, callback);
     else
-        $('ul').hide(1000);
+        return $('ul').hide(1000, callback);
 }
 
 $(()=>{
@@ -25,6 +25,7 @@ $('li.play').click(_=>{
     footerVisible(false);
     imageVisible(false);
     listitemsVisible(false);
+    setTimeout(()=>$('footer, aside, ul').remove(), 1000);
 });
 
 
