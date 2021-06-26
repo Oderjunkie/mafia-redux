@@ -17,7 +17,7 @@ $(()=>{
     setTimeout(()=>{
         $('body').css({'justify-content': 'center'});
         $('.beam').css({'margin-top': '0px'});
-        $('.beam').css({'width': 'initial'});
-        $('.beam').css({'height': 'initial'});
+        $('.beam').css({'width': `${width}px`});
+        $('.beam').css({'height': `${height}px`});
     }, 3000);
 });
