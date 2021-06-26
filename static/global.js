@@ -11,6 +11,7 @@ function navigateToIndex() {
                                                 type: 'text/css',
                                                 href: '/style.css'}));
             currentstylesheet.remove();
+            history.pushState({}, newdocument.find('title').text(), '/');
             $('body').append(newdocument.find('body').children());
             $.get('/script.js', (d,s)=>eval(d));
             footerVisible(true);
@@ -29,6 +30,7 @@ function navigateToPlay() {
                                                 type: 'text/css',
                                                 href: '/play.css'}));
             currentstylesheet.remove();
+            history.pushState({}, newdocument.find('title').text(), '/play.html');
             $('body').append(newdocument.find('body').children());
             $.get('/play.js', (d,s)=>eval(d));
         }, 1000);
@@ -44,6 +46,7 @@ function navigateToHost() {
                                                 type: 'text/css',
                                                 href: '/host.css'}));
             currentstylesheet.remove();
+            history.pushState({}, newdocument.find('title').text(), '/host.html');
             $('body').append(newdocument.find('body').children());
             $.get('/host.js', (d,s)=>eval(d));
         }, 1000);
