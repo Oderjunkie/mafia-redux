@@ -30,11 +30,11 @@ function navigateToIndex() {
             $('body').append(newdocument.find('body').children());
             hasStarted_index = false;
             $.get('/script.js', (d,s)=>{
-                eval(d));
+                eval(d)
                 footerVisible(true);
                 imageVisible(true);
                 listitemsVisible(true);
-            }
+            });
         }, 1000);
     });
 }
