@@ -16,7 +16,7 @@ body {
 aside {
     margin-top: 30px;
     display: flex;
-    justify-content: center
+    justify-content: center;
 }
 
 ul {
@@ -79,6 +79,11 @@ footer {
     align-items: center;
     text-align: center;
     user-select: none;
+    transition: transform 1s cubic-bezier(.6,-0.63,.84,.99);
+}
+
+body[nofooter] footer {
+    transform: translateY(100%);
 }
 
 a {
