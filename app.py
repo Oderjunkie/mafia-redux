@@ -41,6 +41,10 @@ def playjs():
 def hostjs():
     return app.send_static_file('host.js')
 
+@app.route('/global.js')
+def globaljs():
+    return app.send_static_file('global.js')
+
 @app.route('/style.css')
 def style():
     return app.send_static_file('style.css')
