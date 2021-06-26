@@ -80,6 +80,9 @@ footer {
     text-align: center;
     user-select: none;
     transition: transform 1s cubic-bezier(.56,-0.73,.47,1.58);
+    font-family: Roboto, times, "Helvetica Neue", helvetica, arial, sans-serif;
+    text-transform: uppercase;
+    font-size: 13px;
 }
 
 body[nofooter] footer {
