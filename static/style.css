@@ -24,7 +24,7 @@ ul {
     padding-bottom: 20px;
     flex-grow: 999;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: start;
     flex-direction: column;
     list-style-type: none;
