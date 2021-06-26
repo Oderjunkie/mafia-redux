@@ -21,9 +21,6 @@ function navigateToPlay() {
         setTimeout(()=>{
             $('body').append(newdocument.find('body').children());
             $.get('/play.js', (d,s)=>eval(d));
-            footerVisible(true);
-            imageVisible(true);
-            listitemsVisible(true);
         }, 1000);
     });
 }
