@@ -1,0 +1,9 @@
+User-agent: Twitterbot
+Disallow:
+
+Allow: /index.html
+
+User-agent: *
+Disallow:
+
+Allow: /index.html
