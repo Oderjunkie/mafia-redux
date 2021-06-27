@@ -149,7 +149,7 @@ sessions = {}
 @socketio.on('handshake')
 def connection(json):
     join_room(json['roomId'])
-    userid = sessions[request.sid] #json['userId']
+    userid = request.sid #json['userId']
     socketio.emit('userJoin', {'id': userid})
     sessions[request.sid] = userid
     print(request.sid, 'resolved to', userid)
