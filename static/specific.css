@@ -12,19 +12,24 @@ body {
     font-family: "Roboto", times, "Helvetica Neue", helvetica, arial, sans-serif;
     grid-template-columns: 10rem auto 10rem;
     grid-template-rows: auto 3rem;
+    grid-template-areas:
+        'players chat setup'
+        'players input setup';
 }
 
 .players {
-    grid-row: 1/3;
+    grid-area: 'players';
     background-color: red;
 }
 .setup {
-    grid-row: 1/3;
+    grid-area: 'setup';
     background-color: green;
 }
 .chat {
+    grid-area: 'chat';
     background-color: yellow;
 }
 .input {
+    grid-area: 'input';
     background-color: blue;
 }
