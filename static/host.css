@@ -4,7 +4,7 @@ body {
     align-items: center;
     justify-content: flex-end;
     background-color: #232221;
-    color: #CFEFF4;
+    color: #E2EFF4;
     margin: 0;
     position: absolute;
     left: 0;
@@ -18,7 +18,7 @@ body {
 form {
     display: none;
     border: 1px solid white;
-    transition: width 1s linear 0s, height 1s linear 0s, padding 1s linear 0s;
+    transition: width 0.2s linear 0s, height 0.2s linear 0s, padding 0.2s linear 0s;
     padding: 15px;
     overflow: hidden;
     background-color: #2b2d2d;
@@ -37,3 +37,5 @@ space {
     width: 15px;
     height: 1px;
 }
+
+button[type=submit]

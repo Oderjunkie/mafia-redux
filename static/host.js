@@ -10,20 +10,20 @@ function beginAnimation() {
         $('form').css({'display': 'initial'})
                  .height('50%');
         console.log(2);
-    }, 1000);
+    }, 200);
     setTimeout(()=>{
         $('form').css({'margin-top': '50vh'})
                  .height(0);
         $('body').css({'justify-content': 'flex-start'});
         console.log(3);
-    }, 2000);
+    }, 400);
     setTimeout(()=>{
         $('body').css({'justify-content': 'center'});
         $('form').css({'margin-top': '0px', 'padding': padding})
                  .width(width)
                  .height(height);
         console.log(4);
-    }, 3000);
+    }, 600);
 }
 
 function endAnimation() {
@@ -36,25 +36,25 @@ function endAnimation() {
                  .height('50%');
         $('body').css({'justify-content': 'flex-start'});
         console.log(3);
-    }, 1000);
+    }, 200);
     setTimeout(()=>{
         $('body').css({'justify-content': 'flex-end'});
         $('form').css({'margin-top': '0px'})
                  .height(0);
         console.log(2);
-    }, 2000);
+    }, 400);
     setTimeout(()=>{
         $('form').css({'display': 'none'});
         console.log(1);
-    }, 3000);
+    }, 800);
 }
 
 function switchTo(action) {
     return function() {
         let items = $('body *'); // for the rare race condition.
         endAnimation();
-        setTimeout(action, 3000);
-        setTimeout(()=>items.remove(), 4000);
+        setTimeout(action, 800);
+        setTimeout(()=>items.remove(), 1000);
     }
 }
 
