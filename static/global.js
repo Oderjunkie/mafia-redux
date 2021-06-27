@@ -22,6 +22,7 @@ function navigateToIndex() {
                        $('body').removeAttr('footer').attr('nofooter', '');
         let currentstylesheet = $('link[rel="stylesheet"][href^="/"]');
         setTimeout(()=>{
+            $('body').css({'background-color': $('body').css('background-color')});
             $('head').append($('<link/>').attr({rel: 'stylesheet',
                                                 type: 'text/css',
                                                 href: '/style.css'}));
@@ -46,6 +47,7 @@ function navigateToPlay() {
         newdocument = $(new DOMParser().parseFromString(data, 'text/html'));
         setTimeout(()=>{
             let currentstylesheet = $('link[rel="stylesheet"][href^="/"]');
+            $('body').css({'background-color': $('body').css('background-color')});
             $('head').append($('<link/>').attr({rel: 'stylesheet',
                                                 type: 'text/css',
                                                 href: '/play.css'}));
@@ -67,6 +69,7 @@ function navigateToHost() {
         newdocument = $(new DOMParser().parseFromString(data, 'text/html'));
         let currentstylesheet = $('link[rel="stylesheet"][href^="/"]');
         setTimeout(()=>{
+            $('body').css({'background-color': $('body').css('background-color')});
             $('head').append($('<link/>').attr({rel: 'stylesheet',
                                                 type: 'text/css',
                                                 href: '/host.css'}));

@@ -3,7 +3,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    background-color: #232221;
+    background-color: #232221 !important;
     color: #E2EFF4;
     margin: 0;
     position: absolute;
