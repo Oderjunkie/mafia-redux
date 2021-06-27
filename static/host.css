@@ -12,7 +12,7 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    font-family: helvetica, arial, sans-serif;
+    font-family: "Roboto", times, "Helvetica Neue", helvetica, arial, sans-serif;
 }
 
 form {
@@ -38,7 +38,17 @@ space {
     height: 1px;
 }
 
-input[type=submit] {
+input[type="text"] {
+    background-color: #222025;
+    border: 1px solid #344444;
+    border-radius: 5px;
+    line-height; 1;
+    padding: 0 7px;
+    vertical-align: middle;
+    flex-grow: 1;
+}
+
+input[type="submit"] {
     background-color: #0083ff;
     border: #222025;
     border-radius: 5px;
