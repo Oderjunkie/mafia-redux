@@ -71,7 +71,6 @@ input[type="submit"] {
     cursor: pointer;
     font-weight: bold;
     padding: 4px 14px;
-    min-height: 34px;
     transition: background-color 0.2s ease;
 }
 
