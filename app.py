@@ -114,13 +114,13 @@ def getgame(roomid=''):
 #    join_room(json['roomId'])
 #    socketio.emit('userJoin', {'id': json['userId']})
 
-@socketio.on('connection')
+@socketio.on('connect')
 def connection():
     print(request.sid, 'has joined')
 
 @socketio.on('disconnect')
 def disconnect():
-    print(request.sid, 'has joined')
+    print(request.sid, 'has left')
 
 @socketio.on('chat')
 def chat(message):
