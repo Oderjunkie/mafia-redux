@@ -4,7 +4,7 @@ from flask_socketio import SocketIO
 from binascii import hexlify
 from random import choice
 import pymongo
-#import bcrypt
+import bcrypt
 import os
 
 app = Flask(__name__)
@@ -13,8 +13,18 @@ app = Flask(__name__)
 socketio = SocketIO(app)
 #client = pymongo.MongoClient(os.environ['MONGODB'])
 client = pymongo.MongoClient(os.environ['MONGODB'])
+cookie2userid = {}
 
 #mongo = PyMongo(app)
+
+# Utilities
+############
+
+def randChar(index=None) -> str:
+    return choice('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-')
+
+def randString(length: int) -> str:
+    return ''.join(map(randChar, range(length)))
 
 # Index page + scripts
 #######################
@@ -71,6 +81,33 @@ def j360map():
 def robots():
     return app.send_static_file('robots.txt')
 
+# Log in
+#########
+
+@app.route('/api/register', methods=['POST'])
+def register():
+    username = request.form.get('username')
+    password = request.form.get('password')
+    userid = randString(30)
+    userhash = bcrypt.hashpw(password.encode('latin-1'), bcrypt.gen_salt())
+    if client.mafiaredux.users.count_documents({'username': username}):
+        return redirect('/usernametaken.html')
+    client.mafiaredux.users.insert_one({
+        'username': username,
+        'userid': userid
+        'userhash': userhash
+    })
+    return redirect('/index.html')
+
+@app.route('/api/login', methods=['POST'])
+def login():
+    username = request.form.get('username')
+    password = request.form.get('password')
+    user = client.mafiaredux.users.find_one({'username': username}, {'username': 0, 'userid': 1, 'userhash': 1})
+    if bcrypt.checkpw(password.encode('latin-1'), user['userhash']):
+        return redirect('/index.html')
+    return redirect('/badlogin.html')
+
 # Rooms requests
 #################
 
@@ -83,15 +120,12 @@ def rooms():
         arr.append(el)
     return jsonify(arr)
 
-def randChar(index):
-    return choice('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-')
-
 @app.route('/api/makeroom', methods=['POST'])
 def makeroom():
     name = request.form.get('name')
     listed = request.form.get('listed')
     print(name, listedn)
-    roomid = ''.join(map(randChar, range(25)))
+    roomid = randString(25)
     client.mafiaredux.rooms.insert_one({
         'roomId': roomid,
         'name': name,
@@ -109,10 +143,14 @@ def getgame(roomid=''):
 # Socket.io
 ############
 
-#@socketio.on('handshake')
-#def connection(json):
-#    join_room(json['roomId'])
-#    socketio.emit('userJoin', {'id': json['userId']})
+sessions = {}
+
+@socketio.on('handshake')
+def connection(json):
+    join_room(json['roomId'])
+    socketio.emit('userJoin', {'id': json['userId']})
+    sessions[request.sid] = json['userId']
+    print(request.sid, 'resolved to', json['userId'])
 
 @socketio.on('connect')
 def connection():
@@ -120,7 +158,7 @@ def connection():
 
 @socketio.on('disconnect')
 def disconnect():
-    print(request.sid, 'has left')
+    print(sessions[request.sid], 'has left')
 
 @socketio.on('chat')
 def chat(message):

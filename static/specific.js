@@ -1,6 +1,6 @@
 let roomid, socket, button, textbox, form;
 
-function checkforsubmission(e) {
+const checkforsubmission = e=>{
     let disabled = button.attr('disabled');
     let text = textbox.val();
     if (text && disabled)
@@ -25,6 +25,5 @@ $(_=>{
         return false;
     });
     socket = io();
-    socket.on('connect', function() {
-    });
+    socket.on('connect',()=>{});
 });
