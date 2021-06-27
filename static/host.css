@@ -55,8 +55,8 @@ input[type="text"] {
     flex-grow: 1;
 }
 
-input[type="text"]:hover {
-    border-color: #0083ff;
+input[type="text"]:focus {
+    border: 1px solid #0083ff;
 }
 
 input[type="submit"] {
