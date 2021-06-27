@@ -37,13 +37,19 @@
         <script src='/host.js' defer></script>
     </head>
     <body>
-        <form class=beam>
-            <label for='roomname'>Room name:</label><br />
-            <input type='text' id='roomname' name='name' />
-            <input type='submit' value='Create' /><br />
-            <input type='checkbox' id='listed' name='listed' />
-            <label for='listed'>Listed?</label>
-            </label>
+        <form>
+            <section>
+                <label for='roomname'>Room name:</label><br />
+                <flex>
+                    <input type='text' id='roomname' name='name' />
+                    <space />
+                    <input type='submit' value='Create' /><br />
+                </flex>
+            </section>
+            <section>
+                <input type='checkbox' id='listed' name='listed' />
+                <label for='listed'>Listed?</label>
+            </section>
         </form>
     </body>
 </html>

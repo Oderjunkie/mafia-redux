@@ -15,10 +15,24 @@ body {
     font-family: helvetica, arial, sans-serif;
 }
 
-.beam {
+form {
     display: none;
     border: 1px solid white;
     transition: width 1s linear 0s, height 1s linear 0s, padding 1s linear 0s;
     padding: 15px;
     overflow: hidden;
+}
+
+form section + section {
+    margin-top: 15px;
+}
+
+flex {
+    display: flex;
+}
+
+space {
+    display: block;
+    width: 15px;
+    height: 1px;
 }
