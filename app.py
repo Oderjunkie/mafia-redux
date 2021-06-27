@@ -165,7 +165,7 @@ def disconnect():
 @socketio.on('chat')
 def chat(message):
     print(sessions[request.sid], 'says', repr(message))
-    socketio.emit('chat', {'timestamp', time(), 'message': message, 'from': str(sessions[request.sid])})
+    socketio.emit('chat', {'timestamp': time(), 'message': message, 'from': str(sessions[request.sid])})
 
 # Favicon
 ##########
