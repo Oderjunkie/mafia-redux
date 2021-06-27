@@ -25,5 +25,25 @@ $(_=>{
         return false;
     });
     socket = io();
-    socket.on('connect',()=>{});
+    socket.on('connect', ()=>{
+        socket.emit('handshake', {'roomId': roomid, 'userId': 1337});
+    });
+    socket.on('chat', msg=>{
+        let date = new Date(msg.timestamp()*1000);
+        $('.chat').append(
+            $('<message></message>').append(
+                $('<time></time>').append(
+                    `${a.getHours().toString().padStart(2, '0')}:`+
+                    `${a.getMinutes().toString().padStart(2, '0')}:`+
+                    `${a.getSeconds().toString().padStart(2, '0')}`
+                ),
+                $('<name></name>').append(msg.from),
+                msg.message
+            )
+        );
+    });
 });
+
+/*
+
+*/

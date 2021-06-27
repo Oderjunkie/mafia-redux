@@ -3,6 +3,7 @@ from flask_socketio import SocketIO
 #from flask_pymongo import PyMongo
 from binascii import hexlify
 from random import choice
+from time import time
 import pymongo
 import bcrypt
 import os
@@ -148,9 +149,10 @@ sessions = {}
 @socketio.on('handshake')
 def connection(json):
     join_room(json['roomId'])
-    socketio.emit('userJoin', {'id': json['userId']})
-    sessions[request.sid] = json['userId']
-    print(request.sid, 'resolved to', json['userId'])
+    userid = sessions[request.sid] #json['userId']
+    socketio.emit('userJoin', {'id': userid})
+    sessions[request.sid] = userid
+    print(request.sid, 'resolved to', userid)
 
 @socketio.on('connect')
 def connection():
@@ -162,7 +164,8 @@ def disconnect():
 
 @socketio.on('chat')
 def chat(message):
-    print(request.sid, 'says', repr(message))
+    print(sessions[request.sid], 'says', repr(message))
+    socketio.emit('chat', {'timestamp', time(), 'message': message, 'from': str(sessions[request.sid])})
 
 # Favicon
 ##########
