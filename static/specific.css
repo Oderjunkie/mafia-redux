@@ -11,7 +11,7 @@ body {
     overflow: hidden;
     font-family: "Roboto", times, "Helvetica Neue", helvetica, arial, sans-serif;
     grid-template-columns: 14rem auto 16rem;
-    grid-template-rows: auto 2.125rem;
+    grid-template-rows: auto 2.7rem;
     grid-template-areas:
         'players chat setup'
         'players input setup';
@@ -40,7 +40,7 @@ body {
     padding: 7px;
 }
 
-input > * + * {
+.input > * + * {
     margin-right: 7px;
 }
 
@@ -53,6 +53,7 @@ input[type="text"] {
     line-height: 1;
     padding: 0 7px;
     vertical-align: middle;
+    flex-grow: 1;
 }
 
 input[type="text"]:focus {
