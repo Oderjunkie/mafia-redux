@@ -66,6 +66,7 @@ input[type="submit"][disabled] {
     background-color: #252525;
     color: #828282;
     box-shadow: inset 0px 0px 9px 6px #ababab33, inset 0px 1px 6px 11px #00000026;
+    cursor: default;
 }
 
 input[type="submit"] {
@@ -80,7 +81,7 @@ input[type="submit"] {
     transition: background-color 0.2s ease;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover:not([disabled]) {
     background-color: #0058ff;
     border: #222025;
 }
