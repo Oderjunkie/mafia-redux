@@ -10,11 +10,17 @@ body {
     height: 100vh;
     overflow: hidden;
     font-family: "Roboto", times, "Helvetica Neue", helvetica, arial, sans-serif;
+    font-size: 14px;
     grid-template-columns: 14rem auto 16rem;
     grid-template-rows: auto 2.7rem;
     grid-template-areas:
         'players chat setup'
         'players input setup';
+}
+
+message {
+    display: block;
+    padding: 3px 7px;
 }
 
 time {
