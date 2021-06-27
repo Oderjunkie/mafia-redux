@@ -11,7 +11,7 @@ body {
     overflow: hidden;
     font-family: "Roboto", times, "Helvetica Neue", helvetica, arial, sans-serif;
     grid-template-columns: 14rem auto 16rem;
-    grid-template-rows: auto 2.5rem;
+    grid-template-rows: auto 2.125rem;
     grid-template-areas:
         'players chat setup'
         'players input setup';
