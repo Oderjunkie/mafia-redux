@@ -17,6 +17,10 @@ body {
         'players input setup';
 }
 
+.players, .setup, .chat, .input {
+    transition: transform 1s cubic-bezier(0.75, 0, 0.25, 1);
+}
+
 .players {
     grid-area: players;
     background-color: #2c2a31;
@@ -41,6 +45,11 @@ body {
     flex-direction: row;
     padding: 7px;
 }
+
+.players[off] { transform: translateX(-100%) }
+.setup[off]   { transform: translateX(100%) }
+.chat[off]    { transform: translateY(-100%) }
+.input[off] { transform: translateY(100%) }
 
 .input input[type="text"] {
     margin-right: 7px;
