@@ -38,6 +38,12 @@ space {
     height: 1px;
 }
 
+label {
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
 input[type="text"] {
     background-color: #222025;
     border: 1px solid #344444;
