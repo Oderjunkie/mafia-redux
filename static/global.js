@@ -25,11 +25,11 @@ function navigateToIndex() {
             $('head').append($('<link/>').attr({rel: 'stylesheet',
                                                 type: 'text/css',
                                                 href: '/style.css'}));
+            currentstylesheet.remove();
             history.pushState({}, newdocument.find('title').text(), '/');
             $('body').append(newdocument.find('body').children());
             hasStarted_index = false;
             $.get('/script.js', (d,s)=>{
-                currentstylesheet.remove();
                 eval(d);
                 footerVisible(true);
                 imageVisible(true);
@@ -49,11 +49,11 @@ function navigateToPlay() {
             $('head').append($('<link/>').attr({rel: 'stylesheet',
                                                 type: 'text/css',
                                                 href: '/play.css'}));
+            currentstylesheet.remove();
             history.pushState({}, newdocument.find('title').text(), '/play.html');
             $('body').append(newdocument.find('body').children());
             hasStarted_play = false;
             $.get('/play.js', (d,s)=>{
-                currentstylesheet.remove();
                 eval(d);
                 hasStarted_index = false;
                 hasStarted_host = false;
@@ -70,11 +70,11 @@ function navigateToHost() {
             $('head').append($('<link/>').attr({rel: 'stylesheet',
                                                 type: 'text/css',
                                                 href: '/host.css'}));
+            currentstylesheet.remove();
             history.pushState({}, newdocument.find('title').text(), '/host.html');
             $('body').append(newdocument.find('body').children());
             hasStarted_host = false;
             $.get('/host.js', (d,s)=>{
-                currentstylesheet.remove();
                 eval(d);
                 hasStarted_index = false;
                 hasStarted_play = false;
