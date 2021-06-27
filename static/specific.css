@@ -40,7 +40,7 @@ body {
     padding: 7px;
 }
 
-.input > * + * {
+.input input[type="text"] {
     margin-right: 7px;
 }
 
@@ -54,6 +54,7 @@ input[type="text"] {
     padding: 0 7px;
     vertical-align: middle;
     flex-grow: 1;
+    height: 100%;
 }
 
 input[type="text"]:focus {
