@@ -41,11 +41,16 @@ space {
 input[type="text"] {
     background-color: #222025;
     border: 1px solid #344444;
+    color: currentColor;
     border-radius: 5px;
-    line-height; 1;
+    line-height: 1;
     padding: 0 7px;
     vertical-align: middle;
     flex-grow: 1;
+}
+
+input[type="text"]:hover {
+    border-color: #0083ff;
 }
 
 input[type="submit"] {
