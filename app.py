@@ -109,10 +109,22 @@ def getgame(roomid=''):
 # Socket.io
 ############
 
+#@socketio.on('handshake')
+#def connection(json):
+#    join_room(json['roomId'])
+#    socketio.emit('userJoin', {'id': json['userId']})
+
+@socketio.on('connection')
+def connection():
+    print(request.sid, 'has joined')
+
+@socketio.on('disconnect')
+def disconnect():
+    print(request.sid, 'has joined')
+
 @socketio.on('chat')
 def chat(message):
-    print(message)
-
+    print(request.sid, 'says', repr(message))
 
 # Favicon
 ##########
