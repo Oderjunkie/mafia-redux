@@ -4,7 +4,7 @@ $(_=>{
     roomid = location.pathname.split('/')[2];
     button = $('.input > input[type=submit]');
     textbox = $('.input > input[type=text]');
-    text.on('input', e=>{
+    textbox.on('input', e=>{
         let disabled = button.attr('disabled');
         if (e.currentTarget.value && disabled)
             button.removeAttr('disabled');
