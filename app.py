@@ -108,7 +108,9 @@ def getgame(roomid=''):
 # Socket.io
 ############
 
-# empty head wolololool
+@socketio.on('chat')
+def chat(message):
+    print(message)
 
 
 # Favicon
@@ -137,7 +139,6 @@ def fico():
 @app.route('/site.webmanifest')
 def manif():
     return app.send_static_file('site.webmanifest')
-
 
 # Init code
 ############
