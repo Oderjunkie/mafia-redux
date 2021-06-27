@@ -18,10 +18,10 @@ $(_=>{
     });
     form.submit(()=>{
         socket.emit('chat', textbox.val());
+        textbox.val('');
         return false;
     });
     socket = io();
     socket.on('connect', function() {
-        socket.emit('chat', 'Hello!');
     });
 });
