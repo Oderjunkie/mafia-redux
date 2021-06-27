@@ -100,7 +100,7 @@ def makeroom():
 def encode(string: str) -> str:
     return ''.join(['\\x'+hexlify(bytes([char])).decode('latin1') for char in string.encode('latin1')])
 
-@app.route('/game/<str:roomid>')
+@app.route('/game/<string:roomid>')
 def getgame(roomid=''):
     return render_template('specificgame.html', roomid=encode(roomid))
 
