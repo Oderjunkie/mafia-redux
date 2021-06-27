@@ -89,7 +89,7 @@ def randChar(index):
 def makeroom():
     name = request.form.get('name')
     listed = request.form.get('listed')
-    print(name, listed)
+    print(name, listedn)
     roomid = ''.join(map(randChar, range(25)))
     client.mafiaredux.rooms.insert_one({
         'roomId': roomid,
