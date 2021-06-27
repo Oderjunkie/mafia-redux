@@ -30,10 +30,10 @@
         <meta name='robots' content='noindex,nofollow' />
         <link rel='shortcut icon' type='image/x-icon' href='https://via.placeholder.com/32x32.ico'>
         <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,700'>
-        <link rel='stylesheet' type='text/css' href='{{ url_for('static', 'specific.css') }}' />
+        <link rel='stylesheet' type='text/css' href='{{ url_for('static', filename='specific.css') }}' />
         <script src='/jquery-3.6.0.min.js' defer></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js' integrity='sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==' crossorigin='anonymous'></script>
-        <script src='{{ url_for('static', 'specific.js') }}' defer></script>
+        <script src='{{ url_for('static', filename='specific.js') }}' defer></script>
         <script defer>$(_=>main('{{ encodedroomid }}'));</script>
     </head>
     <body>
