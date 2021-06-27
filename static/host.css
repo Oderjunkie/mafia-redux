@@ -45,4 +45,7 @@ input[type=submit] {
     box-shadow: inset 0px 0px 9px 6px #ffffff33, inset 0px 1px 6px 11px #00000026;
     color: #e5e3e7;
     cursor: pointer;
+    font-weight: bold;
+    padding: 4px 14px;
+    min-height: 34px;
 }
