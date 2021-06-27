@@ -31,6 +31,10 @@ body {
 }
 .input {
     grid-area: input;
+    background-color: #111121;
+}
+
+input[type="text"] {
     background-color: #222025;
     border: 1px solid #344444;
     color: currentColor;
@@ -40,7 +44,7 @@ body {
     vertical-align: middle;
 }
 
-.input[type="text"]:focus {
+input[type="text"]:focus {
     outline: none;
     border: 1px solid #0083ff;
 }
