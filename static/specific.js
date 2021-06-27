@@ -1,3 +1,5 @@
-function main(roomid) {
-    console.log(roomid);
-}
+$(_=>{
+
+console.log(location.pathname.split('/')[2])
+
+});
