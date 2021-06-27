@@ -4,8 +4,8 @@
         <title>Yet Another Mafia Redux</title>
         <meta charset='utf-8'>
         <meta name='viewport' content='width=device-width, user-scalable=no'>
-        <meta property='og:title' content='Join other people in a game of heavily customizable mafia!' />
-        <meta property='og:description content='Join other people in a game of heavily customizable mafia!' />
+        <meta property='og:title' content='Join a game of heavily customized mafia!' />
+        <meta property='og:description content='Join a game of heavily customized mafia!' />
         <meta property='og:type' content='website' />
         <meta property='og:url' content='https://mafia-redux.herokuapp.com/' />
         <meta property='og:image:url' content='https://via.placeholder.com/128x128.png' />
@@ -20,36 +20,26 @@
         <meta name='DC.Title' content='Yet Another Mafia Redux' />
         <meta name='DC.Creator' content='Otesunki' />
         <meta name='DC.Subject' content='Mafia' />
-        <meta name='DC.Description' content='Join other people in a game of heavily customizable mafia!' />
+        <meta name='DC.Description' content='Join a game of heavily customized mafia!' />
         <meta name='DC.Format' content='text/html' />
         <meta name='DC.Language' content='en' />
         <meta name='twitter:card' content='summar_large_image' />
         <meta name='twitter:creator' content='@oderjunks' />
-        <meta name='description' content='Join other people in a game of heavily customizable mafia!' />
+        <meta name='description' content='Join a game of heavily customized mafia!' />
         <meta name='keywords' content='mafia,online gaming,game' />
-        <meta name='robots' content='index,follow' />
+        <meta name='robots' content='noindex,nofollow' />
         <link rel='shortcut icon' type='image/x-icon' href='https://via.placeholder.com/32x32.ico'>
         <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,700'>
-        <link rel='stylesheet' type='text/css' href='/host.css' />
+        <link rel='stylesheet' type='text/css' href='{{ url_for('static', 'specific.css') }}' />
         <script src='/jquery-3.6.0.min.js' defer></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js' integrity='sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==' crossorigin='anonymous'></script>
-        <script src='/global.js' defer></script>
-        <script src='/host.js' defer></script>
+        <script src='{{ url_for('static', 'specific.js') }}' defer></script>
+        <script defer>$(_=>main('{{ encodedroomid }}'));</script>
     </head>
     <body>
-        <form action='/api/makeroom' method='post'>
-            <section>
-                <label for='roomname'>Room name:</label><br />
-                <flex>
-                    <input type='text' id='roomname' name='name' autocomplete='off'/>
-                    <space></space>
-                    <input type='submit' value='Create' />
-                </flex>
-            </section>
-            <section>
-                <input type='checkbox' id='listed' name='listed' checked/>
-                <label for='listed'>Listed?</label>
-            </section>
-        </form>
+        <div class='players'></div>
+        <div class='setup'></div>
+        <div class='chat'></div>
+        <div class='input'></div>
     </body>
 </html>

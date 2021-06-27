@@ -1,0 +1,30 @@
+body {
+    display: grid;
+    background-color: #232221;
+    color: #E2EFF4;
+    margin: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    font-family: "Roboto", times, "Helvetica Neue", helvetica, arial, sans-serif;
+    grid-template-columns: 10rem auto 10rem;
+    grid-template-rows: auto 1rem;
+}
+
+.players {
+    grid-row: 1/2;
+    background-color: red;
+}
+.setup {
+    grid-row: 1/2;
+    background-color: green;
+}
+.chat {
+    background-color: yellow;
+}
+.input {
+    background-color: blue;
+}

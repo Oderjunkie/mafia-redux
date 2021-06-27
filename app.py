@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_socketio import SocketIO
 #from flask_pymongo import PyMongo
 from random import choice
@@ -88,12 +88,21 @@ def randChar(index):
 def makeroom():
     name = request.form.get('name')
     listed = request.form.get('listed')
+    print(name, listed)
     roomid = ''.join(map(randChar, range(25)))
     client.mafiaredux.rooms.insert_one({
         'roomId': roomid,
         'name': name,
         'listed': listed
     })
+    return redirect('/game/'+roomid)
+
+def encode(string: str) -> str:
+    return ''.join(['\\x'+hexlify(bytes([char])).decode('latin1') for char in string.encode('latin1')])
+
+@app.route('/game/<str:roomid>')
+def getgame(roomid='')
+    return render_template('specificgame.html', roomid=encode(roomid))
 
 # Socket.io
 ############
@@ -107,18 +116,23 @@ def makeroom():
 @app.route('/android-chrome-192x192.png')
 def a192():
     return app.send_static_file('android-chrome-192x192.png')
+
 @app.route('/android-chrome-512x512.png')
 def a512():
     return app.send_static_file('android-chrome-512x512.png')
+
 @app.route('/favicon-16x16.png')
 def f16():
     return app.send_static_file('favicon-chrome-16x16.png')
+
 @app.route('/favicon-32x32.png')
 def f32():
     return app.send_static_file('favicon-32x32.png')
+
 @app.route('/favicon.ico')
 def fico():
     return app.send_static_file('favicon.ico')
+
 @app.route('/site.webmanifest')
 def manif():
     return app.send_static_file('site.webmanifest')
