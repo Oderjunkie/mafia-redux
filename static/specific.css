@@ -17,6 +17,19 @@ body {
         'players input setup';
 }
 
+time {
+    margin-right: 7px;
+    color: #4c4a52;
+    white-space: nowrap;
+}
+
+name {
+    color: #807e84;
+    display: inline;
+    margin-right: 7px;
+    font-weight: bold;
+}
+
 .players, .setup, .chat, .input {
     transition: transform 1s cubic-bezier(0.75, 0, 0.25, 1);
 }
