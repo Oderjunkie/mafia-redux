@@ -62,6 +62,12 @@ input[type="text"]:focus {
     border: 1px solid #0083ff;
 }
 
+input[type="submit"][disabled] {
+    background-color: #252525;
+    color: #828282;
+    box-shadow: inset 0px 0px 9px 6px #ababab33, inset 0px 1px 6px 11px #00000026;
+}
+
 input[type="submit"] {
     background-color: #0083ff;
     border: #222025;
