@@ -18,18 +18,18 @@ body {
 }
 
 .players {
-    grid-area: 'players';
+    grid-area: players;
     background-color: red;
 }
 .setup {
-    grid-area: 'setup';
+    grid-area: setup;
     background-color: green;
 }
 .chat {
-    grid-area: 'chat';
+    grid-area: chat;
     background-color: yellow;
 }
 .input {
-    grid-area: 'input';
+    grid-area: input;
     background-color: blue;
 }
