@@ -32,7 +32,18 @@ body {
 .input {
     grid-area: input;
     background-color: #111121;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: stretch;
+    flex-direction: row;
+    padding: 7px;
 }
+
+input > * + * {
+    margin-right: 7px;
+}
+
 
 input[type="text"] {
     background-color: #222025;
@@ -47,4 +58,22 @@ input[type="text"] {
 input[type="text"]:focus {
     outline: none;
     border: 1px solid #0083ff;
+}
+
+input[type="submit"] {
+    background-color: #0083ff;
+    border: #222025;
+    border-radius: 5px;
+    box-shadow: inset 0px 0px 9px 6px #ffffff33, inset 0px 1px 6px 11px #00000026;
+    color: #e5e3e7;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 4px 14px;
+    min-height: 34px;
+    transition: background-color 0.2s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #0058ff;
+    border: #222025;
 }
