@@ -1,6 +1,6 @@
 body {
-    display: grid;
-    background-color: #232221 !important;
+    display: grid !important;
+    background-color: #232221;
     color: #E2EFF4;
     margin: 0;
     position: absolute;

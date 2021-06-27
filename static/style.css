@@ -1,7 +1,7 @@
 body {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
-    background-color: black !important;
+    background-color: black;
     color: white;
     margin: 0;
     position: absolute;
