@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template
 from flask_socketio import SocketIO
 #from flask_pymongo import PyMongo
 from random import choice
+from binascii import hexlify
 import pymongo
 import os
 
