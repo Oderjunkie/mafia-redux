@@ -94,7 +94,7 @@ def register():
         return redirect('/usernametaken.html')
     client.mafiaredux.users.insert_one({
         'username': username,
-        'userid': userid
+        'userid': userid,
         'userhash': userhash
     })
     return redirect('/index.html')
