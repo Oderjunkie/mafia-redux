@@ -18,7 +18,7 @@ body {
 form {
     display: none;
     border: 1px solid white;
-    transition: width 0.2s linear 0s, height 0.2s linear 0s, padding 0.2s linear 0s;
+    transition: width 0.2s linear 0.2s, height 0.2s linear 0s, padding 0.2s linear 0s;
     padding: 15px;
     overflow: hidden;
     background-color: #2b2d2d;
@@ -38,4 +38,11 @@ space {
     height: 1px;
 }
 
-button[type=submit]
+input[type=submit] {
+    background-color: #0083ff;
+    border: #222025;
+    border-radius: 5px;
+    box-shadow: inset 0px 0px 9px 6px #ffffff33, inset 0px 1px 6px 11px #00000026;
+    color: #e5e3e7;
+    cursor: pointer;
+}
