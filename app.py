@@ -1,9 +1,10 @@
 from flask import Flask, request, jsonify, render_template, redirect
 from flask_socketio import SocketIO
 #from flask_pymongo import PyMongo
-from random import choice
 from binascii import hexlify
+from random import choice
 import pymongo
+#import bcrypt
 import os
 
 app = Flask(__name__)
