@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect
 from flask_socketio import SocketIO
 #from flask_pymongo import PyMongo
 from random import choice
