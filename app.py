@@ -125,7 +125,7 @@ def rooms():
 def makeroom():
     name = request.form.get('name')
     listed = request.form.get('listed')
-    print(name, listedn)
+    print(name, listed)
     roomid = randString(25)
     client.mafiaredux.rooms.insert_one({
         'roomId': roomid,
