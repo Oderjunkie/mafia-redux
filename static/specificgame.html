@@ -23,7 +23,7 @@
         <meta name='DC.Description' content='Join a game of heavily customized mafia!' />
         <meta name='DC.Format' content='text/html' />
         <meta name='DC.Language' content='en' />
-        <meta name='twitter:card' content='summary_large_image' />
+        <meta name='twitter:card' content='summary' />
         <meta name='twitter:creator' content='@oderjunks' />
         <meta name='description' content='Join a game of heavily customized mafia!' />
         <meta name='keywords' content='mafia,online gaming,game' />
@@ -33,7 +33,7 @@
         <link rel='stylesheet' type='text/css' href='{{ url_for('static', filename='specific.css') }}' />
         <script defer src='/jquery-3.6.0.min.js'></script>
         <script async src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js' integrity='sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==' crossorigin='anonymous'></script>
-        <script defer src='{{ url_for('static', filename='specific.js') }}'></script>
+        <script defer src='/specific.js'></script>
     </head>
     <body>
         <div class='players'></div>

@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, render_template, redirect
-from flask_socketio import SocketIO, join_room, leave_room
+from flask_socketio import SocketIO, join_room, leave_room, rooms
 #from flask_pymongo import PyMongo
 from binascii import hexlify
 from random import choice
@@ -41,6 +41,10 @@ def host():
 @app.route('/play.html')
 def play():
     return app.send_static_file('play.html')
+
+@app.route('/game/<string:roomid>')
+def getgame(roomid=''):
+    return app.send_static_file('specificgame.html')
 
 @app.route('/script.js')
 def script():
@@ -113,7 +117,7 @@ def login():
 #################
 
 @app.route('/api/rooms')
-def rooms():
+def getrooms():
     arr = []
     for el in client.mafiaredux.rooms.find():
         print(arr)
@@ -136,10 +140,6 @@ def makeroom():
 
 def encode(string: str) -> str:
     return ''.join(['\\x'+hexlify(bytes([char])).decode('latin1') for char in string.encode('latin1')])
-
-@app.route('/game/<string:roomid>')
-def getgame(roomid=''):
-    return render_template('specificgame.html', roomid=encode(roomid))
 
 # Socket.io
 ############
@@ -165,7 +165,7 @@ def disconnect():
 @socketio.on('chat')
 def chat(message):
     print(sessions[request.sid], 'says', repr(message))
-    room = socketio.rooms(request.sid)
+    room = rooms(request.sid)
     socketio.emit('chat', {
         'timestamp': time(),
         'message': message,
