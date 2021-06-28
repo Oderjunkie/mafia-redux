@@ -130,7 +130,7 @@ def makeroom():
     client.mafiaredux.rooms.insert_one({
         'roomId': roomid,
         'name': name,
-        'listed': listed
+        'listed': listed=='on'
     })
     return redirect('/game/'+roomid)
 
