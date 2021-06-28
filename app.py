@@ -62,6 +62,10 @@ def hostjs():
 def globaljs():
     return app.send_static_file('global.js')
 
+@app.route('/specific.js')
+def specjs():
+    return app.send_static_file('specific.js')
+
 @app.route('/style.css')
 def style():
     return app.send_static_file('style.css')
@@ -73,6 +77,10 @@ def hostcss():
 @app.route('/play.css')
 def playcss():
     return app.send_static_file('play.css')
+
+@app.route('/specific.css')
+def speccss():
+    return app.send_static_file('specific.css')
 
 @app.route('/jquery-3.6.0.min.js')
 def j360js():
