@@ -102,7 +102,7 @@ input[type="submit"][disabled] {
 }
 
 input[type="submit"] {
-    background-color: #0083ff;
+    background-color: #ff5722;
     border: #222025;
     border-radius: 5px;
     box-shadow: inset 0px 0px 9px 6px #ffffff33, inset 0px 1px 6px 11px #00000026;
@@ -114,6 +114,6 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover:not([disabled]) {
-    background-color: #0058ff;
+    background-color: #f44336;
     border: #222025;
 }

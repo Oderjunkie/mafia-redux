@@ -44,6 +44,10 @@ label {
     margin-bottom: 3px;
 }
 
+input[type="checkbox"][checked] {
+    filter: hue-rotate(165deg);
+}
+
 input[type="text"] {
     background-color: #222025;
     border: 1px solid #344444;
