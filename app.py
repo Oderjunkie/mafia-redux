@@ -102,8 +102,7 @@ def register():
     username = request.form.get('username')
     password = request.form.get('password')
     userid = randString(30)
-    userhash = bcrypt.hashpw(password.encode('latin-1'), bcrypt.gen
-                             salt())
+    userhash = bcrypt.hashpw(password.encode('latin-1'), bcrypt.gensalt())
     if client.mafiaredux.users.count_documents({'username': username}):
         return redirect('/usernametaken.html')
     client.mafiaredux.users.insert_one({
