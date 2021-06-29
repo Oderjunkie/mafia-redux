@@ -62,7 +62,7 @@ name {
 }
 .input {
     grid-area: input;
-    background-color: #150c09;
+    background-color: #13141f;
     border-radius: 15px;
     display: flex;
     justify-content: center;
@@ -84,7 +84,7 @@ name {
 
 
 input[type="text"] {
-    background-color: #222025;
+    background-color: #150c09;
     border: 1px solid #344444;
     color: currentColor;
     /*border-radius: 5px;*/
