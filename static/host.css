@@ -65,10 +65,10 @@ input[type="text"]:focus {
 }
 
 input[type="submit"] {
-    background-color: #0083ff;
+    background-color: #ff5722;
     border: #222025;
-    border-radius: 5px;
-    box-shadow: inset 0px 0px 9px 6px #ffffff33, inset 0px 1px 6px 11px #00000026;
+    /*border-radius: 5px;*/
+    box-shadow: inset 0px 0px 0px 3px #ffffff33;
     color: #e5e3e7;
     cursor: pointer;
     font-weight: bold;
