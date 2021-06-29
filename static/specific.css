@@ -72,8 +72,8 @@ name {
 .chat[off]    { transform: translateY(-100%) }
 .input[off] { transform: translateY(100%) }
 
-.input input[type="text"] {
-    margin-right: 7px;
+.input * + * {
+    margin-left: 7px;
 }
 
 
