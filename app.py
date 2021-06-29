@@ -144,7 +144,8 @@ def makeroom():
         'name': name,
         'listed': listed=='on'
     })
-    return redirect('/game/'+roomid)
+    print(request.scheme, flask.request.environ['wsgi.url_scheme'])
+    return redirect('/game/'+roomid, _scheme=request.scheme)
 
 def encode(string: str) -> str:
     return ''.join(['\\x'+hexlify(bytes([char])).decode('latin1') for char in string.encode('latin1')])
