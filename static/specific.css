@@ -59,6 +59,7 @@ name {
 .input {
     grid-area: input;
     background-color: #2c2a31;
+    border-radius: 5px;
     display: flex;
     justify-content: center;
     align-content: center;
