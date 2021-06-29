@@ -54,7 +54,8 @@ name {
 .chat {
     grid-area: chat;
     background-color: #222025;
-    overflow-y: scroll;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
 }
 .input {
     grid-area: input;
