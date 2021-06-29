@@ -9,7 +9,7 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    font-family: "Roboto", times, "Helvetica Neue", helvetica, arial, sans-serif;
+    font-family: 'Titillium Web', sans-serif;
     font-size: 14px;
     grid-template-columns: 14rem auto 16rem;
     grid-template-rows: auto 2.7rem;
@@ -25,13 +25,13 @@ message {
 
 time {
     margin-right: 0.5rem;
-    color: #444e52;
+    color: #444650;
     vertical-align: middle;
     font-size: x-small;
 }
 
 name {
-    color: #807e84;
+    color: #ff5722;
     display: inline;
     margin-right: 7px;
     font-weight: bold;
@@ -60,7 +60,7 @@ name {
 .input {
     grid-area: input;
     background-color: #2c2a31;
-    border-radius: 5px;
+    border-radius: 15px;
     display: flex;
     justify-content: center;
     align-content: center;
