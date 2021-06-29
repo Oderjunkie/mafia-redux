@@ -56,13 +56,13 @@ name {
 }
 .chat {
     grid-area: chat;
-    background-color: #222025;
+    background-color: #13141f;
     overflow-x: hidden;
     overflow-wrap: break-word;
 }
 .input {
     grid-area: input;
-    background-color: #2c2a31;
+    background-color: #150c09;
     border-radius: 15px;
     display: flex;
     justify-content: center;
