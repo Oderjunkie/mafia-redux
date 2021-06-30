@@ -131,9 +131,11 @@ def login():
     username = request.form.get('username')
     password = request.form.get('password')
     user = client.mafiaredux.users.find_one({'username': username}, {'username': 0, 'userid': 1, 'userhash': 1})
-    if bcrypt.checkpw(password.encode('latin-1'), user['userhash']):
-        return '/index.html', 200
-    return 'Bad login details.', 401
+    if user:
+        if bcrypt.checkpw(password.encode('latin-1'), user['userhash']):
+            return '/index.html', 200
+        return 'Bad password.', 401
+    return 'No such user found.', 404
 
 # Rooms requests
 #################
