@@ -11,7 +11,6 @@ import os
 class ReverseProxied(object):
     def __init__(self, app):
         self.app = app
-
     def __call__(self, environ, start_response):
         scheme = environ.get('HTTP_X_FORWARDED_PROTO')
         if scheme:
@@ -43,6 +42,10 @@ def randString(length: int) -> str:
 
 @app.route('/')
 def index():
+    return app.send_static_file('under_renovation.html')
+
+@app.route('/index.html')
+def index2():
     return app.send_static_file('index.html')
 
 @app.route('/host.html')
