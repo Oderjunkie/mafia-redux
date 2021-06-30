@@ -118,13 +118,13 @@ def register():
     userid = randString(30)
     userhash = bcrypt.hashpw(password.encode('latin-1'), bcrypt.gensalt())
     if client.mafiaredux.users.count_documents({'username': username}):
-        return redirect('/usernametaken.html')
+        return 'That username is taken.', 422
     client.mafiaredux.users.insert_one({
         'username': username,
         'userid': userid,
         'userhash': userhash
     })
-    return redirect('/index.html')
+    return '/index.html', 200
 
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -132,8 +132,8 @@ def login():
     password = request.form.get('password')
     user = client.mafiaredux.users.find_one({'username': username}, {'username': 0, 'userid': 1, 'userhash': 1})
     if bcrypt.checkpw(password.encode('latin-1'), user['userhash']):
-        return redirect('/index.html')
-    return redirect('/badlogin.html')
+        return '/index.html', 200
+    return 'Bad login details.', 401
 
 # Rooms requests
 #################
@@ -158,7 +158,7 @@ def makeroom():
         'name': name,
         'listed': listed=='on'
     })
-    return redirect('/game/'+roomid)
+    return '/game/'+roomid, 200
 
 def encode(string: str) -> str:
     return ''.join(['\\x'+hexlify(bytes([char])).decode('latin1') for char in string.encode('latin1')])
