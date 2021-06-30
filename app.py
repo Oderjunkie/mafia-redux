@@ -8,7 +8,18 @@ import pymongo
 import bcrypt
 import os
 
+class ReverseProxied(object):
+    def __init__(self, app):
+        self.app = app
+
+    def __call__(self, environ, start_response):
+        scheme = environ.get('HTTP_X_FORWARDED_PROTO')
+        if scheme:
+            environ['wsgi.url_scheme'] = scheme
+        return self.app(environ, start_response)
+
 app = Flask(__name__)
+app.wsgi_app = ReverseProxied(app.wsgi_app)
 #app.config['MONGO_DBNAME'] = 'mafiaredux'
 #app.config['MONGO_URI'] = os.environ['MONGODB']
 socketio = SocketIO(app)
@@ -144,8 +155,7 @@ def makeroom():
         'name': name,
         'listed': listed=='on'
     })
-    print(request.scheme, request.environ['wsgi.url_scheme'])
-    return redirect('/game/'+roomid, _scheme=request.scheme)
+    return redirect('/game/'+roomid)
 
 def encode(string: str) -> str:
     return ''.join(['\\x'+hexlify(bytes([char])).decode('latin1') for char in string.encode('latin1')])
