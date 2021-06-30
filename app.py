@@ -136,8 +136,8 @@ def login():
             if bcrypt.checkpw(password.encode('latin-1'), user['userhash']):
                 return '/index.html', 200
             return 'Bad password.', 401
-    except Exception:
-        pass
+    except Exception as e:
+        print(type(e), e)
     return 'No such user found.', 404
 
 # Rooms requests
@@ -163,7 +163,7 @@ def makeroom():
         'name': name,
         'listed': listed=='on'
     })
-    return '/game/'+roomid, 200
+    return redirect('/game/'+roomid)
 
 def encode(string: str) -> str:
     return ''.join(['\\x'+hexlify(bytes([char])).decode('latin1') for char in string.encode('latin1')])
