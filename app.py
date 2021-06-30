@@ -114,11 +114,12 @@ def robots():
 @app.route('/api/register', methods=['POST'])
 def register():
     username = request.form.get('username')
+    if client.mafiaredux.users.count_documents({'username': username}):
+        return 'That username is taken.', 422
     password = request.form.get('password')
     userid = randString(30)
     userhash = bcrypt.hashpw(password.encode('latin-1'), bcrypt.gensalt())
-    if client.mafiaredux.users.count_documents({'username': username}):
-        return 'That username is taken.', 422
+    print(userhash)
     client.mafiaredux.users.insert_one({
         'username': username,
         'userid': userid,
@@ -131,7 +132,7 @@ def login():
     username = request.form.get('username')
     password = request.form.get('password')
     try:
-        user = client.mafiaredux.users.find_one({'username': username}, {'username': 0, 'userid': 1, 'userhash': 1})
+        user = client.mafiaredux.users.find_one({'username': username}, {'username': 0, '_id': 0})
         if user:
             if bcrypt.checkpw(password.encode('latin-1'), user['userhash']):
                 return '/index.html', 200
