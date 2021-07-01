@@ -166,11 +166,7 @@ def loginapi():
 @app.route('/api/rooms')
 def getroomsapi():
     arr = []
-    for el in client.mafiaredux.rooms.find({}):
-        print(arr)
-        el.pop('_id')
-        arr.append(el)
-    return jsonify(arr)
+    return jsonify(client.mafiaredux.rooms.find({'listed': True}, {'_id': 0, 'events': 0, 'listed': 0}))
 
 @app.route('/api/makeroom', methods=['POST'])
 def makeroomapi():
@@ -197,11 +193,14 @@ sessions = {}
 def connection(json):
     if json['usertoken'] not in cookie2userid:
         raise ConnectionRefusedError('can\'t use a cookie to save their lives')
-    join_room(json['roomId'])
+    room = json['roomId']
+    join_room(room)
     userid = cookie2userid[json['usertoken']]
-    socketio.emit('userJoin', {'id': userid})
+    socketio.emit('userJoin', {'id': userid}, to=room)
     sessions[request.sid] = userid
     print(request.sid, 'resolved to', userid)
+    for event in client.mafiaredux.users.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})['events']:
+        socketio.emit(*event, to=request.sid)
 
 @socketio.on('connect')
 def connection():
@@ -217,11 +216,16 @@ def chat(message):
     print(sessions[request.sid], 'says', repr(message))
     room = rooms(request.sid)
     name = client.mafiaredux.users.find_one({'userid': sessions[request.sid]}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
-    socketio.emit('chat', {
+    packet = {
         'timestamp': time(),
         'message': message,
         'from': name
-    }, to=room)
+    }
+    socketio.emit('chat', packet, to=room)
+    client.mafiaredux.users.update_one(
+        {'roomid': room},
+        {'$push': {'events': ['chat', packet]}}
+    )
 
 # Favicon
 ##########
