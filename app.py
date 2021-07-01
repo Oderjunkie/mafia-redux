@@ -149,7 +149,7 @@ def registerapi():
         'userhash': userhash
     })
     usertoken = randString(30)
-    cookie2userid[usertoken] = user['userid']
+    cookie2userid[usertoken] = userid
     resp = make_response('/index.html', 200)
     resp.set_cookie('usertoken', value=usertoken)
     return resp
