@@ -214,7 +214,7 @@ def connection(json):
     print(request.sid, 'resolved to', userid)
     print(room)
     try:
-        for event in client.mafiaredux.users.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})['events']:
+        for event in client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})['events']:
             socketio.emit(*event, to=request.sid)
     except Exception as e:
         errorHandle(e)
