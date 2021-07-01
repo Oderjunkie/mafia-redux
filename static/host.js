@@ -27,7 +27,7 @@ function beginAnimation() {
     setTimeout(()=>{
         $('form').width('')
                  .height('');
-        console.log(!);
+        console.log('!');
     }, 800);
 }
 
