@@ -32,14 +32,11 @@ function navigateToIndex() {
             history.pushState({}, newdocument.find('title').text(), '/');
             $('body').append(newdocument.find('body').children());
             hasStarted_index = false;
-            $.get('/script.js', (d,s)=>{
-                eval(d);
-                footerVisible(true);
-                imageVisible(true);
-                listitemsVisible(true);
-                hasStarted_host = false;
-                hasStarted_play = false;
-            });
+            footerVisible(true);
+            imageVisible(true);
+            listitemsVisible(true);
+            hasStarted_host = false;
+            hasStarted_play = false;
         }, 1000);
     });
 }
@@ -81,11 +78,8 @@ function navigateToHost() {
             history.pushState({}, newdocument.find('title').text(), '/host.html');
             $('body').append(newdocument.find('body').children());
             hasStarted_host = false;
-            $.get('/host.js', (d,s)=>{
-                eval(d);
-                hasStarted_index = false;
-                hasStarted_play = false;
-            });
+            hasStarted_index = false;
+            hasStarted_play = false;
         }, 1000);
     });
 }
@@ -104,11 +98,8 @@ function navigateToLogin() {
             history.pushState({}, newdocument.find('title').text(), '/login.html');
             $('body').append(newdocument.find('body').children());
             hasStarted_host = false;
-            $.get('/login.js', (d,s)=>{
-                eval(d);
-                hasStarted_index = false;
-                hasStarted_play = false;
-            });
+            hasStarted_index = false;
+            hasStarted_play = false;
         }, 1000);
     });
 }
