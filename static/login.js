@@ -87,7 +87,7 @@ function onSubmitBetter_button() {
         cache: false,
         contentType: 'text/plain; charset=UTF-8',
         data: data,
-        dataType: 'text',
+        dataType: 'application/x-www-form-urlencoded',
         method: method,
         url: action
     }).done($data=>{
