@@ -240,7 +240,7 @@ def chat(message):
         'message': message,
         'from': name
     }
-    socketio.emit('chat', packet, to=room[-1])
+    socketio.emit('chat', packet, to=room)
     #oldevents = client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})['events']
     client.mafiaredux.rooms.update_one(
         {'roomid': room},
