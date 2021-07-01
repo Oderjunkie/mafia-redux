@@ -63,8 +63,8 @@ def play():
 
 @app.route('/game/<string:roomid>')
 def getgame(roomid=''):
-    print(request.cookies.get('session'))
-    print(session['session'])
+    print(request.cookies.get('usertoken'))
+    print(session['usertoken'])
     return render_template('specificgame.html')
 
 @app.route('/script.js')
