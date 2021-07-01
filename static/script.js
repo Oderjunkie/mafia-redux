@@ -31,8 +31,8 @@ function switchTo(action) {
 }
 
 $(_=>{
-    if (hasStarted_index) return;
-    hasStarted_index = true;
+    if (window.hasStarted_index) return;
+    window.hasStarted_index = true;
     $('li.login').click(switchTo(navigateToLogin));
     $('li.play').click(switchTo(navigateToPlay));
     $('li.host').click(switchTo(navigateToHost));

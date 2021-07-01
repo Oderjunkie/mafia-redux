@@ -99,9 +99,9 @@ function onSubmitBetter_button() {
 }
 
 $(_=>{
-    console.log(hasStarted_login);
-    if (hasStarted_login) return;
-    hasStarted_host = true;
+    console.log(window.hasStarted_login);
+    if (window.hasStarted_login) return;
+    window.hasStarted_host = true;
     $('form').submit(onSubmitBetter_form)
              .find('input[type="submit"]')
              .click(onSubmitBetter_button);
