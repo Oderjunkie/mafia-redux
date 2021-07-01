@@ -1,5 +1,5 @@
-from flask import Flask, request, jsonify, render_template, redirect
-from flask_socketio import SocketIO, join_room, leave_room, rooms
+from flask import Flask, request, jsonify, render_template, redirect, make_response, session
+from flask_socketio import SocketIO, join_room, leave_room, rooms, ConnectionRefusedError
 #from flask_pymongo import PyMongo
 from binascii import hexlify
 from random import choice
@@ -135,6 +135,9 @@ def login():
         user = client.mafiaredux.users.find_one({'username': username}, {'username': 0, '_id': 0})
         if user:
             if bcrypt.checkpw(password.encode('latin-1'), user['userhash']):
+                usertoken = randString(30)
+                cookie2userid[usertoken] = user['userid']
+                session['usertoken'] = usertoken
                 return '/index.html', 200
             return 'Bad password.', 401
     except Exception as e:
@@ -176,8 +179,10 @@ sessions = {}
 
 @socketio.on('handshake')
 def connection(json):
+    if (json['usertoken'] not in cookie2userid) or cookie2userid[json['usertoken']]!=json['userid']:
+        raise ConnectionRefusedError('can\'t use a cookie to save their lives')
     join_room(json['roomId'])
-    userid = request.sid #json['userId']
+    userid = json['userId']
     socketio.emit('userJoin', {'id': userid})
     sessions[request.sid] = userid
     print(request.sid, 'resolved to', userid)
@@ -197,8 +202,8 @@ def chat(message):
     socketio.emit('chat', {
         'timestamp': time(),
         'message': message,
-        'from': str(sessions[request.sid])},
-    to=room)
+        'from': str(sessions[request.sid])
+    }, to=room)
 
 # Favicon
 ##########

@@ -54,7 +54,7 @@ function switchTo(action) {
         let items = $('body *'); // for the rare race condition.
         endAnimation();
         setTimeout(action, 800);
-        setTimeout(()=>items.remove(), 1000);
+        setTimeout(items.remove, 1000);
     }
 }
 

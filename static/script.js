@@ -33,6 +33,7 @@ function switchTo(action) {
 $(_=>{
     if (hasStarted_index) return;
     hasStarted_index = true;
+    $('li.login').click(switchTo(navigateToLogin));
     $('li.play').click(switchTo(navigateToPlay));
     $('li.host').click(switchTo(navigateToHost));
     $('li.about').css({opacity: 0.2}); // plz don click
