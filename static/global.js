@@ -1,7 +1,7 @@
-window.hasStarted_index = false;
-window.hasStarted_login = false;
-window.hasStarted_play = false;
-window.hasStarted_host = false;
+var hasStarted_index = false;
+var hasStarted_login = false;
+var hasStarted_play = false;
+var hasStarted_host = false;
 
 window.onpopstate = function(event) {
     switch (location.pathname) {
@@ -40,9 +40,9 @@ function navigateToIndex() {
             footerVisible(true);
             imageVisible(true);
             listitemsVisible(true);
-            window.hasStarted_login = false;
-            window.hasStarted_play = false;
-            window.hasStarted_host = false;
+            hasStarted_login = false;
+            hasStarted_play = false;
+            hasStarted_host = false;
         }, 1000);
     });
 }
@@ -66,9 +66,9 @@ function navigateToPlay() {
                 url: '/play.js',
                 dataType: 'script'
             });
-            window.hasStarted_login = false;
-            window.hasStarted_index = false;
-            window.hasStarted_host = false;
+            hasStarted_login = false;
+            hasStarted_index = false;
+            hasStarted_host = false;
         }, 1000);
     });
 }
@@ -91,9 +91,9 @@ function navigateToHost() {
                 url: '/host.js',
                 dataType: 'script'
             });
-            window.hasStarted_login = false;
-            window.hasStarted_index = false;
-            window.hasStarted_play = false;
+            hasStarted_login = false;
+            hasStarted_index = false;
+            hasStarted_play = false;
         }, 1000);
     });
 }
@@ -117,9 +117,9 @@ function navigateToLogin() {
                 url: '/login.js',
                 dataType: 'script'
             });
-            window.hasStarted_login = false;
-            window.hasStarted_index = false;
-            window.hasStarted_play = false;
+            hasStarted_login = false;
+            hasStarted_index = false;
+            hasStarted_play = false;
         }, 1000);
     });
 }
