@@ -239,7 +239,7 @@ def chat(message):
         'from': name
     }
     socketio.emit('chat', packet, to=room)
-    client.mafiaredux.users.update_one(
+    client.mafiaredux.rooms.update_one(
         {'roomid': room},
         {'$push': {'events': ['chat', packet]}}
     )
