@@ -11,6 +11,19 @@ import os
 # Utilities
 ############
 
+def errorHandle(e):
+    line = e.__traceback__.tb_lineno-1
+    print('File "{}", line {}, in {}'.format(e.__traceback__.tb_frame.f_code.co_filename,
+                                         line,
+                                         e.__traceback__.tb_frame.f_code.co_name))
+    with open(e.__traceback__.tb_frame.f_code.co_filename) as f:
+        lines = f.readlines()
+        print('    {}\t{}'.format(line-1, lines[line-1][:-1]))
+        print('>>> {}\t{}'.format(line,   lines[line][:-1]))
+        print('    {}\t{}'.format(line+1, lines[line+1][:-1]))
+        print('{}: {}'.format(str(type(e))[8:-2], str(e)))
+        f.close()
+
 def randChar(index=None) -> str:
     return choice('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-')
 
@@ -199,8 +212,12 @@ def connection(json):
     socketio.emit('userJoin', {'id': userid}, to=room)
     sessions[request.sid] = userid
     print(request.sid, 'resolved to', userid)
-    for event in client.mafiaredux.users.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})['events']:
-        socketio.emit(*event, to=request.sid)
+    print(room)
+    try:
+        for event in client.mafiaredux.users.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})['events']:
+            socketio.emit(*event, to=request.sid)
+    except Exception as e:
+        errorHandle(e)
 
 @socketio.on('connect')
 def connection():
