@@ -166,7 +166,7 @@ def loginapi():
 @app.route('/api/rooms')
 def getroomsapi():
     arr = []
-    return jsonify(client.mafiaredux.rooms.find({'listed': True}, {'_id': 0, 'events': 0, 'listed': 0}))
+    return jsonify(list(client.mafiaredux.rooms.find({'listed': True}, {'_id': 0, 'events': 0, 'listed': 0})))
 
 @app.route('/api/makeroom', methods=['POST'])
 def makeroomapi():
@@ -175,7 +175,7 @@ def makeroomapi():
     print(name, listed)
     roomid = randString(25)
     client.mafiaredux.rooms.insert_one({
-        'roomId': roomid,
+        'roomid': roomid,
         'name': name,
         'listed': listed=='on'
     })
