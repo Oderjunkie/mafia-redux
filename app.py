@@ -233,6 +233,7 @@ def disconnect():
 @socketio.on('chat')
 def chat(message):
     room = rooms(request.sid)
+    print(room)
     name = client.mafiaredux.users.find_one({'userid': sessions[request.sid]}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
     print(name, 'says', repr(message))
     packet = {
@@ -241,13 +242,13 @@ def chat(message):
         'from': name
     }
     socketio.emit('chat', packet, to=room)
-    oldevents = client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})['events']
+    #oldevents = client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})['events']
     client.mafiaredux.rooms.update_one(
         {'roomid': room},
         {'$push': {'events': ['chat', packet]}}
     )
-    newevents = client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})['events']
-    print(oldevents, newevents)
+    #newevents = client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})['events']
+    #print(oldevents, newevents)
 
 # Favicon
 ##########
