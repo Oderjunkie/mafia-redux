@@ -142,7 +142,7 @@ def registerapi():
     password = request.form.get('password')
     userid = randString(30)
     userhash = bcrypt.hashpw(password.encode('latin-1'), bcrypt.gensalt())
-    print(userhash)
+    #print(userhash)
     client.mafiaredux.users.insert_one({
         'username': username,
         'userid': userid,
@@ -158,7 +158,7 @@ def registerapi():
 def loginapi():
     username = request.form.get('username')
     password = request.form.get('password')
-    print('LOGIN', username, password)
+    #print('LOGIN', username, password)
     try:
         user = client.mafiaredux.users.find_one({'username': username}, {'username': 0, '_id': 0})
         if user:
@@ -214,7 +214,9 @@ def connection(json):
     print(request.sid, 'resolved to', userid)
     print(room)
     try:
-        for event in client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})['events']:
+        events = client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})['events']
+        print(events)
+        for event in events:
             socketio.emit(*event, to=request.sid)
     except Exception as e:
         errorHandle(e)
