@@ -53,7 +53,7 @@ input[type="checkbox"][checked] {
     filter: hue-rotate(165deg);
 }
 
-input[type="text"] {
+input[type="text"], input[type="password"] {
     min-height: 34px;
     background-color: #222025;
     border: 1px solid #344444;
@@ -65,7 +65,7 @@ input[type="text"] {
     flex-grow: 1;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus, input[type="password"]:focus {
     outline: none;
     border: 1px solid #ff5722;
 }
