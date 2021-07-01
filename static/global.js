@@ -32,6 +32,11 @@ function navigateToIndex() {
             history.pushState({}, newdocument.find('title').text(), '/');
             $('body').append(newdocument.find('body').children());
             hasStarted_index = false;
+            $.ajax({
+                method: 'GET'
+                url: '/script.js',
+                dataType: 'script'
+            });
             footerVisible(true);
             imageVisible(true);
             listitemsVisible(true);
@@ -55,11 +60,13 @@ function navigateToPlay() {
             history.pushState({}, newdocument.find('title').text(), '/play.html');
             $('body').append(newdocument.find('body').children());
             hasStarted_play = false;
-            $.get('/play.js', (d,s)=>{
-                eval(d);
-                hasStarted_index = false;
-                hasStarted_host = false;
+            $.ajax({
+                method: 'GET'
+                url: '/play.js',
+                dataType: 'script'
             });
+            hasStarted_index = false;
+            hasStarted_host = false;
         }, 1000);
     });
 }
@@ -77,6 +84,11 @@ function navigateToHost() {
             currentstylesheet.remove();
             history.pushState({}, newdocument.find('title').text(), '/host.html');
             $('body').append(newdocument.find('body').children());
+            $.ajax({
+                method: 'GET'
+                url: '/host.js',
+                dataType: 'script'
+            });
             hasStarted_host = false;
             hasStarted_index = false;
             hasStarted_play = false;
@@ -98,6 +110,11 @@ function navigateToLogin() {
             history.pushState({}, newdocument.find('title').text(), '/login.html');
             $('body').append(newdocument.find('body').children());
             hasStarted_host = false;
+            $.ajax({
+                method: 'GET'
+                url: '/login.js',
+                dataType: 'script'
+            });
             hasStarted_index = false;
             hasStarted_play = false;
         }, 1000);
