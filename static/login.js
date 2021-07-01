@@ -83,6 +83,7 @@ function onSubmitBetter_button() {
         contentType: 'text/plain; charset=UTF-8',
         data: data,
         dataType: 'text',
+        method: method,
         url: action
     }).done($data=>{
         window.location.href = $data;
