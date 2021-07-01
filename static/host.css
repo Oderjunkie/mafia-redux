@@ -84,10 +84,11 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: #0058ff;
+    background-color: #f44336;
     border: #222025;
 }
 
 .error {
     background-color: #ff0000;
+    padding: 20px;
 }
