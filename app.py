@@ -120,7 +120,7 @@ def robots():
 #########
 
 @app.route('/api/register', methods=['POST'])
-def register():
+def registerapi():
     username = request.form.get('username')
     if client.mafiaredux.users.count_documents({'username': username}):
         return 'That username is taken.', 422
@@ -136,7 +136,7 @@ def register():
     return '/index.html', 200
 
 @app.route('/api/login', methods=['POST'])
-def login():
+def loginapi():
     username = request.form.get('username')
     password = request.form.get('password')
     try:
@@ -156,7 +156,7 @@ def login():
 #################
 
 @app.route('/api/rooms')
-def getrooms():
+def getroomsapi():
     arr = []
     for el in client.mafiaredux.rooms.find({}):
         print(arr)
@@ -165,7 +165,7 @@ def getrooms():
     return jsonify(arr)
 
 @app.route('/api/makeroom', methods=['POST'])
-def makeroom():
+def makeroomapi():
     name = request.form.get('name')
     listed = request.form.get('listed')
     print(name, listed)
