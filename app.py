@@ -48,6 +48,10 @@ def index():
 def index2():
     return app.send_static_file('index.html')
 
+@app.route('/login.html')
+def login():
+    return app.send_static_file('login.html')
+
 @app.route('/host.html')
 def host():
     return app.send_static_file('host.html')
@@ -71,6 +75,10 @@ def playjs():
 @app.route('/host.js')
 def hostjs():
     return app.send_static_file('host.js')
+
+@app.route('/login.js')
+def loginjs():
+    return app.send_static_file('login.js')
 
 @app.route('/global.js')
 def globaljs():

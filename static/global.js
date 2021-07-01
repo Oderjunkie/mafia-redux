@@ -1,6 +1,7 @@
 let hasStarted_index = false;
-let hasStarted_host = false;
+let hasStarted_login = false;
 let hasStarted_play = false;
+let hasStarted_host = false;
 
 window.onpopstate = function(event) {
     switch (location.pathname) {
@@ -81,6 +82,29 @@ function navigateToHost() {
             $('body').append(newdocument.find('body').children());
             hasStarted_host = false;
             $.get('/host.js', (d,s)=>{
+                eval(d);
+                hasStarted_index = false;
+                hasStarted_play = false;
+            });
+        }, 1000);
+    });
+}
+
+function navigateToLogin() {
+    $.get('/login.html', function(data, status){
+        newdocument = $(new DOMParser().parseFromString(data, 'text/html'));
+        let currentstylesheet = $('link[rel="stylesheet"][href^="/"]');
+        setTimeout(()=>{
+            $('html').css({'background-color': $('body').css('background-color')});
+            $('body').css({'display': 'none'});
+            $('head').append($('<link/>').attr({rel: 'stylesheet',
+                                                type: 'text/css',
+                                                href: '/host.css'}));
+            currentstylesheet.remove();
+            history.pushState({}, newdocument.find('title').text(), '/login.html');
+            $('body').append(newdocument.find('body').children());
+            hasStarted_host = false;
+            $.get('/login.js', (d,s)=>{
                 eval(d);
                 hasStarted_index = false;
                 hasStarted_play = false;
