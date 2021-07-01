@@ -232,7 +232,7 @@ def disconnect():
 
 @socketio.on('chat')
 def chat(message):
-    room = rooms(request.sid)[-1]
+    room = rooms(request.sid)[0]
     print(sessions)
     name = client.mafiaredux.users.find_one({'userid': sessions[request.sid]}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
     print(name, 'says', repr(message))
