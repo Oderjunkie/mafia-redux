@@ -63,7 +63,7 @@ def play():
 
 @app.route('/game/<string:roomid>')
 def getgame(roomid=''):
-    return app.render_template('specificgame.html')
+    return render_template('specificgame.html')
 
 @app.route('/script.js')
 def script():
