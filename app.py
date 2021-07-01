@@ -63,7 +63,7 @@ def play():
 
 @app.route('/game/<string:roomid>')
 def getgame(roomid=''):
-    return app.send_static_file('specificgame.html')
+    return app.render_template('specificgame.html')
 
 @app.route('/script.js')
 def script():
@@ -134,6 +134,9 @@ def registerapi():
         'userid': userid,
         'userhash': userhash
     })
+    usertoken = randString(30)
+    cookie2userid[usertoken] = user['userid']
+    session['usertoken'] = usertoken
     return '/index.html', 200
 
 @app.route('/api/login', methods=['POST'])
