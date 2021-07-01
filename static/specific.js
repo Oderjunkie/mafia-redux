@@ -26,7 +26,7 @@ $(_=>{
     });
     socket = io();
     socket.on('connect', ()=>{
-        socket.emit('handshake', {'roomId': roomid, 'session': $('meta[name="session"]').attr('content')});
+        socket.emit('handshake', {'roomId': roomid, 'usertoken': $('meta[name="session"]').attr('content')});
     });
     socket.on('chat', msg=>{
         let date = new Date(msg.timestamp*1000);
