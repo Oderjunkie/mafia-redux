@@ -24,6 +24,11 @@ function beginAnimation() {
                  .height(height);
         console.log(4);
     }, 600);
+    setTimeout(()=>{
+        $('form').width(')
+                 .height('');
+        console.log(!);
+    }, 600);
 }
 
 function endAnimation() {
