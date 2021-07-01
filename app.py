@@ -211,8 +211,8 @@ def connection(json):
     userid = cookie2userid[json['usertoken']]
     socketio.emit('userJoin', {'id': userid}, to=room)
     sessions[request.sid] = userid
-    print(request.sid, 'resolved to', userid)
-    print(room)
+    name = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
+    print(request.sid, 'resolved to', name, 'at', room)
     try:
         events = client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})['events']
         print(events)
@@ -232,19 +232,22 @@ def disconnect():
 
 @socketio.on('chat')
 def chat(message):
-    print(sessions[request.sid], 'says', repr(message))
     room = rooms(request.sid)
     name = client.mafiaredux.users.find_one({'userid': sessions[request.sid]}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
+    print(name, 'says', repr(message))
     packet = {
         'timestamp': time(),
         'message': message,
         'from': name
     }
     socketio.emit('chat', packet, to=room)
+    oldevents = client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})['events']
     client.mafiaredux.rooms.update_one(
         {'roomid': room},
         {'$push': {'events': ['chat', packet]}}
     )
+    newevents = client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})['events']
+    print(oldevents, newevents)
 
 # Favicon
 ##########
