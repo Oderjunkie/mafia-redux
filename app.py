@@ -8,6 +8,15 @@ import pymongo
 import bcrypt
 import os
 
+# Utilities
+############
+
+def randChar(index=None) -> str:
+    return choice('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-')
+
+def randString(length: int) -> str:
+    return ''.join(map(randChar, range(length)))
+
 class ReverseProxied(object):
     def __init__(self, app):
         self.app = app
@@ -19,6 +28,7 @@ class ReverseProxied(object):
 
 app = Flask(__name__)
 app.wsgi_app = ReverseProxied(app.wsgi_app)
+app.config['SECRET_KEY'] = randString(100)
 #app.config['MONGO_DBNAME'] = 'mafiaredux'
 #app.config['MONGO_URI'] = os.environ['MONGODB']
 socketio = SocketIO(app)
@@ -27,15 +37,6 @@ client = pymongo.MongoClient(os.environ['MONGODB'])
 cookie2userid = {}
 
 #mongo = PyMongo(app)
-
-# Utilities
-############
-
-def randChar(index=None) -> str:
-    return choice('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-')
-
-def randString(length: int) -> str:
-    return ''.join(map(randChar, range(length)))
 
 # Index page + scripts
 #######################
