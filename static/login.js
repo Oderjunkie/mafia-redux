@@ -74,8 +74,8 @@ function onSubmitBetter_button() {
     let button = $(this);
     let form = button.closest('form');
     let data = getDataOf(form);
-    let action = button.prop('formaction') ?? form.prop('action');
-    let method = button.prop('formmethod') ?? form.prop('method');
+    let action = button.attr('formaction') ?? form.prop('action');
+    let method = button.attr('formmethod') ?? form.prop('method');
     let error = form.find('.error');
     error.text();
     return $.ajax({
