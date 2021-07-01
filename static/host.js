@@ -64,8 +64,8 @@ function switchTo(action) {
 }
 
 $(_=>{
-    console.log(window.hasStarted_host);
-    if (window.hasStarted_host) return;
+    console.log(hasStarted_host);
+    if (hasStarted_host) return;
     hasStarted_host = true;
     beginAnimation();
 });

@@ -33,7 +33,7 @@ function navigateToIndex() {
             $('body').append(newdocument.find('body').children());
             hasStarted_index = false;
             $.ajax({
-                method: 'GET'
+                method: 'GET',
                 url: '/script.js',
                 dataType: 'script'
             });
@@ -62,7 +62,7 @@ function navigateToPlay() {
             $('body').append(newdocument.find('body').children());
             hasStarted_play = false;
             $.ajax({
-                method: 'GET'
+                method: 'GET',
                 url: '/play.js',
                 dataType: 'script'
             });
@@ -87,7 +87,7 @@ function navigateToHost() {
             history.pushState({}, newdocument.find('title').text(), '/host.html');
             $('body').append(newdocument.find('body').children());
             $.ajax({
-                method: 'GET'
+                method: 'GET',
                 url: '/host.js',
                 dataType: 'script'
             });
@@ -113,7 +113,7 @@ function navigateToLogin() {
             $('body').append(newdocument.find('body').children());
             hasStarted_host = false;
             $.ajax({
-                method: 'GET'
+                method: 'GET',
                 url: '/login.js',
                 dataType: 'script'
             });
