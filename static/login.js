@@ -85,9 +85,9 @@ function onSubmitBetter_button() {
     error.text();
     return $.ajax({
         cache: false,
-        contentType: 'text/plain; charset=UTF-8',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
         data: data,
-        dataType: 'application/x-www-form-urlencoded',
+        dataType: 'text',
         method: method,
         url: action
     }).done($data=>{
