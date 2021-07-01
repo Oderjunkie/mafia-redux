@@ -1,7 +1,7 @@
-let hasStarted_index = false;
-let hasStarted_login = false;
-let hasStarted_play = false;
-let hasStarted_host = false;
+var hasStarted_index = false;
+var hasStarted_login = false;
+var hasStarted_play = false;
+var hasStarted_host = false;
 
 window.onpopstate = function(event) {
     switch (location.pathname) {
