@@ -40,8 +40,9 @@ function navigateToIndex() {
             footerVisible(true);
             imageVisible(true);
             listitemsVisible(true);
-            hasStarted_host = false;
+            hasStarted_login = false;
             hasStarted_play = false;
+            hasStarted_host = false;
         }, 1000);
     });
 }
@@ -65,6 +66,7 @@ function navigateToPlay() {
                 url: '/play.js',
                 dataType: 'script'
             });
+            hasStarted_login = false;
             hasStarted_index = false;
             hasStarted_host = false;
         }, 1000);
@@ -89,7 +91,7 @@ function navigateToHost() {
                 url: '/host.js',
                 dataType: 'script'
             });
-            hasStarted_host = false;
+            hasStarted_login = false;
             hasStarted_index = false;
             hasStarted_play = false;
         }, 1000);
@@ -115,6 +117,7 @@ function navigateToLogin() {
                 url: '/login.js',
                 dataType: 'script'
             });
+            hasStarted_login = false;
             hasStarted_index = false;
             hasStarted_play = false;
         }, 1000);
