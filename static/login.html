@@ -36,7 +36,7 @@
         <script defer src='/jquery-3.6.0.min.js'></script>
         <script defer src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js' integrity='sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==' crossorigin='anonymous'></script>
         <script defer src='/global.js'></script>
-        <script defer src='/host.js'></script>
+        <script defer src='/login.js'></script>
     </head>
     <body>
         <form method='post'>
@@ -49,8 +49,8 @@
                 <label for='password'>Password:</label><br />
                 <input type='password' id='password' name='password' autocomplete='off'/>
             </section>
-            <input type='submit' value='Login' formaction='/api/register'/>
-            <input type='submit' value='Register' formaction='/api/login'/>
+            <input type='submit' value='Login' formaction='/api/login'/>
+            <input type='submit' value='Register' formaction='/api/register'/>
         </form>
     </body>
 </html>
