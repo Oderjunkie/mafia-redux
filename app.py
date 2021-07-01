@@ -195,10 +195,10 @@ sessions = {}
 
 @socketio.on('handshake')
 def connection(json):
-    if (json['usertoken'] not in cookie2userid) or cookie2userid[json['usertoken']]!=json['userid']:
+    if json['usertoken'] not in cookie2userid:
         raise ConnectionRefusedError('can\'t use a cookie to save their lives')
     join_room(json['roomId'])
-    userid = json['userId']
+    userid = cookie2userid[json['usertoken']]
     socketio.emit('userJoin', {'id': userid})
     sessions[request.sid] = userid
     print(request.sid, 'resolved to', userid)
