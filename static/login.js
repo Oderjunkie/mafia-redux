@@ -25,10 +25,10 @@ function beginAnimation() {
         console.log(4);
     }, 600);
     setTimeout(()=>{
-        $('form').width(')
+        $('form').width('')
                  .height('');
         console.log(!);
-    }, 600);
+    }, 800);
 }
 
 function endAnimation() {
