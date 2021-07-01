@@ -54,6 +54,7 @@ input[type="checkbox"][checked] {
 }
 
 input[type="text"] {
+    min-height: 34px;
     background-color: #222025;
     border: 1px solid #344444;
     color: currentColor;
@@ -66,7 +67,7 @@ input[type="text"] {
 
 input[type="text"]:focus {
     outline: none;
-    border: 1px solid #0083ff;
+    border: 1px solid #ff5722;
 }
 
 input[type="submit"] {
