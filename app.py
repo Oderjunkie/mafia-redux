@@ -64,7 +64,6 @@ def play():
 @app.route('/game/<string:roomid>')
 def getgame(roomid=''):
     print(request.cookies.get('usertoken'))
-    print(session['usertoken'])
     return render_template('specificgame.html')
 
 @app.route('/script.js')
@@ -138,8 +137,9 @@ def registerapi():
     })
     usertoken = randString(30)
     cookie2userid[usertoken] = user['userid']
-    session['usertoken'] = usertoken
-    return '/index.html', 200
+    resp = make_response('/index.html', 200)
+    resp.set_cookie('usertoken', value=usertoken)
+    return resp
 
 @app.route('/api/login', methods=['POST'])
 def loginapi():
@@ -152,8 +152,9 @@ def loginapi():
             if bcrypt.checkpw(password.encode('latin-1'), user['userhash']):
                 usertoken = randString(30)
                 cookie2userid[usertoken] = user['userid']
-                session['usertoken'] = usertoken
-                return '/index.html', 200
+                resp = make_response('/index.html', 200)
+                resp.set_cookie('usertoken', value=usertoken)
+                return resp
             return 'Bad password.', 401
     except Exception as e:
         print(type(e), e)

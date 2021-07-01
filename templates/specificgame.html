@@ -28,7 +28,7 @@
         <meta name='description' content='Join a game of heavily customized mafia!' />
         <meta name='keywords' content='mafia,online gaming,game' />
         <meta name='robots' content='noindex,nofollow' />
-        <meta name='session' content='{{ session.usertoken }}' />
+        <meta name='session' content='{{ request.cookies.get('usertoken') }}' />
         <link rel='shortcut icon' type='image/x-icon' href='https://via.placeholder.com/32x32.ico'>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
