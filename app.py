@@ -209,16 +209,18 @@ def connection():
 
 @socketio.on('disconnect')
 def disconnect():
-    print(sessions[request.sid], 'has left')
+    name = client.mafiaredux.users.find_one({'userid': sessions[request.sid]}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
+    print(name, 'has left')
 
 @socketio.on('chat')
 def chat(message):
     print(sessions[request.sid], 'says', repr(message))
     room = rooms(request.sid)
+    name = client.mafiaredux.users.find_one({'userid': sessions[request.sid]}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
     socketio.emit('chat', {
         'timestamp': time(),
         'message': message,
-        'from': str(sessions[request.sid])
+        'from': name
     }, to=room)
 
 # Favicon
