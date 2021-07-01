@@ -139,6 +139,7 @@ def registerapi():
 def loginapi():
     username = request.form.get('username')
     password = request.form.get('password')
+    print('LOGIN', username, password)
     try:
         user = client.mafiaredux.users.find_one({'username': username}, {'username': 0, '_id': 0})
         if user:
