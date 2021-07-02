@@ -237,7 +237,8 @@ def connection():
 
 @socketio.on('disconnect')
 def disconnect():
-    name = client.mafiaredux.users.find_one({'userid': sessions[request.sid]}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
+    userid = sessions[request.sid]
+    name = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
     socketio.emit('userExit', {
         'id': userid,
         'name': name,
