@@ -3,7 +3,7 @@ $(()=>{
 $.ajax({
     url: '/api/rooms',
     dataType: 'json'
-}),done($data=>{
+}).done($data=>{
     $('body').append(
         ...$data.map(e=>
             $('<form></form>').prop('action', `/game/${e.roomid}`)
