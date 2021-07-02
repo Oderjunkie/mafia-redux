@@ -54,11 +54,11 @@ client = pymongo.MongoClient(os.environ['MONGODB'])
 # Index page + scripts
 #######################
 
-@app.route('/')
-def index():
-    return app.send_static_file('under_renovation.html')
+#@app.route('/')
+#def index():
+#    return app.send_static_file('under_renovation.html')
 
-@app.route('/index.html')
+@app.route('/')
 def index2():
     return app.send_static_file('index.html')
 
