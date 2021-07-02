@@ -5,8 +5,8 @@ $.ajax({
     dataType: 'json'
 }),done($data=>{
     $('body').append(
-        ...data.map(e=>
-            return $('<form></form>').prop('action', `/game/${e.roomid}`)
+        ...$data.map(e=>
+            $('<form></form>').prop('action', `/game/${e.roomid}`)
                               .append(
                 $('<name></name>').append(
                     e.name
