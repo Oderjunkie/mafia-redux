@@ -1,13 +1,15 @@
 body {
     display: flex !important;
     font-family: 'Titillium Web', sans-serif;
+    margin-top: 10px;
+    background-color: #232221;
 }
 
 form {
     display: flex;
     padding: 10px;
     color: white;
-    background-color: #414141;
+    background-color: #2b2d2d;
     border: 1px solid #555;
 }
 
