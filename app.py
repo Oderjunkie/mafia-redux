@@ -47,7 +47,7 @@ app.config['SECRET_KEY'] = randString(100)
 socketio = SocketIO(app)
 #client = pymongo.MongoClient(os.environ['MONGODB'])
 client = pymongo.MongoClient(os.environ['MONGODB'])
-cookie2userid = {}
+#cookie2userid = {}
 
 #mongo = PyMongo(app)
 
@@ -149,7 +149,10 @@ def registerapi():
         'userhash': userhash
     })
     usertoken = randString(30)
-    cookie2userid[usertoken] = userid
+    client.mafiaredux.cookies.insert_one({
+        'token': usertoken,
+        'id': userid
+    })
     resp = make_response('/index.html', 200)
     resp.set_cookie('usertoken', value=usertoken)
     return resp
@@ -164,7 +167,10 @@ def loginapi():
         if user:
             if bcrypt.checkpw(password.encode('latin-1'), user['userhash']):
                 usertoken = randString(30)
-                cookie2userid[usertoken] = user['userid']
+                client.mafiaredux.cookies.insert_one({
+                    'token': usertoken,
+                    'id': user['userid']
+                })
                 resp = make_response('/index.html', 200)
                 resp.set_cookie('usertoken', value=usertoken)
                 return resp
@@ -204,11 +210,11 @@ sessions = {}
 
 @socketio.on('handshake')
 def connection(json):
-    if json['usertoken'] not in cookie2userid:
+    if not client.mafiaredux.cookies.count_documents({'token': json['usertoken']}):
         raise ConnectionRefusedError('can\'t use a cookie to save their lives')
     room = json['roomId']
     join_room(room)
-    userid = cookie2userid[json['usertoken']]
+    userid = client.mafiaredux.cookies.find_one({'token': json['usertoken']}, {'token': 0, '_id': 0})['id']
     sessions[request.sid] = userid
     name = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
     socketio.emit('userJoin', {
