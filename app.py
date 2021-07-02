@@ -217,11 +217,6 @@ def connection(json):
     userid = client.mafiaredux.cookies.find_one({'token': json['usertoken']}, {'token': 0, '_id': 0})['id']
     sessions[request.sid] = userid
     name = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
-    socketio.emit('userJoin', {
-        'id': userid,
-        'name': name,
-        'timestamp': time()
-    }, to=room)
     print(request.sid, 'resolved to', name, 'at', room)
     try:
         events = client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})['events']
@@ -230,6 +225,11 @@ def connection(json):
             socketio.emit(*event, to=request.sid)
     except Exception as e:
         errorHandle(e)
+    socketio.emit('userJoin', {
+        'id': userid,
+        'name': name,
+        'timestamp': time()
+    }, to=room)
 
 @socketio.on('connect')
 def connection():

@@ -1,0 +1,27 @@
+body {
+    display: flex !important;
+}
+
+form {
+    display: block;
+    padding: 20px;
+}
+
+input[type="submit"] {
+    background-color: #ff5722;
+    border: #222025;
+    /*border-radius: 5px;*/
+    box-shadow: inset 0px 0px 0px 3px #ffffff33;
+    color: #e5e3e7;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 4px 14px;
+    min-height: 34px;
+    transition: background-color 0.2s ease;
+    float: right;
+}
+
+input[type="submit"]:hover {
+    background-color: #f44336;
+    border: #222025;
+}
