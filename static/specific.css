@@ -26,9 +26,18 @@ body {
         'input setup';
 }
 
-message {
+message, system, internal {
     display: block;
     padding: 3px 7px;
+}
+
+system {
+    color: #cddc39;
+    font-weight: bold;
+}
+
+internal {
+    color: #9E9E9E;
 }
 
 time {
@@ -36,6 +45,7 @@ time {
     color: #444650;
     vertical-align: middle;
     font-size: x-small;
+    font-weight: normal;
 }
 
 name {
@@ -43,6 +53,11 @@ name {
     display: inline;
     margin-right: 7px;
     font-weight: bold;
+}
+
+internal name {
+    margin-right: 2px;
+    color: #E91E63;
 }
 
 /*.players, */.setup, .chat, .input {

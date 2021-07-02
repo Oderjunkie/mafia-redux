@@ -42,6 +42,47 @@ $(_=>{
             )
         );
     });
+    socket.on('system', msg=>{
+        let date = new Date(msg.timestamp*1000);
+        $('.chat').append(
+            $('<system></system>').append(
+                $('<time></time>').append(
+                    `${date.getHours().toString().padStart(2, '0')}:`+
+                    `${date.getMinutes().toString().padStart(2, '0')}:`+
+                    `${date.getSeconds().toString().padStart(2, '0')}`
+                ),
+                msg.message
+            )
+        );
+    });
+    socket.on('userJoin', msg=>{
+        let date = new Date(msg.timestamp*1000);
+        $('.chat').append(
+            $('<internal></internal>').append(
+                $('<time></time>').append(
+                    `${date.getHours().toString().padStart(2, '0')}:`+
+                    `${date.getMinutes().toString().padStart(2, '0')}:`+
+                    `${date.getSeconds().toString().padStart(2, '0')}`
+                ),
+                $('<name></name>').append(msg.name),
+                'has joined.'
+            )
+        );
+    });
+    socket.on('userExit', msg=>{
+        let date = new Date(msg.timestamp*1000);
+        $('.chat').append(
+            $('<internal></internal>').append(
+                $('<time></time>').append(
+                    `${date.getHours().toString().padStart(2, '0')}:`+
+                    `${date.getMinutes().toString().padStart(2, '0')}:`+
+                    `${date.getSeconds().toString().padStart(2, '0')}`
+                ),
+                $('<name></name>').append(msg.name),
+                'has exited.'
+            )
+        );
+    });
 });
 
 /*
