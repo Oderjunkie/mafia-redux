@@ -1,0 +1,94 @@
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: #232221;
+    color: #E2EFF4;
+    margin: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+form {
+    display: none;
+    border: 1px solid white;
+    transition: width 0.2s linear 0.2s, height 0.2s linear 0s, padding 0.2s linear 0s;
+    padding: 15px;
+    overflow: hidden;
+    background-color: #2b2d2d;
+}
+
+form section + section {
+    margin-top: 15px;
+}
+
+flex {
+    display: flex;
+}
+
+space {
+    display: block;
+    width: 15px;
+    height: 1px;
+}
+
+label {
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+input[type="checkbox"][checked] {
+    filter: hue-rotate(165deg);
+}
+
+input[type="text"], input[type="password"] {
+    min-height: 34px;
+    background-color: #222025;
+    border: 1px solid #344444;
+    color: currentColor;
+    border-radius: 5px;
+    line-height: 1;
+    padding: 0 7px;
+    vertical-align: middle;
+    flex-grow: 1;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+    outline: none;
+    border: 1px solid #ff5722;
+}
+
+input[type="submit"] {
+    background-color: #ff5722;
+    border: #222025;
+    /*border-radius: 5px;*/
+    box-shadow: inset 0px 0px 0px 3px #ffffff33;
+    color: #e5e3e7;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 4px 14px;
+    min-height: 34px;
+    transition: background-color 0.2s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #f44336;
+    border: #222025;
+}
+
+.error {
+    background-color: #ff0000;
+    padding: 20px;
+}

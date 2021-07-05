@@ -1,0 +1,41 @@
+body {
+    display: flex !important;
+    font-family: 'Titillium Web', sans-serif;
+    margin-top: 10px;
+    background-color: #232221;
+    flex-direction: column;
+}
+
+form {
+    display: flex;
+    padding: 10px;
+    color: white;
+    background-color: #2b2d2d;
+    border: 1px solid #555;
+}
+
+form + form {
+    margin-top: 10px;
+}
+
+form name {
+    align-items: center;
+    flex-grow: 1;
+}
+
+input[type="submit"] {
+    background-color: #ff5722;
+    border: #222025;
+    box-shadow: inset 0px 0px 0px 3px #ffffff33;
+    color: #e5e3e7;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 4px 14px;
+    min-height: 34px;
+    transition: background-color 0.2s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #f44336;
+    border: #222025;
+}

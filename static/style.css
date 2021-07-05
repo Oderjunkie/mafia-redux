@@ -1,0 +1,117 @@
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    display: flex !important;
+    flex-direction: column;
+    background-color: black;
+    color: white;
+    margin: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+aside {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    transition: margin-top 1s cubic-bezier(0.57, -0.59, 0.45, 1.53) 0s;
+}
+
+aside img {
+    transition: transform 1s cubic-bezier(0.57, -0.59, 0.45, 1.53) 0s;
+    transform: translateY(0%);
+    aspect-ratio: 7/3;
+    max-width: 700px;
+    min-width: 0;
+}
+
+ul {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    flex-grow: 999;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+    list-style-type: none;
+    padding-inline-start: 0;
+    user-select: none;
+}
+
+li:before {
+    background-color: blue;
+}
+
+li {
+    padding-left: 20%;
+    background-color: #96c820;
+    display: inline-flex;
+    align-items: center;
+    transition: padding-left 1s cubic-bezier(0, 0, 0.45, 1.53);
+    cursor: pointer;
+}
+
+li:hover {
+    background-color: #cce423;
+    padding-left: 30%;
+}
+
+li:hover:after {
+    border-left-color: #cce423;
+}
+
+li span {
+    display: inline;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 15px;
+}
+
+li:after {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 20px solid #000;
+    border-bottom: 20px solid #000;
+    border-left: 20px solid #96c820;
+}
+
+footer {
+    background-color: #161418;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    user-select: none;
+    transition: transform 1s cubic-bezier(.56,-0.73,.47,1.58);
+    font-family: Roboto, times, "Helvetica Neue", helvetica, arial, sans-serif;
+    text-transform: uppercase;
+    font-size: 13px;
+    padding-bottom: 20px;
+}
+
+body[nofooter] footer {
+    transform: translateY(100%);
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    height: 100%
+}
+
+figure {
+    margin-block-end: 0;
+    margin-block-start: 0;
+    height: 100%;
+}
