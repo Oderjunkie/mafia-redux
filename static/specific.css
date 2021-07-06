@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Disposable Droid BB';
+    src: url('/ddroid.ttf') font('ttf')
+}
+
 html {
     width: 100%;
     height: 100%;
@@ -81,7 +86,7 @@ h1 {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
-    font-family: 'Determination Mono', sans-serif;
+    font-family: /*'Determination Mono', */'Disposable Droid BB', sans-serif;
     align-items: center;
     justify-content: flex-start;
 }
@@ -116,6 +121,10 @@ h1 {
     margin-left: 7px;
 }
 
+.details form input[type="submit"] {
+    width: 100%;
+    padding: 7px;
+}
 
 input[type="text"] {
     background-color: #150c09;
