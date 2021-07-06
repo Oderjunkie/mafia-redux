@@ -135,15 +135,15 @@ def j360map():
 
 @app.route('/ddroid.ttf')
 def ddroidttf():
-    return app.send_static_file('disposabledroid/disposabledroidbb.ttf')
+    return app.send_static_file('disposabledroidbb.ttf')
 
 @app.route('/ddroid.woff')
 def ddroidwoff():
-    return app.send_static_file('disposabledroid/disposabledroidbb.woff')
+    return app.send_static_file('disposabledroidbb.woff')
 
 @app.route('/ddroid.woff2')
 def ddroidwoff2():
-    return app.send_static_file('disposabledroid/disposabledroidbb.woff2')
+    return app.send_static_file('disposabledroidbb.woff2')
 
 @app.route('/robots.txt')
 def robots():
