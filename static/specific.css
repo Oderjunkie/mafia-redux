@@ -60,7 +60,12 @@ internal name {
     color: #E91E63;
 }
 
-/*.players, */.setup, .chat, .input {
+h1 {
+    font-size: 3rem;
+    font-weight: normal;
+}
+
+/*.players, */.details, .chat, .input {
     transition: transform 1s cubic-bezier(0.75, 0, 0.25, 1);
 }
 
@@ -69,10 +74,19 @@ internal name {
     background-color: #2c2a31;
     border-right: 1px solid #161418;
 }*/
-.setup {
+.details {
     grid-area: setup;
     background-color: #2c2a31;
     border-left: 1px solid #161418;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    font-family: 'Determination Mono', sans-serif;
+    align-items: center;
+    justify-content: flex-start;
+}
+.details *:last-child {
+    margin-top: auto
 }
 .chat {
     grid-area: chat;
@@ -94,7 +108,7 @@ internal name {
 }
 
 .players[off] { transform: translateX(-100%) }
-.setup[off]   { transform: translateX(100%) }
+.details[off]   { transform: translateX(100%) }
 .chat[off]    { transform: translateY(-100%) }
 .input[off] { transform: translateY(100%) }
 
