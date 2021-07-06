@@ -1,16 +1,9 @@
 @font-face {
     font-family: "Disposable Droid BB";
-    src: url(ddroid.woff) font("woff"),
-         url(ddroid.woff2) font("woff2"),
-         url(ddroid.ttf) font("truetype");
+    src: url(ddroid.woff) format("woff"),
+         url(ddroid.woff2) format("woff2"),
+         url(ddroid.ttf) format("truetype");
 }
-
-/*@font-face {
-    font-family: "Disposable Droid BB";
-    src: url("/ddroid.ttf") font("truetype"),
-         url("/ddroid.woff") font("woff"),
-         url("/ddroid.woff2") font("woff2");
-}*/
 
 html {
     width: 100%;
@@ -31,11 +24,9 @@ body {
     font-family: 'Titillium Web', sans-serif;
     font-size: 14px;
     line-height: 13px;
-    grid-template-columns: /*14rem*/ auto 16rem;
+    grid-template-columns: auto 16rem;
     grid-template-rows: auto 2.7rem;
     grid-template-areas:
-        /*'players chat setup'
-        'players input setup'*/
         'chat setup'
         'input setup';
 }
@@ -48,6 +39,7 @@ message, system, internal {
 system {
     color: #cddc39;
     font-weight: bold;
+
 }
 
 internal {
@@ -79,15 +71,10 @@ h1 {
     font-weight: normal;
 }
 
-/*.players, */.details, .chat, .input {
+.details, .chat, .input {
     transition: transform 1s cubic-bezier(0.75, 0, 0.25, 1);
 }
 
-/*.players {
-    grid-area: players;
-    background-color: #2c2a31;
-    border-right: 1px solid #161418;
-}*/
 .details {
     grid-area: setup;
     background-color: #2c2a31;
@@ -99,15 +86,18 @@ h1 {
     align-items: center;
     justify-content: flex-start;
 }
+
 .details *:last-child {
-    margin-top: auto
+    margin-top: auto;
 }
+
 .chat {
     grid-area: chat;
     background-color: #13141f;
     overflow-x: hidden;
     overflow-wrap: break-word;
 }
+
 .input {
     grid-area: input;
     background-color: #151515;
@@ -139,7 +129,6 @@ input[type="text"] {
     background-color: #150c09;
     border: 1px solid #344444;
     color: currentColor;
-    /*border-radius: 5px;*/
     line-height: 1;
     padding: 0 7px;
     vertical-align: middle;
@@ -162,7 +151,6 @@ input[type="submit"][disabled] {
 input[type="submit"] {
     background-color: #ff5722;
     border: #222025;
-    /*border-radius: 5px;*/
     box-shadow: inset 0px 0px 0px 3px #ffffff33;
     color: #e5e3e7;
     cursor: pointer;
