@@ -1,9 +1,16 @@
 @font-face {
     font-family: "Disposable Droid BB";
+    src: url("https://mafia-redux.herokuapp.com/ddroid.ttf") font("truetype"),
+         url("https://mafia-redux.herokuapp.com/ddroid.woff") font("woff"),
+         url("https://mafia-redux.herokuapp.com/ddroid.woff2") font("woff2");
+}
+
+/*@font-face {
+    font-family: "Disposable Droid BB";
     src: url("/ddroid.ttf") font("truetype"),
          url("/ddroid.woff") font("woff"),
          url("/ddroid.woff2") font("woff2");
-}
+}*/
 
 html {
     width: 100%;
