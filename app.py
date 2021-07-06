@@ -30,6 +30,12 @@ def randChar(index=None) -> str:
 def randString(length: int) -> str:
     return ''.join(map(randChar, range(length)))
 
+def addto(ns, name):
+    def internal(func):
+        setattr(ns, name, func)
+        return None
+    return internal
+
 class ReverseProxied(object):
     def __init__(self, app):
         self.app = app
@@ -324,7 +330,7 @@ class mafIO:
         return type(role).__name__
     def makearr(self, *els):
         return els
-    def makedict(self, *kvs)
+    def makedict(self, *kvs):
         return dict(zip(kvs[::2], kvs[1::2]))
     def add(self, a, b):
         return a + b
@@ -356,12 +362,6 @@ class mafIO:
         return a>=b
     def lte(self, a, b):
         return a<=b
-    def and(self, a, b):
-        return a and b
-    def or(self, a, b):
-        return a or b
-    def not(self, a):
-        return not a
     def set(self, var, val):
         self.vars[var] = val
     def get(self, var, val):
@@ -396,8 +396,18 @@ class mafIO:
         pass
     def apply(self, func, *args):
         return func(*args)
-    def return(self, val):
-        return val
+@addto(mafIO, 'and')
+def _(self, a, b):
+    return a and b
+@addto(mafIO, 'or')
+def _(self, a, b):
+    return a or b
+@addto(mafIO, 'not')
+def _(self, a):
+    return not a
+@addto(mafIO, 'val')
+def _(self, val):
+    return val
 
 # Favicon
 ##########
