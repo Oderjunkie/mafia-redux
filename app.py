@@ -134,8 +134,16 @@ def j360map():
     return app.send_static_file('jquery-3.6.0.min.map')
 
 @app.route('/ddroid.ttf')
-def ddroid():
-    return app.send_static_file('disposabledroid/DisposableDroidBB.ttf')
+def ddroidttf():
+    return app.send_static_file('disposabledroid/disposabledroidbb.ttf')
+
+@app.route('/ddroid.woff')
+def ddroidwoff():
+    return app.send_static_file('disposabledroid/disposabledroidbb.woff')
+
+@app.route('/ddroid.woff2')
+def ddroidwoff2():
+    return app.send_static_file('disposabledroid/disposabledroidbb.woff2')
 
 @app.route('/robots.txt')
 def robots():
