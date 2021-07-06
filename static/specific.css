@@ -95,7 +95,7 @@ h1 {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
-    font-family: /*'Determination Mono', */'Disposable Droid BB', sans-serif;
+    font-family: 'Disposable Droid BB', sans-serif;
     align-items: center;
     justify-content: flex-start;
 }
