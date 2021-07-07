@@ -52,9 +52,8 @@ def disconnect():
 
 @socketio.on('chat')
 def chat(message):
-    global stdlibs
     room = rooms(request.sid)
-    stdlibs = stdlibs[room[-1]]
+    stdlib = stdlibs[room[-1]]
     print(sessions)
     userid = sessions[request.sid]
     name = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']

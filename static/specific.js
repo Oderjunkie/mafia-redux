@@ -9,7 +9,7 @@ const checkforsubmission = e=>{
         button.attr('disabled', '');
 };
 
-const convertTimeToElement = date=>{
+const convertTimeToElement = msg=>{
     let date = new Date(msg.timestamp*1000);
     $('<time></time>').append(
         `${date.getHours().toString().padStart(2, '0')}:`+
