@@ -6,7 +6,7 @@ from flask import Flask
 import pymongo
 import os
 
-app = Flask('__main__')
+app = Flask('app')
 app.wsgi_app = ReverseProxied(app.wsgi_app)
 app.config['SECRET_KEY'] = randString(100)
 socketio = SocketIO(app)
