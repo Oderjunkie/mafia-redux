@@ -40,6 +40,10 @@ def loginjs():
     return app.send_static_file('javascript/login.js')
 
 @app.route('/global.js')
+def globaljs():
+    return app.send_static_file('javascript/global.js')
+
+@app.route('/style.js')
 def style():
     return app.send_static_file('sass/style.scss')
 
