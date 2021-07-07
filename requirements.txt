@@ -16,7 +16,6 @@ gevent==21.1.2
 gevent-websocket==0.10.1
 
 bcrypt==3.2.0
-six>=1.4.1
 cffi>=1.1
 pycparser==2.20
 
