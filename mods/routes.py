@@ -4,19 +4,19 @@ from mods.setupflask import app
 @app.route('/')
 @app.route('/index.html')
 def index():
-    return app.send_static_file('index.html')
+    return app.send_static_file('html/index.html')
 
 @app.route('/login.html')
 def login():
-    return app.send_static_file('login.html')
+    return app.send_static_file('html/login.html')
 
 @app.route('/host.html')
 def host():
-    return app.send_static_file('host.html')
+    return app.send_static_file('html/host.html')
 
 @app.route('/play.html')
 def play():
-    return app.send_static_file('play.html')
+    return app.send_static_file('html/play.html')
 
 @app.route('/game/<string:roomid>')
 def getgame(roomid: str):
@@ -25,63 +25,55 @@ def getgame(roomid: str):
 
 @app.route('/script.js')
 def script():
-    return app.send_static_file('script.js')
+    return app.send_static_file('javascript/script.js')
 
 @app.route('/play.js')
 def playjs():
-    return app.send_static_file('play.js')
+    return app.send_static_file('javascript/play.js')
 
 @app.route('/host.js')
 def hostjs():
-    return app.send_static_file('host.js')
+    return app.send_static_file('javascript/host.js')
 
 @app.route('/login.js')
 def loginjs():
-    return app.send_static_file('login.js')
+    return app.send_static_file('javascript/login.js')
 
 @app.route('/global.js')
-def globaljs():
-    return app.send_static_file('global.js')
-
-@app.route('/specific.js')
-def specjs():
-    return app.send_static_file('specific.js')
-
-@app.route('/style.css')
 def style():
-    return app.send_static_file('style.css')
+    return app.send_static_file('sass/style.scss')
 
 @app.route('/host.css')
 def hostcss():
-    return app.send_static_file('host.css')
+    return app.send_static_file('sass/host.scss')
 
 @app.route('/play.css')
 def playcss():
-    return app.send_static_file('play.css')
+    return app.send_static_file('sass/play.scss')
 
 @app.route('/specific.css')
 def speccss():
-    return app.send_static_file('specific.css')
+    return app.send_static_file('sass/specific.scss')
 
 @app.route('/jquery-3.6.0.min.js')
 def j360js():
-    return app.send_static_file('jquery-3.6.0.min.js')
+    return app.send_static_file('libs/jquery-3.6.0.min.js')
 
 @app.route('/jquery-3.6.0.min.map')
 def j360map():
-    return app.send_static_file('jquery-3.6.0.min.map')
+    return app.send_static_file('libs/jquery-3.6.0.min.map')
 
 @app.route('/ddroid.ttf')
 def ddroidttf():
-    return app.send_static_file('disposabledroidbb.ttf')
+    return app.send_static_file('font/disposabledroidbb.ttf')
 
 @app.route('/ddroid.woff')
 def ddroidwoff():
-    return app.send_static_file('disposabledroidbb.woff')
+    return app.send_static_file('font/disposabledroidbb.woff')
 
 @app.route('/ddroid.woff2')
 def ddroidwoff2():
-    return app.send_static_file('disposabledroidbb.woff2')
+    return app.send_static_file('font/disposabledroidbb.woff2')
 
 @app.route('/robots.txt')
 def robots():
