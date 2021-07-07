@@ -47,7 +47,6 @@ def disconnect():
         'name': name,
         'timestamp': time()
     }, to=room)
-    print('NOooooo', usersinrooms, room, request.sid)
     usersinrooms[room[-1]].remove(request.sid)
     print(name, 'has left')
 
