@@ -48,7 +48,7 @@ def disconnect():
         'timestamp': time()
     }, to=room)
     print('NOooooo', usersinrooms, room, request.sid)
-    usersinrooms[room[-1]].pop(request.sid)
+    usersinrooms[room[-1]].remove(request.sid)
     print(name, 'has left')
 
 @socketio.on('chat')
