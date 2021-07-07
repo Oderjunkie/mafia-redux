@@ -1,4 +1,4 @@
-from setupflask import client, sessions, usersinrooms
+from mods.setupflask import client, sessions, usersinrooms
 from utilities import addto
 from time import time
 

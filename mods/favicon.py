@@ -1,4 +1,4 @@
-from setupflask import app
+from mods.setupflask import app
 
 @app.route('/android-chrome-192x192.png')
 def a192():

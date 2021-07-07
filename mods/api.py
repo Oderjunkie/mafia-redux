@@ -1,6 +1,6 @@
 from flask import request, make_response, jsonify, redirect
-from utilities import randString, errorHandle
-from setupflask import app, client
+from mods.utilities import randString, errorHandle
+from mods.setupflask import app, client
 import bcrypt
 
 # Log in

@@ -1,5 +1,5 @@
 from flask import request, render_template
-from setupflask import app
+from mods.setupflask import app
 
 @app.route('/')
 @app.route('/index.html')
@@ -90,4 +90,4 @@ def robots():
 # Favicon
 ##########
 
-import favicon
+import mods.favicon
