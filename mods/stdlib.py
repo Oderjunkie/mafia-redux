@@ -1,5 +1,5 @@
 from mods.setupflask import client, sessions, usersinrooms
-from utilities import addto
+from mods.utilities import addto
 from time import time
 
 class mafstdlib:
