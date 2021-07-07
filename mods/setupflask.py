@@ -1,5 +1,3 @@
-print(f'{__name__}.py Loaded')
-
 from mods.utilities import randString, ReverseProxied
 from flask_socketio import SocketIO
 from flask import Flask

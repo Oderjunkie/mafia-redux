@@ -1,5 +1,3 @@
-print(f'{__name__}.py Loaded')
-
 from mods.setupflask import client, sessions, usersinrooms
 from mods.utilities import addto
 from time import time

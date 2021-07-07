@@ -1,9 +1,5 @@
-print(f'{__name__}.py Loaded')
-
 from flask import request, render_template
 from mods.setupflask import app
-
-print(f'BEFORE {__name__} URL_MAP: {app.url_map}')
 
 @app.route('/')
 @app.route('/index.html')
@@ -95,5 +91,3 @@ def robots():
 ##########
 
 import mods.favicon
-
-print(f'AFTER {__name__} URL_MAP: {app.url_map}')
