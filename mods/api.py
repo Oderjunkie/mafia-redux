@@ -5,6 +5,8 @@ from mods.utilities import randString, errorHandle
 from mods.setupflask import app, client
 import bcrypt
 
+print(f'BEFORE {__name__} URL_MAP: {app.url_map}')
+
 # Log in
 #########
 
@@ -71,3 +73,5 @@ def makeroomapi():
         'listed': listed=='on'
     })
     return redirect('/game/'+roomid)
+
+print(f'AFTER {__name__} URL_MAP: {app.url_map}')

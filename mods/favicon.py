@@ -2,6 +2,8 @@ print(f'{__name__}.py Loaded')
 
 from mods.setupflask import app
 
+print(f'BEFORE {__name__} URL_MAP: {app.url_map}')
+
 @app.route('/android-chrome-192x192.png')
 def a192():
     return app.send_static_file('android-chrome-192x192.png')
@@ -25,3 +27,5 @@ def fico():
 @app.route('/site.webmanifest')
 def manif():
     return app.send_static_file('site.webmanifest')
+
+print(f'AFTER {__name__} URL_MAP: {app.url_map}')
