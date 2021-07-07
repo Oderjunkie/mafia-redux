@@ -50,7 +50,7 @@ $(_=>{
     socket.on('chat', msg=>{
         addToChat(
             $('<message></message>').append(
-                convertTimeToElement(date),
+                convertTimeToElement(msg),
                 $('<name></name>').append(msg.from),
                 msg.message
             )
