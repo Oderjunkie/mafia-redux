@@ -1,6 +1,11 @@
 from flask import request, render_template
 from mods.setupflask import app
 
+def send_sass(name: str):
+    res = app.send_static_file('sass/'+name)
+    res.mimetype = 'text/css'
+    return res
+
 @app.route('/')
 @app.route('/index.html')
 def index():
@@ -45,19 +50,19 @@ def globaljs():
 
 @app.route('/style.js')
 def style():
-    return app.send_static_file('sass/style.scss')
+    return send_sass('style.scss')
 
 @app.route('/host.css')
 def hostcss():
-    return app.send_static_file('sass/host.scss')
+    return send_sass('host.scss')
 
 @app.route('/play.css')
 def playcss():
-    return app.send_static_file('sass/play.scss')
+    return send_sass('play.scss')
 
 @app.route('/specific.css')
 def speccss():
-    return app.send_static_file('sass/specific.scss')
+    return send_sass('specific.scss')
 
 @app.route('/jquery-3.6.0.min.js')
 def j360js():
