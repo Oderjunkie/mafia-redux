@@ -48,7 +48,7 @@ def loginjs():
 def globaljs():
     return app.send_static_file('javascript/global.js')
 
-@app.route('/style.js')
+@app.route('/style.css')
 def style():
     return send_sass('style.scss')
 
