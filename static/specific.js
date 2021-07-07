@@ -1,4 +1,4 @@
-let roomid, socket, button, textbox, form;
+let roomid, socket, button, textbox, form, chat;
 
 const checkforsubmission = e=>{
     let disabled = button.attr('disabled');
@@ -7,7 +7,16 @@ const checkforsubmission = e=>{
         button.removeAttr('disabled');
     else if (!text && !disabled)
         button.attr('disabled', '');
-}
+};
+
+const convertTimeToElement = date=>{
+    let date = new Date(msg.timestamp*1000);
+    $('<time></time>').append(
+        `${date.getHours().toString().padStart(2, '0')}:`+
+        `${date.getMinutes().toString().padStart(2, '0')}:`+
+        `${date.getSeconds().toString().padStart(2, '0')}`
+    );
+};
 
 $(_=>{
     roomid = location.pathname.split('/')[2];
@@ -24,67 +33,53 @@ $(_=>{
         checkforsubmission();
         return false;
     });
+    let chat = $('.chat');
     socket = io();
     socket.on('connect', ()=>{
         socket.emit('handshake', {'roomId': roomid, 'usertoken': $('meta[name="session"]').attr('content')});
     });
+    const addToChat = el=>{
+        let chatobj = chat[0];
+        let max = chatobj.scrollHeight - chatobj.offsetHeight
+        let old = chat.append(el).scrollTop();
+        if (old == max) {
+            let newmax = chatobj.scrollHeight - chatobj.offsetHeight
+            chat.scrollTop(newmax);
+        }
+    }
     socket.on('chat', msg=>{
-        let date = new Date(msg.timestamp*1000);
-        $('.chat').append(
+        addToChat(
             $('<message></message>').append(
-                $('<time></time>').append(
-                    `${date.getHours().toString().padStart(2, '0')}:`+
-                    `${date.getMinutes().toString().padStart(2, '0')}:`+
-                    `${date.getSeconds().toString().padStart(2, '0')}`
-                ),
+                convertTimeToElement(date),
                 $('<name></name>').append(msg.from),
                 msg.message
             )
         );
     });
     socket.on('system', msg=>{
-        let date = new Date(msg.timestamp*1000);
-        $('.chat').append(
+        addToChat(
             $('<system></system>').append(
-                $('<time></time>').append(
-                    `${date.getHours().toString().padStart(2, '0')}:`+
-                    `${date.getMinutes().toString().padStart(2, '0')}:`+
-                    `${date.getSeconds().toString().padStart(2, '0')}`
-                ),
+                convertTimeToElement(msg),
                 msg.message
             )
         );
     });
     socket.on('userJoin', msg=>{
-        let date = new Date(msg.timestamp*1000);
-        $('.chat').append(
+        addToChat(
             $('<internal></internal>').append(
-                $('<time></time>').append(
-                    `${date.getHours().toString().padStart(2, '0')}:`+
-                    `${date.getMinutes().toString().padStart(2, '0')}:`+
-                    `${date.getSeconds().toString().padStart(2, '0')}`
-                ),
+                convertTimeToElement(msg),
                 $('<name></name>').append(msg.name),
                 'has joined.'
             )
         );
     });
     socket.on('userExit', msg=>{
-        let date = new Date(msg.timestamp*1000);
-        $('.chat').append(
+        addToChat(
             $('<internal></internal>').append(
-                $('<time></time>').append(
-                    `${date.getHours().toString().padStart(2, '0')}:`+
-                    `${date.getMinutes().toString().padStart(2, '0')}:`+
-                    `${date.getSeconds().toString().padStart(2, '0')}`
-                ),
+                convertTimeToElement(msg),
                 $('<name></name>').append(msg.name),
                 'has exited.'
             )
         );
     });
 });
-
-/*
-
-*/
