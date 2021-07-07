@@ -1,3 +1,5 @@
+print(f'{__name__}.py Loaded')
+
 from flask import request, render_template
 from mods.setupflask import app
 

@@ -1,3 +1,5 @@
+print('app.py Loaded')
+
 from mods.setupflask import socketio, app # Flask and friends
 import mods.stdlib # I/O
 import mods.routes # Index page + scripts + favicon

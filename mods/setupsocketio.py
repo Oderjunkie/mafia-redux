@@ -1,3 +1,5 @@
+print(f'{__name__}.py Loaded')
+
 from flask_socketio import join_room, rooms, ConnectionRefusedError
 from mods.setupflask import socketio, client, usersinrooms, sessions, stdlibs
 from mods.utilities import errorHandle

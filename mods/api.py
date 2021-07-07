@@ -1,3 +1,5 @@
+print(f'{__name__}.py Loaded')
+
 from flask import request, make_response, jsonify, redirect
 from mods.utilities import randString, errorHandle
 from mods.setupflask import app, client

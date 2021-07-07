@@ -1,3 +1,5 @@
+print(f'{__name__}.py Loaded')
+
 from random import choice
 
 def errorHandle(e):

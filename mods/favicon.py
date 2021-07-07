@@ -1,3 +1,5 @@
+print(f'{__name__}.py Loaded')
+
 from mods.setupflask import app
 
 @app.route('/android-chrome-192x192.png')
