@@ -40,6 +40,10 @@ def script():
 def playjs():
     return app.send_static_file('javascript/play.js')
 
+@app.route('/specific.js')
+def specjs():
+    return app.send_static_file('javascript/specific.js')
+
 @app.route('/host.js')
 def hostjs():
     return app.send_static_file('javascript/host.js')
