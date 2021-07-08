@@ -5,7 +5,7 @@
         <meta charset='utf-8'>
         <meta name='viewport' content='width=device-width, user-scalable=no'>
         <meta property='og:title' content='{% block desc %}Join other people in a game of heavily customizable mafia!{% endblock %}' />
-        <meta property='og:description content='{% block desc %}Join other people in a game of heavily customizable mafia!{% endblock %}' />
+        <meta property='og:description content='{{ self.desc() }}' />
         <meta property='og:type' content='website' />
         <meta property='og:url' content='https://mafia-redux.herokuapp.com/' />
         <meta property='og:image:url' content='https://via.placeholder.com/128x128.png' />
@@ -16,16 +16,16 @@
         <meta property='og:image:alt' content='128x128' />
         <meta property='og:determiner' content='' />
         <meta property='og:locale' content='en_US' />
-        <meta property='og:site_name' content='{% block title %}Yet Another Mafia Redux{% endblock %}' />
-        <meta name='DC.Title' content='{% block title %}Yet Another Mafia Redux{% endblock %}' />
+        <meta property='og:site_name' content='{{ self.title() }}' />
+        <meta name='DC.Title' content='{{ self.title() }}' />
         <meta name='DC.Creator' content='Otesunki' />
         <meta name='DC.Subject' content='Mafia' />
-        <meta name='DC.Description' content='{% block desc %}Join other people in a game of heavily customizable mafia!{% endblock %}' />
+        <meta name='DC.Description' content='{{ self.desc() }}' />
         <meta name='DC.Format' content='text/html' />
         <meta name='DC.Language' content='en' />
         <meta name='twitter:card' content='summary' />
         <meta name='twitter:creator' content='@oderjunks' />
-        <meta name='description' content='{% block desc %}Join other people in a game of heavily customizable mafia!{% endblock %}' />
+        <meta name='description' content='{{ self.desc() }}' />
         <meta name='keywords' content='mafia,online gaming,game' />
         <meta name='robots' content='noindex,nofollow' />
         <meta name='session' content='{{ request.cookies.get('usertoken') }}' />
