@@ -9,24 +9,28 @@ def send_sass(name: str):
 @app.route('/')
 @app.route('/index.html')
 def index():
-    return app.send_static_file('html/index.html')
+    return render_template('index.html')
 
 @app.route('/login.html')
 def login():
-    return app.send_static_file('html/login.html')
+    return render_template('login.html')
 
 @app.route('/host.html')
 def host():
-    return app.send_static_file('html/host.html')
+    return render_template('host.html')
 
 @app.route('/play.html')
 def play():
-    return app.send_static_file('html/play.html')
+    return render_template('play.html')
 
 @app.route('/game/<string:roomid>')
 def getgame(roomid: str):
     print(request.cookies.get('usertoken'))
     return render_template('specificgame.html')
+
+@app.route('/renovation.js')
+def renovationjs():
+    return app.send_static_file('javascript/renovation.js')
 
 @app.route('/script.js')
 def script():
@@ -47,6 +51,10 @@ def loginjs():
 @app.route('/global.js')
 def globaljs():
     return app.send_static_file('javascript/global.js')
+
+@app.route('/renovation.css')
+def renovationcss():
+    return send_sass('renovation.scss')
 
 @app.route('/style.css')
 def style():

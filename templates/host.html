@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block js %}/host.js{% endblock %}
+{% block css %}/host.css{% endblock %}
+{% block body %}
+        <form action='/api/makeroom' method='post'>
+            <section>
+                <label for='roomname'>Room name:</label><br />
+                <flex>
+                    <input type='text' id='roomname' name='name' autocomplete='off'/>
+                    <space></space>
+                    <input type='submit' value='Create' />
+                </flex>
+            </section>
+            <section>
+                <input type='checkbox' id='listed' name='listed' checked/>
+                <label for='listed'>Listed?</label>
+            </section>
+        </form>
+{% endblock %}

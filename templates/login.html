@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block js %}/login.js{% endblock %}
+{% block css %}/host.css{% endblock %}
+{% block body %}
+        <form method='post'>
+            <div class='error'></div>
+            <section>
+                <label for='username'>Username:</label><br />
+                <input type='text' id='username' name='username' autocomplete='off'/>
+            </section>
+            <section>
+                <label for='password'>Password:</label><br />
+                <input type='password' id='password' name='password' autocomplete='off'/>
+            </section>
+            <input type='submit' value='Login' formaction='/api/login'/>
+            <input type='submit' value='Register' formaction='/api/register'/>
+        </form>
+{% endblock %}
