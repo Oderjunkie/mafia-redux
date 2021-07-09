@@ -63,8 +63,8 @@ app.add_url_rule('/graphql', view_func=GraphQLView.as_view(
     graphiql=True
 ))
 
-app.add_url_rule('/graphql/batch', view_func=GraphQLView.as_view(
-    'graphql',
-    schema=schema,
-    batch=True
-))
+# app.add_url_rule('/graphql/batch', view_func=GraphQLView.as_view(
+#     'graphql',
+#     schema=schema,
+#     batch=True
+# ))
