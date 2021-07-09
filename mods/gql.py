@@ -39,10 +39,10 @@ class RootQuery(ObjectType):
                 client.mafiaredux.users.find(query, projection)]
     
     def resolve_room(root, info, id=None, username=None):
-        query = {'userid': id} if id else {'username': username} if username else {}
+        query = {'roomid': id} if id else {'name': username} if username else {}
         query = {'listed': True, **query}
         projection = {'_id': 0, 'listed': 0}
-        return [Room(id=room['id'],
+        return [Room(id=room['roomid'],
                      name=room['name']) for room in \
                 client.mafiaredux.rooms.find(query, projection)]
     
