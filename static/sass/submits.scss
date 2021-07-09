@@ -1,0 +1,29 @@
+$submitbackground: #ff5722;
+$submitborder: #222025;
+$submitshadow: #ffffff33;
+$submittext: #e5e3e7;
+$submitpadding: 4px 14px;
+$submitdisabledbackground: #252525;
+$submitdisabledtext: #828282;
+$submitdisabledshadow: #ababab24;
+
+input[type="submit"] {
+    background-color: $submitbackground;
+    border: $submitborder;
+    box-shadow: inset 0px 0px 0px 3px $submitshadow;
+    color: $submittext;
+    cursor: pointer;
+    font-weight: bold;
+    padding: $submitpadding;
+    min-height: 34px;
+    transition: background-color 0.2s ease;
+    &[disabled] {
+        background-color: $submitdisabledbg;
+        color: $submitdisabledtext;
+        box-shadow: inset 0px 0px 0px 3px $submitdisabledshadow;
+        cursor: default;
+    }
+    &:hover:not([disabled]) {
+        background-color: darken($submitbackground, 9%);
+    }
+}

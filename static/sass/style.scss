@@ -23,14 +23,13 @@ aside {
     display: flex;
     justify-content: center;
     transition: margin-top 1s cubic-bezier(0.57, -0.59, 0.45, 1.53) 0s;
-}
-
-aside img {
-    transition: transform 1s cubic-bezier(0.57, -0.59, 0.45, 1.53) 0s;
-    transform: translateY(0%);
-    aspect-ratio: 7/3;
-    max-width: 700px;
-    min-width: 0;
+    img {
+        transition: transform 1s cubic-bezier(0.57, -0.59, 0.45, 1.53) 0s;
+        transform: translateY(0%);
+        aspect-ratio: 7/3;
+        max-width: 700px;
+        min-width: 0;
+    }
 }
 
 ul {
@@ -46,43 +45,38 @@ ul {
     user-select: none;
 }
 
-li:before {
-    background-color: blue;
-}
-
 li {
+    &:before {
+        background-color: blue;
+    }
     padding-left: 20%;
     background-color: #96c820;
     display: inline-flex;
     align-items: center;
     transition: padding-left 1s cubic-bezier(0, 0, 0.45, 1.53);
     cursor: pointer;
-}
-
-li:hover {
-    background-color: #cce423;
-    padding-left: 30%;
-}
-
-li:hover:after {
-    border-left-color: #cce423;
-}
-
-li span {
-    display: inline;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-right: 15px;
-}
-
-li:after {
-    content: '';
-    display: inline-block;
-    width: 0;
-    height: 0;
-    border-top: 20px solid #000;
-    border-bottom: 20px solid #000;
-    border-left: 20px solid #96c820;
+    &:hover {
+        background-color: #cce423;
+        padding-left: 30%;
+        &:after {
+            border-left-color: #cce423;
+        }
+    }
+    &:after {
+        content: '';
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-top: 20px solid #000;
+        border-bottom: 20px solid #000;
+        border-left: 20px solid #96c820;
+    }
+    span {
+        display: inline;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-right: 15px;
+    }
 }
 
 footer {
@@ -98,10 +92,9 @@ footer {
     text-transform: uppercase;
     font-size: 13px;
     padding-bottom: 20px;
-}
-
-body[nofooter] footer {
-    transform: translateY(100%);
+    body[nofooter] & {
+        transform: translateY(100%);
+    }
 }
 
 a {

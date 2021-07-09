@@ -1,41 +1,31 @@
+$backgroundcolor: #232221;
+$textcolor: #fff;
+
+$formbackground: #2b2d2d;
+$formborder: #555;
+$formspacing: 10px;
+
 body {
     display: flex !important;
     font-family: 'Titillium Web', sans-serif;
     margin-top: 10px;
-    background-color: #232221;
+    background-color: $backgroundcolor;
     flex-direction: column;
 }
 
 form {
     display: flex;
     padding: 10px;
-    color: white;
-    background-color: #2b2d2d;
-    border: 1px solid #555;
+    color: $textcolor;
+    background-color: $formbackground;
+    border: 1px solid $formborder;
+    & + & {
+        margin-top: $formspacing;
+    }
+    name {
+        align-items: center;
+        flex-grow: 1;
+    }
 }
 
-form + form {
-    margin-top: 10px;
-}
-
-form name {
-    align-items: center;
-    flex-grow: 1;
-}
-
-input[type="submit"] {
-    background-color: #ff5722;
-    border: #222025;
-    box-shadow: inset 0px 0px 0px 3px #ffffff33;
-    color: #e5e3e7;
-    cursor: pointer;
-    font-weight: bold;
-    padding: 4px 14px;
-    min-height: 34px;
-    transition: background-color 0.2s ease;
-}
-
-input[type="submit"]:hover {
-    background-color: #f44336;
-    border: #222025;
-}
+@import 'submits';

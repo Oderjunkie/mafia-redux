@@ -1,8 +1,12 @@
-from flask import request, render_template
+from flask import request, render_template, make_response
 from mods.setupflask import app
+from scss import Compiler
+
+scss = Compiler()
 
 def send_sass(name: str):
-    res = app.send_static_file('sass/'+name)
+    #res = app.send_static_file('sass/'+name)
+    res = make_response(scss.compile('./static/sass/'+name), 200)
     res.mimetype = 'text/css'
     return res
 
