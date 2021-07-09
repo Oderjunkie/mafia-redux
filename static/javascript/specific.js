@@ -47,7 +47,7 @@ $(_=>{
             chat.scrollTop(newmax);
         }
     }
-    socket.on('chat', msg=>{
+    const onchat = msg=>{
         addToChat(
             $('<message></message>').append(
                 convertTimeToElement(msg),
@@ -55,15 +55,17 @@ $(_=>{
                 msg.message
             )
         );
-    });
-    socket.on('system', msg=>{
+    }
+    const onsystem = msg=>{
         addToChat(
             $('<system></system>').append(
                 convertTimeToElement(msg),
                 msg.message
             )
         );
-    });
+    }
+    socket.on('chat', onchat);
+    socket.on('system', onsystem);
     socket.on('userJoin', msg=>{
         addToChat(
             $('<internal></internal>').append(
