@@ -1,3 +1,5 @@
+
+# Flask and dependencies.
 Flask>=1.1.1
 Click>=7.0
 itsdangerous>=1.1.0
@@ -6,18 +8,26 @@ Werkzeug>=0.15.6
 Jinja2>=2.10.1
 flask_cors>=3.0.10
 
+# Socket.IO.
 Flask-SocketIO==5.1.0
 
+# MongoDBs.
 pymongo==3.11.2
 dnspython==2.1.0
 
+# Gunicorn is used to host the flask server, gevent-websocket is used for Socket.IO connections.
 gunicorn==19.9.0
 gevent==21.1.2
 gevent-websocket==0.10.1
 
+# Secure One-Way Encryption of passwords using bcrypt.
 bcrypt==3.2.0
 cffi>=1.1
 pycparser==2.20
 
+# SCSS files are compiled using pyScss.
 pyScss>=1.3.7
 six>=1.15.0
+
+# The MScript parser uses parsimonious.
+parsimonious>=0.8.1
