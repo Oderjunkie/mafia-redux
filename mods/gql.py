@@ -68,12 +68,12 @@ class MakeUser(Mutation):
         username = String()
         password = String()
     
-    self = Field(lambda: SelfUser)
+    me = Field(lambda: SelfUser)
     error = String(required=False)
     
     def mutate(root, info, username, password):
         if client.mafiaredux.users.count_documents({'username': username}):
-            return MakeUser(self=None, error='That username is taken.')
+            return MakeUser(me=None, error='That username is taken.')
         userid = randString(30)
         userhash = bcrypt.hashpw(password.encode('latin-1'), bcrypt.gensalt())
         client.mafiaredux.users.insert_one({
@@ -88,10 +88,10 @@ class MakeUser(Mutation):
             'token': usertoken,
             'id': userid
         })
-        return MakeUser(self=SelfUser(id=id, username=username, wins=0, losses=0, token=usertoken), error=None)
+        return MakeUser(me=SelfUser(id=id, username=username, wins=0, losses=0, token=usertoken), error=None)
 
 class RootMutation(ObjectType):
-    make_user = MakeUser
+    make_user = MakeUser.Field()
 
 schema = Schema(
     query=RootQuery,
