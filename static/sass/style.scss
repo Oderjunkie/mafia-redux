@@ -1,3 +1,9 @@
+$backgroundcolor: #000;
+$textcolor: #fff;
+$licolor: #96c820;
+$lihover: #cce423;
+$footercolor: #161418;
+
 html {
     width: 100%;
     height: 100%;
@@ -6,8 +12,8 @@ html {
 body {
     display: flex !important;
     flex-direction: column;
-    background-color: black;
-    color: white;
+    background-color: $backgroundcolor;
+    color: $textcolor;
     margin: 0;
     position: absolute;
     left: 0;
@@ -35,7 +41,7 @@ aside {
 ul {
     padding-top: 20px;
     padding-bottom: 20px;
-    flex-grow: 999;
+    flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: start;
@@ -46,20 +52,20 @@ ul {
 }
 
 li {
-    &:before {
-        background-color: blue;
-    }
+    // &:before {
+    //     background-color: blue;
+    // }
     padding-left: 20%;
-    background-color: #96c820;
+    background-color: $licolor;
     display: inline-flex;
     align-items: center;
     transition: padding-left 1s cubic-bezier(0, 0, 0.45, 1.53);
     cursor: pointer;
     &:hover {
-        background-color: #cce423;
+        background-color: $lihover;
         padding-left: 30%;
         &:after {
-            border-left-color: #cce423;
+            border-left-color: $lihover;
         }
     }
     &:after {
@@ -67,9 +73,9 @@ li {
         display: inline-block;
         width: 0;
         height: 0;
-        border-top: 20px solid #000;
-        border-bottom: 20px solid #000;
-        border-left: 20px solid #96c820;
+        border-top: 20px solid $backgroundcolor;
+        border-bottom: 20px solid $backgroundcolor;
+        border-left: 20px solid $licolor;
     }
     span {
         display: inline;
@@ -80,7 +86,7 @@ li {
 }
 
 footer {
-    background-color: #161418;
+    background-color: $footercolor;
     flex-grow: 1;
     display: flex;
     justify-content: center;
