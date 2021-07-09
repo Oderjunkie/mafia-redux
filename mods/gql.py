@@ -91,7 +91,7 @@ class MakeUser(Mutation):
         return MakeUser(self=SelfUser(id=id, username=username, wins=0, losses=0, token=usertoken), error=None)
 
 class RootMutation(ObjectType):
-    make_user = MakeUser
+    make_user = MakeUser.Field()
 
 schema = Schema(
     query=RootQuery,
