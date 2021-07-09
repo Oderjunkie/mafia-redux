@@ -108,3 +108,8 @@ def robots():
 ##########
 
 import mods.favicon
+
+# GraphQL
+##########
+
+import mods.gql
