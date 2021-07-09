@@ -88,7 +88,7 @@ class MakeUser(Mutation):
             'token': usertoken,
             'id': userid
         })
-        return MakeUser(me=SelfUser(id=id, username=username, wins=0, losses=0, token=usertoken), error=None)
+        return MakeUser(me=SelfUser(id=userid, username=username, wins=0, losses=0, token=usertoken), error=None)
 
 class RootMutation(ObjectType):
     make_user = MakeUser.Field()
