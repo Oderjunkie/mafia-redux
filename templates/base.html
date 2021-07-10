@@ -28,7 +28,7 @@
         <meta name='twitter:creator' content='@oderjunks' />
         <meta name='description' content='{{ self.desc() }}' />
         <meta name='keywords' content='mafia,online gaming,game' />
-        <meta name='robots' content='noindex,nofollow' />
+        <meta name='robots' content='{% block robots %}index,follow{% endblock %}' />
         <meta name='session' content='{{ request.cookies.get('usertoken') }}' />
         <link rel='shortcut icon' type='image/x-icon' href='https://via.placeholder.com/32x32.ico'>
         <link rel="preconnect" href="https://fonts.googleapis.com">
