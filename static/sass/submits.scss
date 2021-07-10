@@ -1,11 +1,11 @@
 $submitbackground: #ff5722;
 $submitborder: #222025;
-$submitshadow: #ffffff33;
+$submitshadow: rgba(#ffffff, 0.2);
 $submittext: #e5e3e7;
 $submitpadding: 4px 14px;
 $submitdisabledbackground: #252525;
 $submitdisabledtext: #828282;
-$submitdisabledshadow: #ababab24;
+$submitdisabledshadow: rgba(#ababab, 0.09412);
 
 input[type="submit"] {
     background-color: $submitbackground;
