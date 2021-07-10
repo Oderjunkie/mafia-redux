@@ -18,7 +18,7 @@ input[type="submit"] {
     min-height: 34px;
     transition: background-color 0.2s ease;
     &[disabled] {
-        background-color: $submitdisabledbg;
+        background-color: $submitdisabledbackground;
         color: $submitdisabledtext;
         box-shadow: inset 0px 0px 0px 3px $submitdisabledshadow;
         cursor: default;
