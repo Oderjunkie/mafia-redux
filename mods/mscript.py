@@ -1,77 +1,5 @@
 from parsimonious import Grammar, NodeVisitor
 from operator import methodcaller
-from dis import dis
-
-## testcodeold = r"""
-## 
-## def .test [arg]
-##     [localvar] = [arg]
-##     ~print [localvar]
-## end
-## 
-## """
-
-testcode = r"""
-class .Villager
-    def .vote_start
-        ~makegui $(.getself) condemn $(~getallusernames) $(~getallusers)
-    end
-    def .vote_end
-        ~freezegui condemn
-    end
-    def .see_role
-        ~return "Villager"
-    end
-    def .death_phrase [name]
-        ~format "{}, the Villager, has died." [name]
-    end
-end
-
-def !condemn
-    [users] = $(~getallusers)
-    [votes] = $(~mul $(~makearr 0) $(~len [users]))
-    for [role] $(~get roles)
-        [index] = $(~find [users] $(~getgui [role] condemn))
-        ~setindex [votes] [index] $(~add $(~getindex [votes] [index]) 1)
-    end
-    [most] = $(~max [votes])
-    [bad] = $(~count [votes] [most])
-    if $(~gt [bad] 1)
-        ~system "The vote tied."
-    end
-    if $(~eq [bad] 1)
-        [index] = $(~find [votes] [most])
-        [obj] = $(~getindex $(~get roles) [index])
-        ~system $(~apply $(~getprop [obj] ".death_phrase"))
-        ~kill $(~getindex [users] [index])
-    end
-end
-"""
-
-##testcode = """
-##class .Cop
-##    def .night_action
-##        ~gui nmr "Visit in Group: " Target player
-##    end
-##    def .day_start
-##        ~set target $(~guiout)
-##        if ~isseenasmaf $(~get target)
-##            ~system "Upon investigating, you suspect that your target is sided with the mafia."
-##        end
-##        if ~not $(~isseenasmaf $(~get target))
-##            ~system "Upon investigating, you suspect that your target is NOT sided with the mafia."
-##        end
-##    end
-##end
-##
-##def !saytwice [msg] - Say it twice!- twice!
-##    ~system [msg]
-##    ~system [msg]
-##end
-##
-##
-##"""
-
 
 grammar = Grammar(r"""
 document = __? (def __?)+
@@ -254,37 +182,29 @@ class TrickOrTreater(NodeVisitor):
         return Code.Set(visited_children[0], visited_children[4])
     def visit_desc(self, node, visited_children):
         funcname = visited_children[0]
-        #print(funcname)
         args = visited_children[2]
         if type(args)==list:
             args = list(map(methodcaller('__getitem__', 1), args))
             args = list(map(methodcaller('__getitem__', 1), args))
         else:
             args = []
-        #print(reccursive_debug_list(args))
         desc = visited_children[4]
         if type(desc)==list:
             desc = desc[0][2]
         else:
             desc = ''
-        #print(reccursive_debug_list(desc))
         return Code.FuncDef(funcname, args, desc)
     def visit_classdesc(self, node, visited_children):
         funcname = visited_children[0]
-        #print(funcname)
         desc = visited_children[2]
         if type(desc)==list:
             desc = desc[0][2]
         else:
             desc = ''
-        #print(reccursive_debug_list(desc))
         return Code.ClassDef(funcname, desc)
     def visit_funcdef(self, node, visited_children):
-        #print(visited_children)
         assert visited_children[0]=='def'
         assert visited_children[1]==None
-        #print('\n'.join(map(repr, visited_children[5])))
-        #print(len(visited_children[2]), end='\n\n\n\n\n')
         visited_children[2].body = visited_children[5]
         return visited_children[2]
     def visit_classdef(self, node, visited_children):
@@ -292,8 +212,6 @@ class TrickOrTreater(NodeVisitor):
         assert visited_children[1]==None
         if type(visited_children[4])==list:
             visited_children[2].inherit = visited_children[4][0][2]
-        #print('\n'.join(map(repr, visited_children[5])))
-        #print(len(visited_children[2]), end='\n\n\n\n\n')
         visited_children[2].body = visited_children[6]
         return visited_children[2]
     def visit_funcbody(self, node, visited_children):
@@ -316,66 +234,12 @@ class TrickOrTreater(NodeVisitor):
 def parse(code):
     return TrickOrTreater().visit(grammar.parse(code))
 
-from json import loads, dumps
-
-# ~set ~get ~print
-# ~and ~or ~not
-# ~gui ~guiout
-# ~getrole ~isseenasmaf ~ismaf
-# ~system
-class stdlib:
-    def __init__(self, io):
-        self.io = io
-        self.vars = {}
-    def _gui(self, *args):
-        """ The world may never know.
-            At least not legally.     """
-        pass
-    def _guiout(self, *args):
-        """ Same as above """
-        pass
-    def _set(self, name, value):
-        self.vars[name] = value
-    def _get(self, name):
-        return self.vars[name]
-    def _print(self, log):
-        return print(log)
-    def _and(self, one, two):
-        return one and two
-    def _or(self, one, two):
-        return one or two
-    def _not(self, one):
-        return not one
-    def _getrole(self, *args):
-        """ I can't figure out what to put here
-            without being able to test it every
-            couple of seconds                   """
-        pass
-    def _isseenasmaf(self, *args):
-        pass
-    def _ismaf(self, *args):
-        pass
-    def _system(self, msg):
-        self.io.system(msg)
-
 from types import CodeType, FunctionType
-
-class Mock:
-    def __init__(self, name):
-        self.name = name
-    def __call__(self, *args):
-        print('{}({})'.format(self.name, ', '.join(map(repr, args))))
-        if self.name=='io._roles':
-            return [1, 2, 3]
-    def __getattr__(self, name):
-        return type(self)(self.name+'.'+name)
 
 class new:
     class classes:
         pass
     class funcs:
-        #def _system(msg):
-        #    print('SYSTEM:', msg)
         pass
     def __init__(self):
         pass
@@ -387,9 +251,6 @@ class new:
             elif type(defi)==Code.ClassDef:
                 setattr(self.classes, *self.register_class(defi))
     def register_class(self, defi):
-        #if defi.inherit:
-        #    assert defi.inherit[0]=='.'
-        #    getattr(self.classes, defi.inherit[1:])
         def init(self):
             pass
         funcobjs = []
@@ -408,7 +269,6 @@ class new:
         names = self.find_names(defi)
         local = self.find_locals(defi)
         args = ('io', *defi.args)
-        #print(consts, names, local)
         code = self.code_gen(defi, consts, names, (*args, *local)) + b'd' + bytes([consts.index(None)]) + b'S\x00'
         funcobj = self.converttofunc(defi, funcname, consts, names, code, args, local)
         return funcname, funcobj
@@ -440,7 +300,6 @@ class new:
         func = FunctionType(codeobj, globals(), name=co_name)
         return func
     def find_consts(self, func):
-        #print('FIND_CONSTS', repr(func))
         if type(func) in [str, int, float, bool]:
             return [func]
         consts = []
@@ -472,7 +331,6 @@ class new:
                 for el in self.find_consts([stat.val]):
                     if el not in consts:
                         consts.append(el)
-        #print(consts)
         return tuple(consts)
     def convert_to_name(self, name):
         if name[0] in '!?':
@@ -564,25 +422,18 @@ class new:
         code = arr + b'D\x00' + plusjump +\
                b'}' + bytes([el]) + body + b'\x01\x00' + \
                minusjump
-        #dis(code)
-        #print()
-        #dis(body)
         return code
     def code_gen_call(self, stat, consts, names, args):
         if type(stat) in [str, bool, int, float]:
-            #print(repr(stat))
             return b'd' + bytes([consts.index(stat)])
         if type(stat)==Code.Variable:
             return b'|' + bytes([args.index(stat.name)])
         final = b''
         name = self.convert_to_name(stat.name)
-        #print(names, name)
         name = names.index(name)
         final += b'|' + (bytes([args.index('io')]) if stat.name[0]=='~' else b'\x00') + b'\xa0' + bytes([name])
         for arg in stat.args:
             if type(arg) in [str, bool, int, float]:
-                #print(repr(arg))
-                #print(repr(consts))
                 final += b'd' + bytes([consts.index(arg)])
             if type(arg)==Code.FuncCall:
                 final += self.code_gen_call(arg, consts, names, args)
@@ -591,7 +442,6 @@ class new:
         final += b'\xa1' + bytes([len(stat.args)])
         return final
     def code_gen_set(self, stat, consts, names, args):
-        #print(stat.var, consts, names, args)
         name = args.index(stat.var.name)
         val = stat.val
         final = b'}' + bytes([name])
@@ -601,47 +451,3 @@ class new:
             return self.code_gen_call(val, consts, names, args) + final
         if type(val)==Code.Variable:
             return b'|' + bytes([args.index(val.name)]) + final
-
-
-r"""
-def test(io, arg):
-    for part in arg:
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print('hi')
-        io.print(part)
-"""
