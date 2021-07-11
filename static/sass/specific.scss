@@ -104,6 +104,9 @@ h1 {
     }
     form {
         width: 100%;
+        [type="submit"] {
+            width: 100%;
+        }
     }
     &[off] { transform: translateX(100%) }
 }
