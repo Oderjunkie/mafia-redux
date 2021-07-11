@@ -128,7 +128,7 @@ h1 {
     &[off] { transform: translateY(-100%) }
     &::-webkit-scrollbar { width: $chatscrollwidth }
     &::-webkit-scrollbar-track { background-color: $chatscrollbackground }
-    &::-webkit-scrollbar-thumb { background-color: $chatsrollforeground }
+    &::-webkit-scrollbar-thumb { background-color: $chatscrollforeground }
 }
 
 .input {
