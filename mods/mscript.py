@@ -231,20 +231,19 @@ class TrickOrTreater(NodeVisitor):
     def visit_document(self, node, visited_children):
         return Code.Document(list(map(methodcaller('__getitem__', 0), visited_children[1])))
 
-def parse(code):
-    return TrickOrTreater().visit(grammar.parse(code))
-
 from types import CodeType, FunctionType
 
-class new:
+class maflogic:
     class classes:
         pass
     class funcs:
         pass
     def __init__(self):
         pass
+    def parse(self, code):
+        return TrickOrTreater().visit(grammar.parse(code))
     def main(self, code):
-        ast = parse(code)
+        ast = self.parse(code)
         for defi in ast.defs:
             if type(defi)==Code.FuncDef:
                 setattr(self.funcs, *self.register_func(defi))
