@@ -21,8 +21,9 @@ def connection(json):
     try:
         events = client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})['events']
         print(events)
-        for event in events:
-            socketio.emit(*event, to=request.sid)
+        socketio.emit('handshake', events, to=request.sid)
+    #     for event in events:
+    #         socketio.emit(*event, to=request.sid)
     except Exception as e:
         errorHandle(e)
     socketio.emit('userJoin', {

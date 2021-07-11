@@ -18,6 +18,38 @@ const convertTimeToElement = msg=>{
     );
 };
 
+function addToChat(el) {
+    let chatobj = chat[0];
+    let max = chatobj.scrollHeight - chatobj.offsetHeight
+    let old = chat.append(el).scrollTop();
+    if (old == max) {
+        let newmax = chatobj.scrollHeight - chatobj.offsetHeight
+        chat.scrollTop(newmax);
+    }
+}
+function createChatFrom(msg) {
+    return $('<message></message>').append(
+        convertTimeToElement(msg),
+        $('<name></name>').append(msg.from),
+        msg.message
+    );
+}
+function createSystemFrom(msg) {
+    return $('<system></system>').append(
+        convertTimeToElement(msg),
+        msg.message
+    );
+}
+function onchat(msg) {
+    addToChat(createChatFrom(msg));
+}
+function onsystem(msg) {
+    addToChat(createSystemFrom(msg));
+}
+function onphase(msg) {
+    $('h1').text(msg.name);
+}
+
 $(_=>{
     roomid = location.pathname.split('/')[2];
     form = $('.input');
@@ -33,39 +65,32 @@ $(_=>{
         checkforsubmission();
         return false;
     });
-    let chat = $('.chat');
+    chat = $('.chat');
     socket = io();
     socket.on('connect', ()=>{
         socket.emit('handshake', {'roomId': roomid, 'usertoken': $('meta[name="session"]').attr('content')});
     });
-    const addToChat = el=>{
-        let chatobj = chat[0];
-        let max = chatobj.scrollHeight - chatobj.offsetHeight
-        let old = chat.append(el).scrollTop();
-        if (old == max) {
-            let newmax = chatobj.scrollHeight - chatobj.offsetHeight
-            chat.scrollTop(newmax);
+    socket.on('handshake', e=>{
+        let currentphaseind = events.map(e=>e[0]=='phase').lastIndexOf(true);
+        let currentevents = events.slice(0, currentphaseind);
+        if (currentphaseind != -1) {
+            let currentphase = events[currentphaseind];
+            onphase({'name': currentphase});
         }
-    }
-    const onchat = msg=>{
-        addToChat(
-            $('<message></message>').append(
-                convertTimeToElement(msg),
-                $('<name></name>').append(msg.from),
-                msg.message
-            )
-        );
-    }
-    const onsystem = msg=>{
-        addToChat(
-            $('<system></system>').append(
-                convertTimeToElement(msg),
-                msg.message
-            )
-        );
-    }
+        for (let [type, msg] in currentevents) {
+            switch (type) {
+                case 'chat':
+                    onchat(msg);
+                    break;
+                case 'system':
+                    onsystem(msg);
+                    break;
+            }
+        }
+    }); 
     socket.on('chat', onchat);
     socket.on('system', onsystem);
+    socket.on('phase', onphase);
     socket.on('userJoin', msg=>{
         addToChat(
             $('<internal></internal>').append(
