@@ -1,4 +1,12 @@
 $detailswidth: 16rem;
+$detailsbackground: #2c2a31;
+$detailsborder: #161418;
+
+$chatbackground: #13141f;
+$chatscrollwidth: 0.5rem;
+$chatscrollbackground: #2c2a31;
+$chatscrollforeground: #E2EFF4;
+
 $inputheight: 2.7rem;
 
 $backgroundcolor: #232221;
@@ -91,8 +99,8 @@ h1 {
 .details {
     @include sectiontransition;
     grid-area: setup;
-    background-color: #2c2a31;
-    border-left: 1px solid #161418;
+    background-color: $detailsbackground;
+    border-left: 1px solid $detailsborder;
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
@@ -114,10 +122,13 @@ h1 {
 .chat {
     @include sectiontransition;
     grid-area: chat;
-    background-color: #13141f;
+    background-color: $chatbackground;
     overflow-x: hidden;
     overflow-wrap: break-word;
     &[off] { transform: translateY(-100%) }
+    &::-webkit-scrollbar { width: $chatscrollwidth }
+    &::-webkit-scrollbar-track { background-color: $chatscrollbackground }
+    &::-webkit-scrollbar-thumb { background-color: $chatsrollforeground }
 }
 
 .input {
