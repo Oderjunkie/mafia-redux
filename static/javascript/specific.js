@@ -70,7 +70,7 @@ $(_=>{
     socket.on('connect', ()=>{
         socket.emit('handshake', {'roomId': roomid, 'usertoken': $('meta[name="session"]').attr('content')});
     });
-    socket.on('handshake', e=>{
+    socket.on('handshake', events=>{
         let currentphaseind = events.map(e=>e[0]=='phase').lastIndexOf(true);
         let currentevents = events.slice(0, currentphaseind);
         if (currentphaseind != -1) {
