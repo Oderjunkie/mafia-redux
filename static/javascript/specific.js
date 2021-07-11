@@ -77,7 +77,7 @@ $(_=>{
             let currentphase = events[currentphaseind];
             onphase({'name': currentphase});
         }
-        for (let [type, msg] in currentevents) {
+        for (let [type, msg] of currentevents) {
             switch (type) {
                 case 'chat':
                     onchat(msg);
