@@ -55,7 +55,6 @@ class mafstdlib:
     from math import floor
     from math import ceil
     from builtins import len
-    from builtins import int
     def find(self, arr, val):
         return arr.index(val)
     def count(self, arr, val):
