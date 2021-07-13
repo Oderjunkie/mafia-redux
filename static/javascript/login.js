@@ -55,7 +55,7 @@ function endAnimation() {
 }
 
 function switchTo(action) {
-    return function() {
+    return ()=>{
         let items = $('body *'); // for the rare race condition.
         endAnimation();
         setTimeout(action, 800);
@@ -64,7 +64,7 @@ function switchTo(action) {
 }
 
 function getDataOf(form) {
-    return form.find('input:not([type="submit"])').map(function(_){
+    return form.find('input:not([type="submit"])').map(function(){
         let current = $(this);
         return `${encodeURIComponent(current.prop('name'))}=${encodeURIComponent(current.val())}`;
     }).toArray().join('&');
