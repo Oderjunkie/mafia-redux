@@ -268,7 +268,7 @@ class maflogic:
         names = self.find_names(defi)
         local = self.find_locals(defi)
         args = ('io', *defi.args)
-        code = self.code_gen(defi, consts, names, (*args, *local)) + b'd' + bytes([consts.index(None)]) + b'S\x00'
+        code = self.code_gen(defi, consts, names, (*args, *local)) + b'S\x00' # b'd' + bytes([consts.index(None)]) + 
         funcobj = self.converttofunc(defi, funcname, consts, names, code, args, local)
         return funcname, funcobj
     def converttofunc(self, func, name, consts, names, code, args, local):
