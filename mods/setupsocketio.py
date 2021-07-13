@@ -45,7 +45,8 @@ def connection(json):
     if room not in logics:
         logics[room] = maflogic()
         try:
-            code = get('https://pastebin.com/raw/'+quote(roomobj['logic']))
+            code = get('https://pastebin.com/raw/'+quote(roomobj['logic'], safe='')).content
+            logics[room].main(code)
         except Exception as e:
             socketio.emit('system', {
                 'message': 'Game logic url was not valid, Logic is currently disabled.',
@@ -71,23 +72,50 @@ def disconnect():
     usersinrooms[room[-1]].remove(request.sid)
     print(name, 'has left')
 
+@socketio.on('logic')
+def changeGameLogic(link):
+    room = rooms(request.sid)
+    userid = sessions[request.sid]
+    roomobj = client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})
+    if userid == roomobj['host']:
+        logics[room] = maflogic()
+        try:
+            code = get('https://pastebin.com/raw/'+quote(roomobj['logic'], safe='')).content
+            logics[room].main(code)
+        except Exception as e:
+            socketio.emit('system', {
+                'message': 'Game logic url was not valid, Logic is currently disabled.',
+                'timestamp': time()
+            }, to=room)
+            errorHandle(e)
+            return
+
+@socketio.on('start')
+def startGame(_):
+    room = rooms(request.sid)
+    userid = sessions[request.sid]
+    if userid == client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0, 'logic': 0})['host']:
+        stdlib = stdlibs[room[-1]]
+        logics[room].funcs.start(stdlib)
+
 @socketio.on('chat')
 def chat(message):
     room = rooms(request.sid)
     stdlib = stdlibs[room[-1]]
-    print(sessions)
     userid = sessions[request.sid]
-    name = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
-    print(name, 'says', repr(message))
-    packet = {
-        'timestamp': time(),
-        'message': message,
-        'from': name,
-        'fromid': userid
-    }
-    socketio.emit('chat', packet, to=room)
-    client.mafiaredux.rooms.update_one(
-        {'roomid': room[-1]},
-        {'$push': {'events': ['chat', packet]}}
-    )
-    print(room)
+    print(sessions)
+    if logics[room].funcs.chat(stdlib, userid, message) in [None, True]:
+        name = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
+        print(name, 'says', repr(message))
+        packet = {
+            'timestamp': time(),
+            'message': message,
+            'from': name,
+            'fromid': userid
+        }
+        socketio.emit('chat', packet, to=room)
+        client.mafiaredux.rooms.update_one(
+            {'roomid': room[-1]},
+            {'$push': {'events': ['chat', packet]}}
+        )
+        print(room)

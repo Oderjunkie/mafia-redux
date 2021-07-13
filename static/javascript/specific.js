@@ -72,10 +72,11 @@ $(_=>{
         if (e.which==13)
             button.click();
     });
-    form.submit(()=>{
+    form.submit(e=>{
         socket.emit('chat', textbox.val());
         textbox.val('');
         checkforsubmission();
+        e.preventDefault();
         return false;
     });
     chat = $('.chat');
@@ -165,9 +166,7 @@ $(_=>{
                                                                     type: 'submit',
                                                                     value: 'Change logic'
                                                                 }).click(_=>{
-                                                                    socket.emit('logic', {
-                                                                        'link': $('form.centered input[type="text"]').prop('value')
-                                                                    });
+                                                                    socket.emit('logic', $('form.centered input[type="text"]').prop('value'));
                                                                     $('body').click();
                                                                 })
                                                 )
@@ -177,7 +176,7 @@ $(_=>{
                             .prop('value', 'Start game')
                             .addClass('startgame')
                             .click(_=>{
-                                socket.emit('start');
+                                socket.emit('start', 'start');
                             })
             );
     });
