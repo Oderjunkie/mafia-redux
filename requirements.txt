@@ -42,3 +42,11 @@ rx<2,>=1.6
 # Integrating graphene with flask
 flask_graphql>=2.0.1
 graphql-server-core<2,>=1.1
+
+# RICH TEXT FORMATTING POG
+rich>=0.8.13
+colorama<0.5.0,>=0.4.3
+pygments<3.0.0,>=2.6.1
+pprintpp<0.5.0,>=0.4.0
+commonmark<0.10.0,>=0.9.0
+typing-extensions<4.0.0,>=3.7.4

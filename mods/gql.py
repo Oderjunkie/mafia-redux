@@ -1,5 +1,5 @@
 from graphene import ObjectType, Mutation, String, Schema, Int, Field, List, JSONString
-from mods.setupflask import app, client
+from mods.setupflask import app, client, print
 from flask_graphql import GraphQLView
 from mods.utilities import randString
 import bcrypt

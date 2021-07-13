@@ -1,5 +1,5 @@
 from flask import request, render_template, make_response
-from mods.setupflask import app
+from mods.setupflask import app, print
 from scss import Compiler
 
 scss = Compiler()

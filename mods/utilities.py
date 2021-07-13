@@ -1,16 +1,17 @@
+from mods.setupflask import printerr
 from random import choice
 
 def errorHandle(e):
     line = e.__traceback__.tb_lineno-1
-    print('File "{}", line {}, in {}'.format(e.__traceback__.tb_frame.f_code.co_filename,
-                                         line,
-                                         e.__traceback__.tb_frame.f_code.co_name))
+    printerr('File "{}", line {}, in {}'.format(e.__traceback__.tb_frame.f_code.co_filename,
+                                               line,
+                                               e.__traceback__.tb_frame.f_code.co_name))
     with open(e.__traceback__.tb_frame.f_code.co_filename) as f:
         lines = f.readlines()
-        print('    {}\t{}'.format(line-1, lines[line-1][:-1]))
-        print('>>> {}\t{}'.format(line,   lines[line][:-1]))
-        print('    {}\t{}'.format(line+1, lines[line+1][:-1]))
-        print('{}: {}'.format(str(type(e))[8:-2], str(e)))
+        printerr('    {}\t{}'.format(line-1, lines[line-1][:-1]))
+        printerr('>>> {}\t{}'.format(line,   lines[line][:-1]))
+        printerr('    {}\t{}'.format(line+1, lines[line+1][:-1]))
+        printerr('{}: {}'.format(str(type(e))[8:-2], str(e)))
         f.close()
 
 def randChar(index=None) -> str:
