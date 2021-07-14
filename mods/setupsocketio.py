@@ -1,11 +1,12 @@
-from mods.setupflask import socketio, client, usersinrooms, sessions, stdlibs, logics, print
+from mods.setupflask import socketio, client, usersinrooms, sessions, stdlibs, logics
 from flask_socketio import join_room, rooms, ConnectionRefusedError
 from mods.utilities import errorHandle
 from mods.mscript import maflogic
 from mods.stdlib import mafstdlib
+from mods.console import print
+from urllib.parse import quote
 from flask import request
 from requests import get
-from urllib.parse import quote
 from time import time
 
 @socketio.on('handshake')

@@ -1,7 +1,8 @@
 from graphene import ObjectType, Mutation, String, Schema, Int, Field, List, JSONString
-from mods.setupflask import app, client, print
+from mods.setupflask import app, client
 from flask_graphql import GraphQLView
 from mods.utilities import randString
+from mods.console import print
 import bcrypt
 
 class User(ObjectType):

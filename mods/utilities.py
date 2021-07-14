@@ -1,4 +1,4 @@
-from mods.setupflask import printerr
+from mods.console import printerr
 from random import choice
 
 def errorHandle(e):

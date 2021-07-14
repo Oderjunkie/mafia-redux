@@ -1,7 +1,6 @@
 from mods.utilities import randString, ReverseProxied
 from flask_socketio import SocketIO
 from flask import Flask
-from rich.console import Console
 import pymongo
 import os
 
@@ -14,7 +13,3 @@ stdlibs = {}
 logics = {}
 sessions = {}
 usersinrooms = {}
-console = Console()
-consoleerr = Console(stderr=True)
-print = console.log
-printerr = consoleerr.log
