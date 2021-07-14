@@ -26,7 +26,7 @@ def connection(json):
     try:
         roomobj = client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})
         events = roomobj['events']
-        print(events)
+        #print(events)
         isHost = roomobj['host']==userid
         socketio.emit('presence', {'player': False, 'host': isHost}, to=request.sid)
         socketio.emit('handshake', events, to=request.sid)
@@ -70,7 +70,10 @@ def disconnect():
         'name': name,
         'timestamp': time()
     }, to=room)
-    usersinrooms[room[-1]].remove(request.sid)
+    try:
+        usersinrooms[room[-1]].remove(request.sid)
+    except Exception as e:
+        errorHandle(e)
     print(name, 'has left')
 
 @socketio.on('logic')
@@ -98,6 +101,7 @@ def startGame(_):
     if userid == client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0, 'logic': 0})['host']:
         stdlib = stdlibs[room[-1]]
         logics[room].funcs.start(stdlib)
+        logics[room].funcs.distrobute_roles(stdlib)
 
 @socketio.on('chat')
 def chat(message):

@@ -242,14 +242,14 @@ class maflogic:
         pass
     def parse(self, code):
         return TrickOrTreater().visit(grammar.parse(code))
-    def main(self, code):
+    def main(self, code, filename='<anonymous#245>'):
         ast = self.parse(code)
         for defi in ast.defs:
             if type(defi)==Code.FuncDef:
-                setattr(self.funcs, *self.register_func(defi))
+                setattr(self.funcs, *self.register_func(defi, filename))
             elif type(defi)==Code.ClassDef:
-                setattr(self.classes, *self.register_class(defi))
-    def register_class(self, defi):
+                setattr(self.classes, *self.register_class(defi, filename))
+    def register_class(self, defi, filename):
         def init(self):
             pass
         funcobjs = []
@@ -257,21 +257,21 @@ class maflogic:
         classname = defi.name[1:]
         for func in defi:
             assert func.name[0]=='.'
-            funcobjs.append(self.register_func(func))
+            funcobjs.append(self.register_func(func, filename))
         options = {'__init__': init}
         for funcname, funcobj in funcobjs:
             options.update({funcname: funcobj})
         return classname, type(classname, (object,), options)
-    def register_func(self, defi):
+    def register_func(self, defi, filename):
         funcname = defi.name[1:]
         consts = (None, *self.find_consts(defi))
         names = self.find_names(defi)
         local = self.find_locals(defi)
         args = ('io', *defi.args)
         code = self.code_gen(defi, consts, names, (*args, *local)) + b'S\x00' # b'd' + bytes([consts.index(None)]) + 
-        funcobj = self.converttofunc(defi, funcname, consts, names, code, args, local)
+        funcobj = self.converttofunc(defi, funcname, consts, names, code, args, local, filename)
         return funcname, funcobj
-    def converttofunc(self, func, name, consts, names, code, args, local):
+    def converttofunc(self, func, name, consts, names, code, args, local, filename):
         co_varnames = args+local
         co_consts = consts
         co_flags = 67
@@ -280,7 +280,7 @@ class maflogic:
             co_flags = 71
             co_varnames[-1] = co_varnames[-1][1:]
             co_argcount -= 1
-        co_filename = self.__init__.__code__.co_filename
+        co_filename = filename
         co_name = name
         co_firstlineno = 1
         co_freevars = ()
