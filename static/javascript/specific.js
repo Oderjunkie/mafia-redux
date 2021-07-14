@@ -135,12 +135,13 @@ $(_=>{
             $('input[type="submit"].playerup').prop('value', 'Player down');
         else
             $('input[type="submit"].playerup').prop('value', 'Player up');
-        if (msg.host)
+        if (msg.host) {
+            $('.gamelogic, .startgame').remove();
             $('.details form').append(
                 $('<input>').prop('type', 'submit')
                             .prop('value', 'Edit Game logic')
                             .addClass('gamelogic')
-                            .click(_=>{
+                            .click(_=>
                                 $('body').addClass('dark')
                                          .click(_=>{
                                             if (_.target==document.body)
@@ -148,30 +149,31 @@ $(_=>{
                                                             .off('click')
                                                             .find('form.centered')
                                                             .remove();
-                                        });
-                                $('<form>').submit(cancelform)
-                                            .addClass('centered')
-                                            .append(
-                                                $('<fieldset>').append(
-                                                    $('<legend>').text('Edit Game logic'),
-                                                    $('<label>').prop('for', 'gamelogiclink')
-                                                                .text('Pastebin Link:'),
-                                                    $('<br>'),
-                                                    $('<input>').prop({
-                                                                    type: 'text',
-                                                                    id: 'gamelogiclink'
-                                                                }),
-                                                    $('<br>'),
-                                                    $('<input>').prop({
-                                                                    type: 'submit',
-                                                                    value: 'Change logic'
-                                                                }).click(_=>{
-                                                                    socket.emit('logic', $('form.centered input[type="text"]').prop('value'));
-                                                                    $('body').click();
-                                                                })
+                                        }).append(
+                                    $('<form>').submit(cancelform)
+                                                .addClass('centered')
+                                                .append(
+                                                    $('<fieldset>').append(
+                                                        $('<legend>').text('Edit Game logic'),
+                                                        $('<label>').prop('for', 'gamelogiclink')
+                                                                    .text('Pastebin Link:'),
+                                                        $('<br>'),
+                                                        $('<input>').prop({
+                                                                        type: 'text',
+                                                                        id: 'gamelogiclink'
+                                                                    }),
+                                                        $('<br>'),
+                                                        $('<input>').prop({
+                                                                        type: 'submit',
+                                                                        value: 'Change logic'
+                                                                    }).click(_=>{
+                                                                        socket.emit('logic', $('form.centered input[type="text"]').prop('value'));
+                                                                        $('body').click();
+                                                                    })
+                                                    )
                                                 )
-                                            )
-                            }),
+                                )
+                            ),
                 $('<input>').prop('type', 'submit')
                             .prop('value', 'Start game')
                             .addClass('startgame')
@@ -179,6 +181,7 @@ $(_=>{
                                 socket.emit('start', 'start');
                             })
             );
+        }
     });
     socket.on('start', ()=>{}); // Future uses?
 });
