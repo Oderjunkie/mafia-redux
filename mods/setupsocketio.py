@@ -46,14 +46,14 @@ def connection(json):
     if room not in logics:
         logics[room] = maflogic()
         try:
-            code = get('https://pastebin.com/raw/'+quote(roomobj['logic'], safe='')).content
+            code = get('https://pastebin.com/raw/'+quote(roomobj['logic'], safe='')).content.decode('utf-8')
             logics[room].main(code)
         except Exception as e:
             socketio.emit('system', {
                 'message': 'Game logic url was not valid, Logic is currently disabled.',
                 'timestamp': time()
             }, to=room)
-            errorHandle(e)
+            #errorHandle(e)
             return
 
 @socketio.on('connect')
@@ -84,7 +84,7 @@ def changeGameLogic(link):
     if userid == roomobj['host']:
         logics[room] = maflogic()
         try:
-            code = get('https://pastebin.com/raw/'+quote(roomobj['logic'], safe='')).content
+            code = get('https://pastebin.com/raw/'+quote(roomobj['logic'], safe='')).content.decode('utf-8')
             logics[room].main(code)
         except Exception as e:
             socketio.emit('system', {
