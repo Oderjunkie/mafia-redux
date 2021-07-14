@@ -48,6 +48,7 @@ def connection(json):
         try:
             code = get('https://pastebin.com/raw/'+quote(roomobj['logic'], safe='')).content.decode('utf-8')
             logics[room].main(code)
+            logics[room].funcs.setup(stdlibs[room])
         except Exception as e:
             socketio.emit('system', {
                 'message': 'Game logic url was not valid, Logic is currently disabled.',
@@ -101,13 +102,34 @@ def startGame(_):
     if userid == client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0, 'logic': 0})['host']:
         stdlib = stdlibs[room[-1]]
         logics[room].funcs.start(stdlib)
-        logics[room].funcs.distrobute_roles(stdlib)
+        logics[room].funcs.distributeroles(stdlib)
+
+@socketio.on('presence')
+def presence(msg):
+    room = rooms(request.sid)
+    stdlib = stdlibs[room[-1]]
+    userid = sessions[request.sid]
+    name = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
+    if msg['host'] and userid != client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0, 'logic': 0})['host']:
+        socketio.emit('system', {
+            'timestamp': time(),
+            'message': '{} [ID:{}] is trying to hack mafia redux and gain host privelages, thankfully they failed.'.format(name, userid)
+        }, to=room)
+        return
+    if msg['player']:
+        if logics[room].funcs.playerup(stdlib, userid, name) == False:
+            return
+    else:
+        if logics[room].funcs.playerdown(stdlib, userid, name) == False:
+            return
+    socketio.emit('presence', msg, to=request.sid)
+
 
 @socketio.on('chat')
 def chat(message):
     room = rooms(request.sid)
-    stdlib = stdlibs[room[-1]]
     userid = sessions[request.sid]
+    stdlib = stdlibs[room[-1]]
     print(sessions)
     if logics[room].funcs.chat(stdlib, userid, message) in [None, True]:
         name = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
