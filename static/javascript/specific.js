@@ -8,7 +8,7 @@ function checkforsubmission() {
         button.prop('disabled', true);
 }
 
-function convertTimeToElement() {
+function convertTimeToElement(msg) {
     let date = new Date(msg.timestamp*1000);
     $('<time></time>').append(
         `${date.getHours().toString().padStart(2, '0')}:`+
