@@ -16,7 +16,7 @@ arg = LBRACKET argname RBRACKET
 argname = ~'\*?[a-zA-Z]+'
 classbody = (__? funcdef NEWLINE)* NEWLINE?
 funcbody = (__? stat NEWLINE)* NEWLINE?
-stat = fncall / ifstat / forstat / set
+stat = fncall / ifstat / forstat / set / return
 fncall = name (_ fnarg)*
 fnarg = fullargstring / dollar / variable / number / boolean / argstring
 dollar = OPENDOLLAR stat CLOSEDOLLAR
@@ -27,6 +27,7 @@ set = variable _? EQUALS _? fnarg
 variable = LBRACKET _? argname _? RBRACKET
 number = ~r'([0-9]*\.)?[0-9]+'
 boolean = 'true' / 'false'
+return = RETURN _ fnarg
 
 _ = ~r'[ \t]+'
 __ = ~r'[ \t\r\n]+'
@@ -42,6 +43,7 @@ CLOSEDOLLAR = ')'
 EQUALS = '='
 QUOTE = '"'
 END = 'end'
+RETURN = 'return'
 NEWLINE = ~r'[\r\n]+'
 """)
 
@@ -82,6 +84,13 @@ class Code:
             return 'Set({!r}, {!r})'.format(self.var, self.val)
         def __str__(self):
             return '[{}] = {}'.format(self.var, self.val)
+    class Return:
+        def __init__(self, val):
+            self.val = val
+        def __repr__(self):
+            return 'Return({!r})'.format(self.val)
+        def __str__(self):
+            return 'return {}'.format(self.val)
     class FuncCall:
         def __init__(self, name, args):
             self.name = name
@@ -180,6 +189,8 @@ class TrickOrTreater(NodeVisitor):
         return Code.ForStat(visited_children[4], visited_children[2], visited_children[6])
     def visit_set(self, node, visited_children):
         return Code.Set(visited_children[0], visited_children[4])
+    def visit_return(self, node, visited_children):
+        return Code.Return(visited_children[2])
     def visit_desc(self, node, visited_children):
         funcname = visited_children[0]
         args = visited_children[2]
@@ -268,7 +279,9 @@ class maflogic:
         names = self.find_names(defi)
         local = self.find_locals(defi)
         args = ('io', *defi.args)
-        code = self.code_gen(defi, consts, names, (*args, *local)) + b'S\x00' # b'd' + bytes([consts.index(None)]) + 
+        code = self.code_gen(defi, consts, names, (*args, *local))
+        if not code.endswith(b'S\x00'):
+            code += b'S\x00'
         funcobj = self.converttofunc(defi, funcname, consts, names, code, args, local, filename)
         return funcname, funcobj
     def converttofunc(self, func, name, consts, names, code, args, local, filename):
@@ -356,7 +369,7 @@ class maflogic:
                 for el in [*self.find_names(stat), *self.find_names([stat.arr])]:
                     if el not in names:
                         names.append(el)
-            elif type(stat)==Code.Set:
+            elif type(stat) in [Code.Set, Code.Return]:
                 if type(stat.val)==Code.FuncCall:
                     for el in self.find_names([stat.val]):
                         if el not in names:
@@ -391,6 +404,9 @@ class maflogic:
                 continue
             if type(stat)==Code.Set:
                 final += self.code_gen_set(stat, consts, names, args)
+                continue
+            if type(stat)==Code.Return:
+                final += self.code_gen_return(stat, consts, names, args)
                 continue
         return final
     def code_gen_if(self, ln, func, consts, names, args):
@@ -444,6 +460,15 @@ class maflogic:
         name = args.index(stat.var.name)
         val = stat.val
         final = b'}' + bytes([name])
+        if type(val) in [str, bool, int, float]:
+            return b'd' + bytes([consts.index(val)]) + final
+        if type(val)==Code.FuncCall:
+            return self.code_gen_call(val, consts, names, args) + final
+        if type(val)==Code.Variable:
+            return b'|' + bytes([args.index(val.name)]) + final
+    def code_gen_return(self, stat, consts, names, args):
+        val = stat.val
+        final = b'S\x00'
         if type(val) in [str, bool, int, float]:
             return b'd' + bytes([consts.index(val)]) + final
         if type(val)==Code.FuncCall:
