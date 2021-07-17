@@ -34,7 +34,7 @@ def connection(json):
     #         socketio.emit(*event, to=request.sid)
     except Exception as e:
         socketio.emit('error', 'Internal server error occured. [getting events]', to=room)
-        errorHandle(e)
+        # errorHandle(e)
         return
     socketio.emit('userJoin', {
         'id': userid,
@@ -54,7 +54,7 @@ def connection(json):
                 'message': 'Game logic url was not valid, Logic is currently disabled.',
                 'timestamp': time()
             }, to=room)
-            #errorHandle(e)
+            # errorHandle(e)
             return
 
 @socketio.on('connect')
@@ -81,12 +81,14 @@ def disconnect():
 def changeGameLogic(link):
     room = rooms(request.sid)
     userid = sessions[request.sid]
-    roomobj = client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})
+    roomobj = client.mafiaredux.rooms.find_one({'roomid': room[-1]}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})
     if userid == roomobj['host']:
-        logics[room] = maflogic()
+        logics[room[-1]] = maflogic()
+        logic = logics[room[-1]]
         try:
             code = get('https://pastebin.com/raw/'+quote(roomobj['logic'], safe='')).content.decode('utf-8')
-            logics[room].main(code)
+            logic.main(code)
+            logic.funcs.setup(stdlibs[room])
         except Exception as e:
             socketio.emit('system', {
                 'message': 'Game logic url was not valid, Logic is currently disabled.',
@@ -99,10 +101,11 @@ def changeGameLogic(link):
 def startGame(_):
     room = rooms(request.sid)
     userid = sessions[request.sid]
-    if userid == client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0, 'logic': 0})['host']:
+    if userid == client.mafiaredux.rooms.find_one({'roomid': room[-1]}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0, 'logic': 0})['host']:
         stdlib = stdlibs[room[-1]]
-        logics[room].funcs.start(stdlib)
-        logics[room].funcs.distributeroles(stdlib)
+        logic = logics[room[-1]]
+        logic.funcs.start(stdlib)
+        logic.funcs.distributeroles(stdlib)
 
 @socketio.on('presence')
 def presence(msg):
@@ -110,17 +113,17 @@ def presence(msg):
     stdlib = stdlibs[room[-1]]
     userid = sessions[request.sid]
     name = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
-    if msg['host'] and userid != client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0, 'logic': 0})['host']:
+    if msg['host'] and userid != client.mafiaredux.rooms.find_one({'roomid': room[-1]}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0, 'logic': 0})['host']:
         socketio.emit('system', {
             'timestamp': time(),
             'message': '{} [ID:{}] is trying to hack mafia redux and gain host privelages, thankfully they failed.'.format(name, userid)
         }, to=room)
         return
     if msg['player']:
-        if logics[room].funcs.playerup(stdlib, userid, name) == False:
+        if logics[room[-1]].funcs.playerup(stdlib, userid, name) == False:
             return
     else:
-        if logics[room].funcs.playerdown(stdlib, userid, name) == False:
+        if logics[room[-1]].funcs.playerdown(stdlib, userid, name) == False:
             return
     socketio.emit('presence', msg, to=request.sid)
 
@@ -131,8 +134,8 @@ def chat(message):
     userid = sessions[request.sid]
     stdlib = stdlibs[room[-1]]
     print(sessions)
-    if logics[room].funcs.chat(stdlib, userid, message) in [None, True]:
-        name = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
+    name = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
+    if logics[room[-1]].funcs.chat(stdlib, userid, name, message) in [None, True]:
         print(name, 'says', repr(message))
         packet = {
             'timestamp': time(),
