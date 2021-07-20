@@ -186,6 +186,15 @@ fieldset {
     }
 }
 
+select {
+    color: inherit;
+    background: inherit;
+    font-family: inherit;
+    option {
+        background-color: $detailsbackground;
+    }
+}
+
 form.centered {
     position: absolute;
     left: 50%;
