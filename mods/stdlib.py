@@ -8,10 +8,15 @@ class mafstdlib:
         self.room = room
         self.vars = {}
     def system(self, msg):
-        self.socket.emit('system', {
+        packet = {
             'timestamp': time(),
             'message': msg
-        }, to=self.room)
+        }
+        self.socket.emit('system', packet, to=self.room)
+        client.mafiaredux.rooms.update_one(
+            {'roomid': self.room},
+            {'$push': {'events': ['system', packet]}}
+        )
     def systemto(self, useridto, msg):
         sid = list(sessions.values())[list(sessions.keys()).index(useridto)]
         self.socket.emit('system', {
@@ -19,12 +24,17 @@ class mafstdlib:
             'message': msg
         }, to=sid)
     def sendas(self, useridas, username, msg):
-        self.socket.emit('chat', {
+        packet = {
             'timestamp': time(),
             'message': msg,
             'from': username,
             'fromid': useridas
-        }, to=self.room)
+        }
+        self.socket.emit('chat', packet, to=self.room)
+        client.mafiaredux.rooms.update_one(
+            {'roomid': self.room},
+            {'$push': {'events': ['chat', packet]}}
+        )
     def sendasto(self, useridas, username, useridto, msg):
         sid = list(sessions.values())[list(sessions.keys()).index(useridto)]
         self.socket.emit('chat', {
@@ -35,11 +45,16 @@ class mafstdlib:
         }, to=sid)
     def kill(self, userid):
         name = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
-        self.socket.emit('kill', {
+        packet = {
             'timestamp': time(),
             'id': userid,
             'name': name
-        }, to=self.room)
+        }
+        self.socket.emit('kill', packet, to=self.room)
+        client.mafiaredux.rooms.update_one(
+            {'roomid': self.room},
+            {'$push': {'events': ['kill', packet]}}
+        )
     def makearr(self, *els):
         return els
     def makedict(self, *kvs):
@@ -79,30 +94,30 @@ class mafstdlib:
         return self.vars[var]
     def getallusers(self):
         return map(sessions.get, usersinrooms[self.room])
-    def getallusernames(self): # TODO: stop lazying
-        pass #    return map(sessions.get, usersinrooms[self.room])
+    def getallusernames(self):
+        def getusername(userid):
+            return client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
+        return map(getusername, map(sessions.get, usersinrooms[self.room]))
     def getname(self, instance):
         return type(instance).__name__
-    def getprop(self, instance, prop):
-        return instance.prop
+    from builtins import getattr as getprop
     def getindex(self, obj, index):
         return obj[index]
-    def setprop(self, instance, prop, val):
-        instance.prop = val
-        return val
+    from builtins import setattr as setprop
     def setindex(self, obj, index, val):
         obj[index] = val
         return val
     def format(self, string, *args):
         return string.format(*args)
-    def makegui(self, role, name, names, values):
-        pass
-    def getgui(self, role, name):
-        pass
-    def getguiname(self, role, name):
-        pass
-    def freezegui(self, role, name):
-        pass
+    count = list.count
+    # def makegui(self, role, name, names, values):
+    #     pass
+    # def getgui(self, role, name):
+    #     pass
+    # def getguiname(self, role, name):
+    #     pass
+    # def freezegui(self, role, name):
+    #     pass
     def apply(self, func, *args):
         return func(*args)
     from random import randint as rand
