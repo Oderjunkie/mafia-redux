@@ -1,5 +1,31 @@
 let roomid, socket, button, textbox, form, chat, packets;
 
+/*
+ * 7/21/2021 00:06
+ *
+ *  HH      HH  II      CCCCCC  HH      HH  RRRRRRRR    II    SSSSSSSS
+ *  HH      HH  II    CC        HH      HH  RR      RR  II  SS
+ *  HH      HH  II    CC        HH      HH  RR      RR  II  SS
+ *  HHHHHHHHHH  II    CC        HHHHHHHHHH  RRRRRRRR    II    SSSSSS
+ *  HH      HH  II    CC        HH      HH  RR      RR  II          SS
+ *  HH      HH  II    CC        HH      HH  RR      RR  II          SS
+ *  HH      HH  II      CCCCCC  HH      HH  RR      RR  II  SSSSSSSS
+ * 
+ * chris is nice
+ * so is perception
+ * 
+ * bad ascii art of chris:
+ *          __
+ *         "##|
+ *        /^^^|
+ *    _.~;\ I /
+ *   "####;\~"
+ * 
+ * i think my iq is decreasing
+ * 
+ * 7/21/2021 00:13
+ */
+
 function checkforsubmission() {
     let text = textbox.val();
     if (text)
@@ -130,6 +156,13 @@ $(_=>{
             )
         );
     });
+    socket.on('gui', msg=>{
+        $('<form/>').append(
+            $('<fieldset/>').append(
+                
+            )
+        )
+    });
     socket.on('presence', msg=>{
         if (msg.player)
             $('input[type="submit"].playerup').prop('value', 'Player down');
@@ -137,7 +170,7 @@ $(_=>{
             $('input[type="submit"].playerup').prop('value', 'Player up');
         if (msg.host) {
             $('.gamelogic, .startgame').remove();
-            $('.details form').append(
+            $('.details form:last-child').append(
                 $('<input>').prop('type', 'submit')
                             .prop('value', 'Edit Game logic')
                             .addClass('gamelogic')
