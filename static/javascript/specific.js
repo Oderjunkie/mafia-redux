@@ -196,7 +196,7 @@ $(_=>{
             $('input[type="submit"].playerup').prop('value', 'Player up');
         if (msg.host) {
             $('.gamelogic, .startgame').remove();
-            $('.details form:last-child').append(
+            $('.details form:last').append(
                 $('<input>').prop('type', 'submit')
                             .prop('value', 'Edit Game logic')
                             .addClass('gamelogic')
