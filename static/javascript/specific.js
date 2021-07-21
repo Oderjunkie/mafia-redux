@@ -26,6 +26,32 @@ let roomid, socket, button, textbox, form, chat, packets;
  * 7/21/2021 00:13
  */
 
+function createGUI(name, selection, optional) {
+    $('.details form:last').before(
+        $('<form/>').append(
+            $('<fieldset/>').append(
+                $('<legend/>').text('Condemn'),
+                $('<select/>').append(
+                    optional ? $('<option/>').prop('value', '').text('No selection') : undefined,
+                    ...Object.entries(selection).map(([k, v])=>{
+                        return $('<option/>').prop('value', v).text(k);
+                    })
+                ).change(function(){
+                    socket.emit('gui', {[name]: $(this).find(':selected').prop('value')});
+                })
+            )
+        ).prop('formname', name.toLowerCase().replaceAll(/[^a-z]/, ''))
+    );
+}
+
+function freezeGUI(name) {
+    $(`form[formname=${name.toLowerCase().replaceAll(/[^a-z]/, )}] > fieldset > select`).prop('disabled', true);
+}
+
+function deleteGUI(name) {
+    $(`form[formname=${name.toLowerCase().replaceAll(/[^a-z]/, )}]`).remove();
+}
+
 function checkforsubmission() {
     let text = textbox.val();
     if (text)
@@ -217,4 +243,7 @@ $(_=>{
         }
     });
     socket.on('start', ()=>{}); // Future uses?
+    socket.on('gui', msg=>createGUI(msg.name, msg.list, msg.optional));
+    socket.on('guifreeze', name=>freezeGUI(name));
+    socket.on('guidelete', name=>deleteGUI(name));
 });
