@@ -124,7 +124,7 @@ function cancelform (event) {
     return false;
 }
 
-$(_=>{
+$(async _=>{
     roomid = location.pathname.split('/')[2];
     form = $('.input');
     button = $('.input > input[type=submit]');
@@ -162,10 +162,10 @@ $(_=>{
         for (let [type, msg] of currentevents) {
             switch (type) {
                 case 'chat':
-                    onchat(msg);
+                    await onchat(msg);
                     break;
                 case 'system':
-                    onsystem(msg);
+                    await onsystem(msg);
                     break;
             }
         }
