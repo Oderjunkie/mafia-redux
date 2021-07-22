@@ -124,7 +124,7 @@ function cancelform (event) {
     return false;
 }
 
-$(async _=>{
+$(_=>{
     roomid = location.pathname.split('/')[2];
     form = $('.input');
     button = $('.input > input[type=submit]');
@@ -150,7 +150,7 @@ $(async _=>{
     socket.on('connect', ()=>{
         socket.emit('handshake', {'roomId': roomid, 'usertoken': $('meta[name="session"]').attr('content')});
     });
-    socket.on('handshake', events=>{
+    socket.on('handshake', async events=>{
         packets = events;
         let currentphaseind = events.map(e=>e[0]=='phase').lastIndexOf(true);
         let currentevents = events.slice(0, currentphaseind);
