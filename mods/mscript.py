@@ -340,7 +340,7 @@ class maflogic:
                     if el not in consts:
                         consts.append(el)
                 continue
-            elif type(stat)==Code.Set:
+            elif type(stat) in [Code.Set, Code.Return]:
                 for el in self.find_consts([stat.val]):
                     if el not in consts:
                         consts.append(el)
