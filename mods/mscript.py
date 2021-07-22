@@ -1,6 +1,6 @@
 from parsimonious import Grammar, NodeVisitor
+from mods.console import print
 from operator import methodcaller
-from console import print
 
 grammar = Grammar(r"""
 document = __? (def __?)+
