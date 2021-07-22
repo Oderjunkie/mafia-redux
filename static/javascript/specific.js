@@ -1,4 +1,4 @@
-let roomid, socket, button, textbox, form, chat, packets;
+let roomid, socket, button, textbox, form, chat, packets, ishost;
 
 /*
  * 7/21/2021 00:06
@@ -144,7 +144,7 @@ $(_=>{
     $('.details form').submit(
         cancelform
     ).find('input[type="submit"].playerup').click(_=>{
-        socket.emit('presence', {'player': true});
+        socket.emit('presence', {'player': true, 'host': ishost});
     });
     socket = io();
     socket.on('connect', ()=>{
@@ -191,19 +191,13 @@ $(_=>{
             )
         );
     });
-    socket.on('gui', msg=>{
-        $('<form/>').append(
-            $('<fieldset/>').append(
-                
-            )
-        )
-    });
     socket.on('presence', msg=>{
         if (msg.player)
             $('input[type="submit"].playerup').prop('value', 'Player down');
         else
             $('input[type="submit"].playerup').prop('value', 'Player up');
-        if (msg.host) {
+        ishost = msg.host;
+        if (ishost) {
             $('.gamelogic, .startgame').remove();
             $('.details form:last').append(
                 $('<input>').prop('type', 'submit')
