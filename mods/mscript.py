@@ -1,5 +1,6 @@
 from parsimonious import Grammar, NodeVisitor
 from operator import methodcaller
+from console import print
 
 grammar = Grammar(r"""
 document = __? (def __?)+
@@ -467,6 +468,7 @@ class maflogic:
         if type(val)==Code.Variable:
             return b'|' + bytes([args.index(val.name)]) + final
     def code_gen_return(self, stat, consts, names, args):
+        print(stat)
         val = stat.val
         final = b'S\x00'
         if type(val) in [str, bool, int, float]:
