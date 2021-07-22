@@ -26,6 +26,14 @@ let roomid, socket, button, textbox, form, chat, packets;
  * 7/21/2021 00:13
  */
 
+function getNameFromId(id) {
+    return new Promise(resolve =>
+        $.post('/graphql', {query: `{ user(id:${JSON.stringify(id)}) { username } }`}, res=>{
+            resolve(res.data.user[0].username);
+        })
+    );
+}
+
 function createGUI(name, selection, optional) {
     $('.details form:last').before(
         $('<form/>').append(
@@ -79,10 +87,11 @@ function addToChat(el) {
     }
 }
 
-function createChatFrom(msg) {
+async function createChatFrom(msg) {
+    let from = await getNameFromId(msg.fromid);
     return $('<message></message>').append(
         convertTimeToElement(msg),
-        $('<name></name>').append(msg.from),
+        $('<name></name>').append(from),
         msg.message
     );
 }
@@ -94,13 +103,13 @@ function createSystemFrom(msg) {
     );
 }
 
-function onchat(msg) {
-    addToChat(createChatFrom(msg));
+async function onchat(msg) {
+    addToChat(await createChatFrom(msg));
     packets.push(['chat', msg]);
 }
 
-function onsystem(msg) {
-    addToChat(createSystemFrom(msg));
+async function onsystem(msg) {
+    addToChat(await createSystemFrom(msg));
     packets.push(['system', msg]);
 }
 
@@ -233,9 +242,10 @@ $(_=>{
                                                 )
                                 )
                             ),
-                $('<input>').prop('type', 'submit')
-                            .prop('value', 'Start game')
-                            .addClass('startgame')
+                $('<input>').prop({
+                                type: 'submit',
+                                value:'Start game'
+                            }).addClass('startgame')
                             .click(_=>{
                                 socket.emit('start', 'start');
                             })
