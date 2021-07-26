@@ -7,6 +7,9 @@ class mafstdlib:
         self.socket = socket
         self.room = room
         self.vars = {}
+    from builtins import len, max, min, map, filter, zip, range, setattr as setprop, getattr as getprop
+    from random import randint as rand
+    from math import floor, ceil
     def system(self, msg):
         packet = {
             'timestamp': time(),
@@ -67,15 +70,10 @@ class mafstdlib:
         return a * b
     def div(self, a, b):
         return a / b
-    from math import floor
-    from math import ceil
-    from builtins import len
     def find(self, arr, val):
         return arr.index(val)
     def count(self, arr, val):
         return arr.count(val)
-    from builtins import max
-    from builtins import min
     def eq(self, a, b):
         return a==b
     def neq(self, a, b):
@@ -100,10 +98,8 @@ class mafstdlib:
         return map(getusername, map(sessions.get, usersinrooms[self.room]))
     def getname(self, instance):
         return type(instance).__name__
-    from builtins import getattr as getprop
     def getindex(self, obj, index):
         return obj[index]
-    from builtins import setattr as setprop
     def setindex(self, obj, index, val):
         obj[index] = val
         return val
@@ -120,7 +116,6 @@ class mafstdlib:
     #     pass
     def apply(self, func, *args):
         return func(*args)
-    from random import randint as rand
 @addto(mafstdlib, 'and')
 def _(self, a, b):
     return a and b
@@ -133,3 +128,6 @@ def _(self, a):
 @addto(mafstdlib, 'return')
 def _(self, val):
     return val
+@addto(mafstdlib, 'is')
+def _(self, a, b):
+    return a is b
