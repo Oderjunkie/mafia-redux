@@ -1,5 +1,5 @@
-from dataclasses import dataclass
 from __future__ import annotations
+from dataclasses import dataclass
 from typing import Any, Union
 from parsimonious import Grammar, NodeVisitor
 from mods.console import print
