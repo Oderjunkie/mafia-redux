@@ -1,3 +1,6 @@
+from dataclasses import dataclass
+from __future__ import annotations
+from typing import Any, Union
 from parsimonious import Grammar, NodeVisitor
 from mods.console import print
 from operator import methodcaller
@@ -49,150 +52,112 @@ NEWLINE = ~r'[\r\n]+'
 """)
 
 class Code:
+    @dataclass
     class IfStat:
-        def __init__(self, cond, body):
-            self.cond = cond
-            self.body = body
+        cond: Any
+        body: list[Any]
         def __iter__(self):
             return iter(self.body)
-        def __repr__(self):
-            return 'IfStat({!r}, {!r})'.format(self.cond, self.body)
-        def __str__(self):
-            return 'if {}\n{}\nend'.format(self.cond, '\n'.join(map(str, self.body)))
+    @dataclass
     class ForStat:
-        def __init__(self, arr, el, body):
-            self.arr = arr
-            self.el = el
-            self.body = body
+        arr: Any
+        el: Code.Name
+        body: list[Any]
         def __iter__(self):
             return iter(self.body)
-        def __repr__(self):
-            return 'ForStat({!r}, {!r}, {!r})'.format(self.arr, self.el, self.body)
-        def __str__(self):
-            return 'for {} {}\n{}\nend'.format(self.el, self.arr, self.body)
+    
+    @dataclass
     class Variable:
-        def __init__(self, name):
-            self.name = name
-        def __repr__(self):
-            return 'Variable({!r})'.format(self.name)
-        def __str__(self):
-            return '[{}]'.format(self.name)
+        name: str
+    
+    @dataclass
     class Set:
-        def __init__(self, var, val):
-            self.var = var
-            self.val = val
-        def __repr__(self):
-            return 'Set({!r}, {!r})'.format(self.var, self.val)
-        def __str__(self):
-            return '[{}] = {}'.format(self.var, self.val)
+        var: Code.Variable
+        val: Any
+    
+    @dataclass
     class Return:
-        def __init__(self, val):
-            self.val = val
-        def __repr__(self):
-            return 'Return({!r})'.format(self.val)
-        def __str__(self):
-            return 'return {}'.format(self.val)
+        val: Any
+    @dataclass
     class FuncCall:
-        def __init__(self, name, args):
-            self.name = name
-            self.args = args
-        def __repr__(self):
-            return 'FuncCall({!r}, {!r})'.format(self.name, self.args)
-        def __str__(self):
-            return '{} {}'.format(self.name, ' '.join(map(str, self.args)))
+        name: str
+        args: list
+    
+    @dataclass
     class FuncDef:
-        def __init__(self, name, args, docs):
-            self.name = name
-            self.args = args
-            self.docs = docs
+        name: str
+        args: list[str]
+        docs: str
+        def __post_init__(self, *_, **__):
             self.body = []
         def __iter__(self):
             return iter(self.body)
-        def __repr__(self):
-            return 'FuncDef({!r}, {!r}, {!r}, {!r})'.format(self.name, self.args, self.docs, self.body)
-        def __str__(self):
-            docs = self.docs
-            string = 'def {0} {1} - {2}' if docs else 'def {0} {1}'
-            args = self.args
-            args = map('[{}]'.format, args)
-            args = ' '.join(args)
-            string = string.format(self.name, args, docs)
-            body = map(lambda x:'  '+str(x), self.body)
-            funcdef = '{}\n{}\nend'.format(string, '\n'.join(body))
-            return funcdef
+    @dataclass
     class ClassDef:
-        def __init__(self, name, docs):
-            self.name = name
-            self.docs = docs
+        name: str
+        docs: str
+        def __post_init__(self, *_, **__):
             self.body = []
             self.inherit = None
         def __iter__(self):
             return iter(self.body)
-        def __repr__(self):
-            return 'ClassDef({!r}, {!r}, {!r}, {!r})'.format(self.name, self.docs, self.body, self.inherit)
-        def __str__(self):
-            return '\n'.join(map(str, self.body))
+    @dataclass
     class Document:
-        def __init__(self, defs):
-            self.defs = defs
+        defs: list[Union[Code.ClassDef, Code.FuncDef]]
         def __iter__(self):
             return iter(self.defs)
-        def __repr__(self):
-            return 'Documuent({!r})'.format(self.defs)
-        def __str__(self):
-            return '\n'.join(map(str, self.defs))
 
 class TrickOrTreater(NodeVisitor):
     def generic_visit(self, node, visited_children):
         return visited_children or node
-    def visit__(self, node, visited_children):
+    def visit__(self, *_):
         return None
-    def visit___(self, node, visited_children):
+    def visit___(self, *_):
         return None
-    def visit_NEWLINE(self, node, visited_children):
+    def visit_NEWLINE(self, *_):
         return None
-    def visit_DEF(self, node, visited_children):
+    def visit_DEF(self, node, _):
         return node.text
-    def visit_CLASS(self, node, visited_children):
+    def visit_CLASS(self, node, _):
         return node.text
-    def visit_LBRACKET(self, node, visited_children):
+    def visit_LBRACKET(self, node, _):
         return node.text
-    def visit_RBRACKET(self, node, visited_children):
+    def visit_RBRACKET(self, node, _):
         return node.text
-    def visit_END(self, node, visited_children):
+    def visit_END(self, node, _):
         return node.text
-    def visit_string(self, node, visited_children):
+    def visit_string(self, node, _):
         return node.text
-    def visit_argstring(self, node, visited_children):
+    def visit_argstring(self, node, _):
         return node.text
-    def visit_boolean(self, node, visited_children):
+    def visit_boolean(self, node, _):
         return node.text=='true'
-    def visit_number(self, node, visited_children):
+    def visit_number(self, node, _):
         try:
             return int(node.text)
         except Exception:
             return float(node.text)
-    def visit_fullargstring(self, node, visited_children):
+    def visit_fullargstring(self, _, visited_children):
         return visited_children[1].text
-    def visit_argname(self, node, visited_children):
+    def visit_argname(self, node, _):
         return node.text
-    def visit_name(self, node, visited_children):
+    def visit_name(self, node, _):
         return node.text
-    def visit_fnarg(self, node, visited_children):
+    def visit_fnarg(self, _, visited_children):
         return visited_children[0]
-    def visit_def(self, node, visited_children):
+    def visit_def(self, _, visited_children):
         return visited_children[0]
-    def visit_variable(self, node, visited_children):
+    def visit_variable(self, _, visited_children):
         return Code.Variable(visited_children[2])
-    def visit_ifstat(self, node, visited_children):
+    def visit_ifstat(self, _, visited_children):
         return Code.IfStat(visited_children[2], visited_children[4])
-    def visit_forstat(self, node, visited_children):
+    def visit_forstat(self, _, visited_children):
         return Code.ForStat(visited_children[4], visited_children[2], visited_children[6])
-    def visit_set(self, node, visited_children):
+    def visit_set(self, _, visited_children):
         return Code.Set(visited_children[0], visited_children[4])
-    def visit_return(self, node, visited_children):
+    def visit_return(self, _, visited_children):
         return Code.Return(visited_children[2])
-    def visit_desc(self, node, visited_children):
+    def visit_desc(self, _, visited_children):
         funcname = visited_children[0]
         args = visited_children[2]
         if type(args)==list:
@@ -206,7 +171,7 @@ class TrickOrTreater(NodeVisitor):
         else:
             desc = ''
         return Code.FuncDef(funcname, args, desc)
-    def visit_classdesc(self, node, visited_children):
+    def visit_classdesc(self, _, visited_children):
         funcname = visited_children[0]
         desc = visited_children[2]
         if type(desc)==list:
@@ -214,33 +179,33 @@ class TrickOrTreater(NodeVisitor):
         else:
             desc = ''
         return Code.ClassDef(funcname, desc)
-    def visit_funcdef(self, node, visited_children):
+    def visit_funcdef(self, _, visited_children):
         assert visited_children[0]=='def'
         assert visited_children[1]==None
         visited_children[2].body = visited_children[5]
         return visited_children[2]
-    def visit_classdef(self, node, visited_children):
+    def visit_classdef(self, _, visited_children):
         assert visited_children[0]=='class'
         assert visited_children[1]==None
         if type(visited_children[4])==list:
             visited_children[2].inherit = visited_children[4][0][2]
         visited_children[2].body = visited_children[6]
         return visited_children[2]
-    def visit_funcbody(self, node, visited_children):
+    def visit_funcbody(self, _, visited_children):
         return list(map(methodcaller('__getitem__', 1), visited_children[0]))
-    def visit_classbody(self, node, visited_children):
+    def visit_classbody(self, _, visited_children):
         return list(map(methodcaller('__getitem__', 1), visited_children[0]))
-    def visit_stat(self, node, visited_children):
+    def visit_stat(self, _, visited_children):
         return visited_children[0]
-    def visit_fncall(self, node, visited_children):
+    def visit_fncall(self, _, visited_children):
         funcname = visited_children[0]
         args = []
         if type(visited_children[1])==list:
             args = list(map(methodcaller('__getitem__', 1), visited_children[1]))
         return Code.FuncCall(funcname, args)
-    def visit_dollar(self, node, visited_children):
+    def visit_dollar(self, _, visited_children):
         return visited_children[1]
-    def visit_document(self, node, visited_children):
+    def visit_document(self, _, visited_children):
         return Code.Document(list(map(methodcaller('__getitem__', 0), visited_children[1])))
 
 from types import CodeType, FunctionType
