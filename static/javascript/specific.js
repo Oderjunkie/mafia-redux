@@ -34,6 +34,12 @@ function getNameFromId(id) {
     );
 }
 
+const encodeGUIname = btoa;
+
+// function encodeGUIname(name) {
+//     return name.toLowerCase().replace(/[^a-z]/g, '');
+// }
+
 function createGUI(name, selection, optional) {
     $('.details form:last').before(
         $('<form/>').append(
@@ -48,16 +54,16 @@ function createGUI(name, selection, optional) {
                     socket.emit('gui', {[name]: $(this).find(':selected').prop('value')});
                 })
             )
-        ).prop('formname', name.toLowerCase().replaceAll(/[^a-z]/, ''))
+        ).prop('formname', encodeGUIname(name))
     );
 }
 
 function freezeGUI(name) {
-    $(`form[formname=${name.toLowerCase().replaceAll(/[^a-z]/, )}] > fieldset > select`).prop('disabled', true);
+    $(`form[formname=${encodeGUIname(name)}] > fieldset > select`).prop('disabled', true);
 }
 
 function deleteGUI(name) {
-    $(`form[formname=${name.toLowerCase().replaceAll(/[^a-z]/, )}]`).remove();
+    $(`form[formname=${encodeGUIname(name)}]`).remove();
 }
 
 function checkforsubmission() {
@@ -113,10 +119,10 @@ async function onsystem(msg) {
     packets.push(['system', msg]);
 }
 
-function onphase(msg) {
-    $('h1').text(msg.name);
+function onphase(name) {
+    $('h1').text(name);
     chat.children().remove();
-    packets.push(['phase', msg]);
+    packets.push(['phase', name]);
 }
 
 function cancelform (event) {
@@ -124,52 +130,110 @@ function cancelform (event) {
     return false;
 }
 
-$(_=>{
+function autosend(event) {
+    if (event.which==13)
+        button.click();
+}
+
+function chatout(event) {
+    socket.emit('chat', textbox.val());
+    textbox.val('');
+    checkforsubmission();
+    event.preventDefault();
+    return false;
+}
+
+function updatepresence(msg) {
+    if (msg.player)
+        $('input[type="submit"].playerup').prop('value', 'Player down');
+    else
+        $('input[type="submit"].playerup').prop('value', 'Player up');
+    ishost = msg.host;
+    if (ishost) {
+        $('.gamelogic, .startgame').remove();
+        $('.details form:last').append(
+            $('<input>').prop('type', 'submit')
+                        .prop('value', 'Edit Game logic')
+                        .addClass('gamelogic')
+                        .click(_=>
+                            $('body').addClass('dark')
+                                     .click(_=>{
+                                        if (_.target==document.body)
+                                            $('body').removeClass('dark')
+                                                        .off('click')
+                                                        .find('form.centered')
+                                                        .remove();
+                                    }).append(
+                                $('<form>').submit(cancelform)
+                                            .addClass('centered')
+                                            .append(
+                                                $('<fieldset>').append(
+                                                    $('<legend>').text('Edit Game logic'),
+                                                    $('<label>').prop('for', 'gamelogiclink')
+                                                                .text('Pastebin Link:'),
+                                                    $('<br>'),
+                                                    $('<input>').prop({
+                                                                    type: 'text',
+                                                                    id: 'gamelogiclink'
+                                                                }),
+                                                    $('<br>'),
+                                                    $('<input>').prop({
+                                                                    type: 'submit',
+                                                                    value: 'Change logic'
+                                                                }).click(_=>{
+                                                                    socket.emit('logic', $('form.centered input[type="text"]').prop('value'));
+                                                                    $('body').click();
+                                                                })
+                                                )
+                                            )
+                            )
+                        ),
+            $('<input>').prop({
+                            type: 'submit',
+                            value:'Start game'
+                        }).addClass('startgame')
+                        .click(_=>{
+                            socket.emit('start', 'start');
+                        })
+        );
+    }
+}
+
+async function onhandshake(events) {
+    let currentphaseind = events.map(e=>e[0]=='phase').lastIndexOf(true);
+    let currentevents = events.slice(0, currentphaseind);
+    if (currentphaseind != -1) {
+        let currentphase = events[currentphaseind][1];
+        onphase(currentphase);
+        $('.details form').remove();
+    }
+    for (let [type, msg] of currentevents)
+        switch (type) {
+            case 'chat':
+                await onchat(msg);
+                break;
+            case 'system':
+                await onsystem(msg);
+                break;
+        }
+}
+
+function main() {
     roomid = location.pathname.split('/')[2];
     form = $('.input');
     button = $('.input > input[type=submit]');
     textbox = $('.input > input[type=text]');
-    textbox.on('input', checkforsubmission).keypress(e=>{
-        if (e.which==13)
-            button.click();
-    });
-    form.submit(e=>{
-        socket.emit('chat', textbox.val());
-        textbox.val('');
-        checkforsubmission();
-        e.preventDefault();
-        return false;
-    });
+    textbox.on('input', checkforsubmission).keypress(autosend);
+    form.submit(chatout);
     chat = $('.chat');
-    $('.details form').submit(
-        cancelform
-    ).find('input[type="submit"].playerup').click(_=>{
-        socket.emit('presence', {'player': true, 'host': ishost});
-    });
+    $('.details form').submit(cancelform).find('input[type="submit"].playerup').click(_=>
+        socket.emit('presence', {'player': true, 'host': ishost})
+    );
     socket = io();
-    socket.on('connect', ()=>{
-        socket.emit('handshake', {'roomId': roomid, 'usertoken': $('meta[name="session"]').attr('content')});
-    });
-    socket.on('handshake', async events=>{
-        packets = events;
-        let currentphaseind = events.map(e=>e[0]=='phase').lastIndexOf(true);
-        let currentevents = events.slice(0, currentphaseind);
-        if (currentphaseind != -1) {
-            let currentphase = events[currentphaseind];
-            onphase({'name': currentphase});
-            $('.details form').remove();
-        }
-        for (let [type, msg] of currentevents) {
-            switch (type) {
-                case 'chat':
-                    await onchat(msg);
-                    break;
-                case 'system':
-                    await onsystem(msg);
-                    break;
-            }
-        }
-    }); 
+    socket.on('connect', ()=>
+        socket.emit('handshake', {'roomId': roomid, 'usertoken': $('meta[name="session"]').attr('content')})
+    );
+    socket.on('handshake', onhandshake); 
     socket.on('chat', onchat);
     socket.on('system', onsystem);
     socket.on('phase', onphase);
@@ -191,63 +255,11 @@ $(_=>{
             )
         );
     });
-    socket.on('presence', msg=>{
-        if (msg.player)
-            $('input[type="submit"].playerup').prop('value', 'Player down');
-        else
-            $('input[type="submit"].playerup').prop('value', 'Player up');
-        ishost = msg.host;
-        if (ishost) {
-            $('.gamelogic, .startgame').remove();
-            $('.details form:last').append(
-                $('<input>').prop('type', 'submit')
-                            .prop('value', 'Edit Game logic')
-                            .addClass('gamelogic')
-                            .click(_=>
-                                $('body').addClass('dark')
-                                         .click(_=>{
-                                            if (_.target==document.body)
-                                                $('body').removeClass('dark')
-                                                            .off('click')
-                                                            .find('form.centered')
-                                                            .remove();
-                                        }).append(
-                                    $('<form>').submit(cancelform)
-                                                .addClass('centered')
-                                                .append(
-                                                    $('<fieldset>').append(
-                                                        $('<legend>').text('Edit Game logic'),
-                                                        $('<label>').prop('for', 'gamelogiclink')
-                                                                    .text('Pastebin Link:'),
-                                                        $('<br>'),
-                                                        $('<input>').prop({
-                                                                        type: 'text',
-                                                                        id: 'gamelogiclink'
-                                                                    }),
-                                                        $('<br>'),
-                                                        $('<input>').prop({
-                                                                        type: 'submit',
-                                                                        value: 'Change logic'
-                                                                    }).click(_=>{
-                                                                        socket.emit('logic', $('form.centered input[type="text"]').prop('value'));
-                                                                        $('body').click();
-                                                                    })
-                                                    )
-                                                )
-                                )
-                            ),
-                $('<input>').prop({
-                                type: 'submit',
-                                value:'Start game'
-                            }).addClass('startgame')
-                            .click(_=>{
-                                socket.emit('start', 'start');
-                            })
-            );
-        }
-    });
+    socket.on('presence', updatepresence);
     socket.on('start', ()=>{}); // Future uses?
     socket.on('gui', msg=>createGUI(msg.name, msg.list, msg.optional));
     socket.on('guifreeze', name=>freezeGUI(name));
     socket.on('guidelete', name=>deleteGUI(name));
-});
+}
+
+$(main);
