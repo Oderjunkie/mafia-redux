@@ -116,6 +116,12 @@ class mafstdlib:
     #     pass
     def apply(self, func, *args):
         return func(*args)
+    def phase(self, name):
+        self.socket.emit('phase', name, to=self.room)
+        client.mafiaredux.rooms.update_one(
+            {'roomid': self.room},
+            {'$push': {'events': ['phase', name]}}
+        )
 @addto(mafstdlib, 'and')
 def _(self, a, b):
     return a and b
