@@ -44,7 +44,7 @@ function createGUI(name, selection, optional) {
     $('.details form:last').before(
         $('<form/>').append(
             $('<fieldset/>').append(
-                $('<legend/>').text(name),
+                $('<legend/>').text(name + ':'),
                 $('<select/>').append(
                     optional ? $('<option/>').prop('value', '').text('No selection') : undefined,
                     ...Object.entries(selection).map(([k, v])=>{
