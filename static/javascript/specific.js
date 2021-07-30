@@ -256,7 +256,7 @@ function main() {
         );
     });
     socket.on('presence', updatepresence);
-    socket.on('start', ()=>{}); // Future uses?
+    // socket.on('start', ()=>{}); // Future uses?
     socket.on('gui', msg=>createGUI(msg.name, msg.list, msg.optional));
     socket.on('guifreeze', name=>freezeGUI(name));
     socket.on('guidelete', name=>deleteGUI(name));
