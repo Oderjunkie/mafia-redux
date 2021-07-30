@@ -28,7 +28,7 @@ let roomid, socket, button, textbox, form, chat, packets, ishost;
 
 function getNameFromId(id) {
     return new Promise(resolve =>
-        $.post('/graphql', {query: `{ user(id:${JSON.stringify(id)}) { username } }`}, res=>{
+        $.post('/graphql', {query: '{ user(id:' + JSON.stringify(id) + ') { username } }'}, res=>{
             resolve(res.data.user[0].username);
         })
     );
@@ -59,11 +59,11 @@ function createGUI(name, selection, optional) {
 }
 
 function freezeGUI(name) {
-    $(`form[formname=${encodeGUIname(name)}] > fieldset > select`).prop('disabled', true);
+    $('form[formname="' + encodeGUIname(name) + '"] > fieldset > select').prop('disabled', true);
 }
 
 function deleteGUI(name) {
-    $(`form[formname=${encodeGUIname(name)}]`).remove();
+    $('form[formname="' + encodeGUIname(name) +'"]').remove();
 }
 
 function checkforsubmission() {
@@ -77,9 +77,9 @@ function checkforsubmission() {
 function convertTimeToElement(msg) {
     let date = new Date(msg.timestamp*1000);
     $('<time></time>').append(
-        `${date.getHours().toString().padStart(2, '0')}:`+
-        `${date.getMinutes().toString().padStart(2, '0')}:`+
-        `${date.getSeconds().toString().padStart(2, '0')}`
+        date.getHours().toString().padStart(2, '0')+':'+
+        date.getMinutes().toString().padStart(2, '0')+':'+
+        date.getSeconds().toString().padStart(2, '0')
     );
 }
 
