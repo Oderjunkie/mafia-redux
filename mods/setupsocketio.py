@@ -116,7 +116,7 @@ def presence(msg):
     if msg['host'] and userid != client.mafiaredux.rooms.find_one({'roomid': room[-1]}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0, 'logic': 0})['host']:
         socketio.emit('system', {
             'timestamp': time(),
-            'message': '{} [ID:{}] is trying to hack mafia redux and gain host privelages, thankfully, they did not get it on the first try, eeeeeeeeediot.'.format(name, userid)
+            'message': '{} [ID:{}] is trying to hack mafia redux and gain host privileges, thankfully, they did not get it on the first try, eeeeeeeeediot.'.format(name, userid)
         }, to=room)
         return
     if msg['player']:
