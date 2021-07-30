@@ -119,11 +119,12 @@ def presence(msg):
             'message': '{} [ID:{}] is trying to hack mafia redux and gain host privileges, thankfully, they did not get it on the first try, eeeeeeeeediot.'.format(name, userid)
         }, to=room)
         return
+    logic = logics[room[-1]]
     if msg['player']:
-        if logics[room[-1]].funcs.playerup(stdlib, userid, name) == False:
+        if logic.funcs.playerup(stdlib, userid, name) == False:
             return
     else:
-        if logics[room[-1]].funcs.playerdown(stdlib, userid, name) == False:
+        if logic.funcs.playerdown(stdlib, userid, name) == False:
             return
     socketio.emit('presence', msg, to=request.sid)
 
