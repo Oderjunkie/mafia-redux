@@ -127,7 +127,7 @@ function convertTimeToElement({timestamp}) {
  * Appends an element to chat, and appropriately scrolls
  * the chat to the bottom.
  * 
- * @param {jQuery} el - The element to appent
+ * @param {jQuery} el - The element to append.
  */
 
 function addToChat(el) {
@@ -228,7 +228,7 @@ function createPopup(name, appendables) {
                             ...appendables
                         )
                     )
-    )
+    );
 }
 
 /**
