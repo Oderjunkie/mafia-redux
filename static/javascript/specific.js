@@ -119,6 +119,26 @@ async function onsystem(msg) {
     packets.push(['system', msg]);
 }
 
+function createPopup(name, appendables) {
+    $('body').addClass('dark')
+             .click(_=>{
+                if (_.target==document.body)
+                    $('body').removeClass('dark')
+                                .off('click')
+                                .find('form.centered')
+                                .remove();
+            }).append(
+        $('<form>').submit(cancelform)
+                    .addClass('centered')
+                    .append(
+                        $('<fieldset>').append(
+                            $('<legend>').text(name),
+                            ...appendables
+                        )
+                    )
+    )
+}
+
 function onphase(name) {
     $('h1').text(name);
     chat.children().remove();
@@ -156,37 +176,23 @@ function updatepresence(msg) {
                         .prop('value', 'Edit Game logic')
                         .addClass('gamelogic')
                         .click(_=>
-                            $('body').addClass('dark')
-                                     .click(_=>{
-                                        if (_.target==document.body)
-                                            $('body').removeClass('dark')
-                                                        .off('click')
-                                                        .find('form.centered')
-                                                        .remove();
-                                    }).append(
-                                $('<form>').submit(cancelform)
-                                            .addClass('centered')
-                                            .append(
-                                                $('<fieldset>').append(
-                                                    $('<legend>').text('Edit Game logic'),
-                                                    $('<label>').prop('for', 'gamelogiclink')
-                                                                .text('Pastebin Link:'),
-                                                    $('<br>'),
-                                                    $('<input>').prop({
-                                                                    type: 'text',
-                                                                    id: 'gamelogiclink'
-                                                                }),
-                                                    $('<br>'),
-                                                    $('<input>').prop({
-                                                                    type: 'submit',
-                                                                    value: 'Change logic'
-                                                                }).click(_=>{
-                                                                    socket.emit('logic', $('form.centered input[type="text"]').prop('value'));
-                                                                    $('body').click();
-                                                                })
-                                                )
-                                            )
-                            )
+                            createPopup('Edit Game logic', [
+                                $('<label>').prop('for', 'gamelogiclink')
+                                            .text('Pastebin Link:'),
+                                $('<br>'),
+                                $('<input>').prop({
+                                                type: 'text',
+                                                id: 'gamelogiclink'
+                                            }),
+                                $('<br>'),
+                                $('<input>').prop({
+                                                type: 'submit',
+                                                value: 'Change logic'
+                                            }).click(_=>{
+                                                socket.emit('logic', $('form.centered input[type="text"]').prop('value'));
+                                                $('body').click();
+                                            })
+                            ])
                         ),
             $('<input>').prop({
                             type: 'submit',
