@@ -40,7 +40,7 @@ const encodeGUIname = btoa;
 //     return name.toLowerCase().replace(/[^a-z]/g, '');
 // }
 
-function createGUI(name, selection, optional) {
+function createGUI({name, list: selection, optional}) {
     $('.details form:last').before(
         $('<form/>').append(
             $('<fieldset/>').append(
@@ -263,9 +263,10 @@ function main() {
     });
     socket.on('presence', updatepresence);
     // socket.on('start', ()=>{}); // Future uses?
-    socket.on('gui', msg=>createGUI(msg.name, msg.list, msg.optional));
-    socket.on('guifreeze', name=>freezeGUI(name));
-    socket.on('guidelete', name=>deleteGUI(name));
+    socket.on('gui', createGUI);
+    socket.on('guifreeze', freezeGUI);
+    socket.on('guidelete', deleteGUI);
+    socket.on('error', handleError)
 }
 
 $(main);
