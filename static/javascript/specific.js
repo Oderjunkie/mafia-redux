@@ -163,6 +163,12 @@ function chatout(event) {
     return false;
 }
 
+function handleError(msg) {
+    createPopup('Error', [
+        $('<p>').text(msg)
+    ]);
+}
+
 function updatepresence(msg) {
     if (msg.player)
         $('input[type="submit"].playerup').prop('value', 'Player down');
@@ -266,7 +272,7 @@ function main() {
     socket.on('gui', createGUI);
     socket.on('guifreeze', freezeGUI);
     socket.on('guidelete', deleteGUI);
-    socket.on('error', handleError)
+    socket.on('error', handleError);
 }
 
 $(main);
