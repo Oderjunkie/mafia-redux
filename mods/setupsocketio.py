@@ -1,3 +1,4 @@
+from typing import Any
 from mods.setupflask import socketio, client, usersinrooms, sessions, stdlibs, logics
 from flask_socketio import join_room, rooms, ConnectionRefusedError
 from mods.utilities import errorHandle, idname2key
@@ -13,21 +14,21 @@ from time import time
 def connection(json):
     if not client.mafiaredux.cookies.count_documents({'token': json['usertoken']}):
         raise ConnectionRefusedError('can\'t use a cookie to save their lives')
-    room = json['roomId']
+    room: str = json['roomId']
     join_room(room)
-    userid = client.mafiaredux.cookies.find_one({'token': json['usertoken']}, {'token': 0, '_id': 0})['id']
+    userid: str = client.mafiaredux.cookies.find_one({'token': json['usertoken']}, {'token': 0, '_id': 0})['id']
     if room not in usersinrooms:
         usersinrooms[room] = []
     usersinrooms[room].append(request.sid)
     sessions[request.sid] = userid
-    name = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
+    name: str = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
     print(request.sid, 'resolved to', name, 'at', room)
     roomobj = None
     try:
-        roomobj = client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})
-        events = roomobj['events']
+        roomobj: dict[str, Any] = client.mafiaredux.rooms.find_one({'roomid': room}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})
+        events: list[list[Any]] = roomobj['events']
         #print(events)
-        isHost = roomobj['host']==userid
+        isHost: bool = roomobj['host']==userid
         socketio.emit('presence', {'player': False, 'host': isHost}, to=request.sid)
         socketio.emit('handshake', events, to=request.sid)
     #     for event in events:
@@ -46,7 +47,7 @@ def connection(json):
     if room not in logics:
         logics[room] = maflogic()
         try:
-            code = get('https://pastebin.com/raw/'+quote(roomobj['logic'], safe='')).content.decode('utf-8')
+            code: str = get('https://pastebin.com/raw/'+quote(roomobj['logic'], safe='')).content.decode('utf-8')
             logics[room].main(code)
             logics[room].funcs.setup(stdlibs[room])
         except Exception as e:
@@ -55,7 +56,6 @@ def connection(json):
                 'timestamp': time()
             }, to=room)
             raise e
-            return
 
 @socketio.on('connect')
 def connection():
@@ -63,9 +63,9 @@ def connection():
 
 @socketio.on('disconnect')
 def disconnect():
-    room = rooms(request.sid)
-    userid = sessions[request.sid]
-    name = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
+    room: list[str] = rooms(request.sid)
+    userid: str = sessions[request.sid]
+    name: str = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
     socketio.emit('userExit', {
         'id': userid,
         'name': name,
@@ -97,7 +97,7 @@ def changeGameLogic(link):
             raise e
 
 @socketio.on('start')
-def startGame(_):
+def startGame():
     room: list[str] = rooms(request.sid)
     userid: str = sessions[request.sid]
     if userid == client.mafiaredux.rooms.find_one({'roomid': room[-1]}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0, 'logic': 0})['host']:
@@ -140,14 +140,14 @@ def guichange(dicts: dict):
 
 @socketio.on('chat')
 def chat(message):
-    room = rooms(request.sid)
-    userid = sessions[request.sid]
-    stdlib = stdlibs[room[-1]]
+    room: list[str] = rooms(request.sid)
+    userid: str = sessions[request.sid]
+    stdlib: mafstdlib = stdlibs[room[-1]]
     print(sessions)
-    name = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
+    name: str = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
     if logics[room[-1]].funcs.chat(stdlib, userid, name, message) in [None, True]:
         print(name, 'says', repr(message))
-        packet = {
+        packet: dict = {
             'timestamp': time(),
             'message': message,
             'from': name,
