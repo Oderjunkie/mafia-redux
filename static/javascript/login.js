@@ -82,7 +82,7 @@ function onSubmitBetter_button() {
     let action = button.attr('formaction') ?? form.prop('action');
     let method = button.attr('formmethod') ?? form.prop('method');
     let error = form.find('.error');
-    error.text();
+    error.hide(500).text();
     return $.ajax({
         cache: false,
         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -93,9 +93,8 @@ function onSubmitBetter_button() {
     }).done($data=>{
         window.location.href = $data;
     }).fail(({responseText: $data})=>{
-        error.text($data);
+        error.text($data).show(500);
     });
-    return false;
 }
 
 $(_=>{
