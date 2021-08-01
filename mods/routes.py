@@ -89,6 +89,10 @@ def j360js():
 def j360map():
     return app.send_static_file('libs/jquery-3.6.0.min.map')
 
+@app.route('/logo.png')
+def logo():
+    return app.send_static_file('logo.png')
+
 @app.route('/ddroid.ttf')
 def ddroidttf():
     return app.send_static_file('font/disposabledroidbb.ttf')
