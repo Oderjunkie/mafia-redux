@@ -1,6 +1,6 @@
 from mods.setupflask import socketio, client, usersinrooms, sessions, stdlibs, logics
 from flask_socketio import join_room, rooms, ConnectionRefusedError
-from mods.utilities import errorHandle
+from mods.utilities import errorHandle, idname2key
 from mods.mscript import maflogic
 from mods.stdlib import mafstdlib
 from mods.console import print
@@ -79,12 +79,12 @@ def disconnect():
 
 @socketio.on('logic')
 def changeGameLogic(link):
-    room = rooms(request.sid)
-    userid = sessions[request.sid]
-    roomobj = client.mafiaredux.rooms.find_one({'roomid': room[-1]}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})
+    room: list[str] = rooms(request.sid)
+    userid: str = sessions[request.sid]
+    roomobj: dict = client.mafiaredux.rooms.find_one({'roomid': room[-1]}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0})
     if userid == roomobj['host']:
         logics[room[-1]] = maflogic()
-        logic = logics[room[-1]]
+        logic: maflogic = logics[room[-1]]
         try:
             code = get('https://pastebin.com/raw/'+quote(roomobj['logic'], safe='')).content.decode('utf-8')
             logic.main(code)
@@ -95,31 +95,30 @@ def changeGameLogic(link):
                 'timestamp': time()
             }, to=room)
             raise e
-            return
 
 @socketio.on('start')
 def startGame(_):
-    room = rooms(request.sid)
-    userid = sessions[request.sid]
+    room: list[str] = rooms(request.sid)
+    userid: str = sessions[request.sid]
     if userid == client.mafiaredux.rooms.find_one({'roomid': room[-1]}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0, 'logic': 0})['host']:
-        stdlib = stdlibs[room[-1]]
-        logic = logics[room[-1]]
+        stdlib: mafstdlib = stdlibs[room[-1]]
+        logic: maflogic = logics[room[-1]]
         logic.funcs.start(stdlib)
         logic.funcs.distributeroles(stdlib)
 
 @socketio.on('presence')
 def presence(msg):
-    room = rooms(request.sid)
-    stdlib = stdlibs[room[-1]]
-    userid = sessions[request.sid]
-    name = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
+    room: list[str] = rooms(request.sid)
+    stdlib: mafstdlib = stdlibs[room[-1]]
+    userid: str = sessions[request.sid]
+    name: str = client.mafiaredux.users.find_one({'userid': userid}, {'userid': 0, 'userhash': 0, '_id': 0})['username']
     if msg['host'] and userid != client.mafiaredux.rooms.find_one({'roomid': room[-1]}, {'_id': 0, 'setup': 0, 'listed': 0, 'roomid': 0, 'name': 0, 'logic': 0})['host']:
         socketio.emit('system', {
             'timestamp': time(),
             'message': '{} [ID:{}] is trying to hack mafia redux and gain host privileges, thankfully, they did not get it on the first try, eeeeeeeeediot.'.format(name, userid)
         }, to=room)
         return
-    logic = logics[room[-1]]
+    logic: maflogic = logics[room[-1]]
     if msg['player']:
         if logic.funcs.playerup(stdlib, userid, name) == False:
             return
@@ -128,6 +127,16 @@ def presence(msg):
             return
     socketio.emit('presence', msg, to=request.sid)
 
+@socketio.on('gui')
+def guichange(dicts: dict):
+    room: list[str] = rooms(request.sid)
+    stdlib: mafstdlib = stdlibs[room[-1]]
+    userid: str = sessions[request.sid]
+    logic: maflogic = logics[room[-1]]
+    if logics[room[-1]].funcs.chat(stdlib, userid, dicts) in [None, True]:
+        for name, value in dicts.items():
+            logic.funcs.guichange(stdlib, userid, name, value)
+            stdlib.guiselection[idname2key(userid, name)] = value
 
 @socketio.on('chat')
 def chat(message):
