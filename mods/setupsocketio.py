@@ -34,7 +34,7 @@ def connection(json):
     #     for event in events:
     #         socketio.emit(*event, to=request.sid)
     except Exception as e:
-        socketio.emit('error', 'Internal server error occured. [getting events]', to=room)
+        socketio.emit('error', 'Internal server error occured [getting events], Maybe you typed in an incorrect url?', to=room)
         # errorHandle(e)
         return
     socketio.emit('userJoin', {
