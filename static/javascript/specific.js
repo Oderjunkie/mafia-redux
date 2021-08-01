@@ -145,7 +145,7 @@ function onphase(name) {
     packets.push(['phase', name]);
 }
 
-function cancelform (event) {
+function cancelform(event) {
     event.preventDefault();
     return false;
 }
