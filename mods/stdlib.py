@@ -1,5 +1,6 @@
+from __future__ import annotations
 from mods.setupflask import client, sessions, usersinrooms
-from mods.utilities import addto
+from mods.utilities import addto, idname2key
 from time import time
 
 class mafstdlib:
@@ -7,6 +8,7 @@ class mafstdlib:
         self.socket = socket
         self.room = room
         self.vars = {}
+        self.guis = {}
     from builtins import len, max, min, map, filter, zip, range, setattr as setprop, getattr as getprop
     from random import randint as rand
     from math import floor, ceil
@@ -106,14 +108,29 @@ class mafstdlib:
     def format(self, string, *args):
         return string.format(*args)
     count = list.count
-    # def makegui(self, role, name, names, values):
-    #     pass
-    # def getgui(self, role, name):
-    #     pass
-    # def getguiname(self, role, name):
-    #     pass
-    # def freezegui(self, role, name):
-    #     pass
+    def makegui(self, userid: str, name: str, names: list[str], values: list[str], optional: bool = None):
+        sid = list(sessions.values())[list(sessions.keys()).index(userid)]
+        gui = dict(zip(names, values))
+        self.guis[idname2key(userid, name)] = gui
+        self.socket.emit('gui', {'name': name, 'list': gui, 'optional': optional}, to=sid)
+    def getguiname(self, userid: str, name: str) -> str:
+        key = idname2key(userid, name)
+        gui = self.guis[key]
+        reversed_gui = {v: k for k, v in gui.items()}
+        value = self.guiselection[key]
+        name = reversed_gui[value]
+        return name
+    def getguivalue(self, userid: str, name: str) -> str:
+        key = idname2key(userid, name)
+        value = self.guiselection[key]
+        return value
+    def freezegui(self, userid: str, name: str):
+        sid = list(sessions.values())[list(sessions.keys()).index(userid)]
+        self.socket.emit('guifreeze', name, to=sid)
+    def deletegui(self, userid: str, name: str):
+        sid = list(sessions.values())[list(sessions.keys()).index(userid)]
+        self.guis.pop(idname2key(userid, name))
+        self.socket.emit('guidelete', name, to=sid)
     def apply(self, func, *args):
         return func(*args)
     def phase(self, name):
