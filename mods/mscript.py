@@ -25,7 +25,7 @@ fncall = name (_ fnarg)*
 fnarg = fullargstring / dollar / variable / number / boolean / argstring
 dollar = OPENDOLLAR stat CLOSEDOLLAR
 fullargstring = QUOTE ~r'[^\r\n\t\"\+\$\(\)]*' QUOTE
-ifstat = IF _ fnarg NEWLINE funcbody _? END
+ifstat = IF _ fnarg THEN NEWLINE funcbody _? END
 forstat = FOR _ variable _ fnarg NEWLINE funcbody _? END
 set = variable _? EQUALS _? fnarg
 variable = LBRACKET _? argname _? RBRACKET
@@ -150,7 +150,7 @@ class TrickOrTreater(NodeVisitor):
     def visit_variable(self, _, visited_children):
         return Code.Variable(visited_children[2])
     def visit_ifstat(self, _, visited_children):
-        return Code.IfStat(visited_children[2], visited_children[4])
+        return Code.IfStat(visited_children[2], visited_children[5])
     def visit_forstat(self, _, visited_children):
         return Code.ForStat(visited_children[4], visited_children[2], visited_children[6])
     def visit_set(self, _, visited_children):
