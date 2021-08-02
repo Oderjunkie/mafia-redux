@@ -133,7 +133,7 @@ def guichange(dicts: dict):
     stdlib: mafstdlib = stdlibs[room[-1]]
     userid: str = sessions[request.sid]
     logic: maflogic = logics[room[-1]]
-    if logics[room[-1]].funcs.chat(stdlib, userid, dicts) in [None, True]:
+    if logics[room[-1]].funcs.guichange(stdlib, userid, dicts) in [None, True]:
         for name, value in dicts.items():
             logic.funcs.guichange(stdlib, userid, name, value)
             stdlib.guiselection[idname2key(userid, name)] = value
