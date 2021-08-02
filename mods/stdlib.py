@@ -1,6 +1,7 @@
 from __future__ import annotations
-from mods.setupflask import client, sessions, usersinrooms, print
+from mods.setupflask import client, sessions, usersinrooms
 from mods.utilities import addto, idname2key
+from mods.console import print
 from time import time
 
 class mafstdlib:
