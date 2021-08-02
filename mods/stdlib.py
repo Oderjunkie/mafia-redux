@@ -24,7 +24,7 @@ class mafstdlib:
             {'$push': {'events': ['system', packet]}}
         )
     def systemto(self, useridto, msg):
-        sid = list(sessions.values())[list(sessions.keys()).index(useridto)]
+        sid = sessions[useridto]
         self.socket.emit('system', {
             'timestamp': time(),
             'message': msg
@@ -42,7 +42,7 @@ class mafstdlib:
             {'$push': {'events': ['chat', packet]}}
         )
     def sendasto(self, useridas, username, useridto, msg):
-        sid = list(sessions.values())[list(sessions.keys()).index(useridto)]
+        sid = sessions[useridto]
         self.socket.emit('chat', {
             'timestamp': time(),
             'message': msg,
@@ -110,8 +110,7 @@ class mafstdlib:
         return string.format(*args)
     count = list.count
     def makegui(self, userid: str, name: str, names: list[str], values: list[str], optional: bool = None):
-        print(userid, sessions)
-        sid = list(sessions.values())[list(sessions.keys()).index(userid)]
+        sid = sessions[userid]
         gui = dict(zip(names, values))
         self.guis[idname2key(userid, name)] = gui
         self.socket.emit('gui', {'name': name, 'list': gui, 'optional': optional}, to=sid)
@@ -127,10 +126,10 @@ class mafstdlib:
         value = self.guiselection[key]
         return value
     def freezegui(self, userid: str, name: str):
-        sid = list(sessions.values())[list(sessions.keys()).index(userid)]
+        sid = sessions[userid]
         self.socket.emit('guifreeze', name, to=sid)
     def deletegui(self, userid: str, name: str):
-        sid = list(sessions.values())[list(sessions.keys()).index(userid)]
+        sid = sessions[userid]
         self.guis.pop(idname2key(userid, name))
         self.socket.emit('guidelete', name, to=sid)
     def apply(self, func, *args):
