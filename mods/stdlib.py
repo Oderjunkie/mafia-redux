@@ -1,14 +1,16 @@
 from __future__ import annotations
+from typing import Any
 from mods.setupflask import client, sessions, usersinrooms
 from mods.utilities import addto, idname2key
 from time import time
 
 class mafstdlib:
     def __init__(self, socket, room):
-        self.socket = socket
-        self.room = room
-        self.vars = {}
-        self.guis = {}
+        self.socket: Any = socket
+        self.room: str = room
+        self.vars: dict[str, Any] = {}
+        self.guis: dict[str, dict[str, Any]] = {}
+        self.guiselection: dict[str, Any] = {}
     from builtins import len, max, min, map, filter, zip, range, setattr as setprop, getattr as getprop
     from random import randint as rand
     from math import floor, ceil
