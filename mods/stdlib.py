@@ -115,6 +115,7 @@ class mafstdlib:
         sid = list(sessions.keys())[list(sessions.values()).index(userid)]
         gui = dict(zip(names, values))
         self.guis[idname2key(userid, name)] = gui
+        self.guiselection[idname2key(userid, name)] = '' if optional else values[0]
         self.socket.emit('gui', {'name': name, 'list': gui, 'optional': optional}, to=sid)
     def getguiname(self, userid: str, name: str) -> str:
         key = idname2key(userid, name)
