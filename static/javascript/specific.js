@@ -62,7 +62,7 @@ function createGUI({name, list: selection, optional}) {
             $('<fieldset/>').append(
                 $('<legend/>').text(name + ':'),
                 $('<select/>').append(
-                    optional ? $('<option/>').prop('value', '').text('No selection') : undefined,
+                    optional ? $('<option/>').prop('value', '').text(optional) : undefined,
                     ...Object.entries(selection).map(([k, v])=>{
                         return $('<option/>').prop('value', v).text(k);
                     })

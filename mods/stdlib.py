@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Any
+from typing import Any, Optional
 from mods.setupflask import client, sessions, usersinrooms
 from mods.utilities import addto, idname2key
 from time import time
@@ -110,13 +110,15 @@ class mafstdlib:
     def format(self, string, *args):
         return string.format(*args)
     count = list.count
-    def makegui(self, userid: str, name: str, names: list[str], values: list[str], optional: bool = None):
+    def makegui(self, userid: str, name: str, names: list[str], values: list[str], optional: Optional[str] = ''):
         print(userid, sessions)
         sid = list(sessions.keys())[list(sessions.values()).index(userid)]
         gui = dict(zip(names, values))
+        self.socket.emit('gui', {'name': name, 'list': gui, 'optional': optional}, to=sid)
+        if optional!='':
+            gui[optional] = ''
         self.guis[idname2key(userid, name)] = gui
         self.guiselection[idname2key(userid, name)] = '' if optional else values[0]
-        self.socket.emit('gui', {'name': name, 'list': gui, 'optional': optional}, to=sid)
     def getguiname(self, userid: str, name: str) -> str:
         key = idname2key(userid, name)
         gui = self.guis[key]
