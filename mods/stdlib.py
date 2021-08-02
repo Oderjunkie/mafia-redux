@@ -1,5 +1,5 @@
 from __future__ import annotations
-from mods.setupflask import client, sessions, usersinrooms
+from mods.setupflask import client, sessions, usersinrooms, print
 from mods.utilities import addto, idname2key
 from time import time
 
@@ -109,6 +109,7 @@ class mafstdlib:
         return string.format(*args)
     count = list.count
     def makegui(self, userid: str, name: str, names: list[str], values: list[str], optional: bool = None):
+        print(userid, sessions)
         sid = list(sessions.values())[list(sessions.keys()).index(userid)]
         gui = dict(zip(names, values))
         self.guis[idname2key(userid, name)] = gui
