@@ -88,7 +88,7 @@ def changeGameLogic(link):
         try:
             code = get('https://pastebin.com/raw/'+quote(roomobj['logic'], safe='')).content.decode('utf-8')
             logic.main(code)
-            logic.funcs.setup(stdlibs[room])
+            logic.funcs.setup(stdlibs[room[-1]])
         except Exception as e:
             socketio.emit('system', {
                 'message': 'Game logic url was not valid, Logic is currently disabled.',
