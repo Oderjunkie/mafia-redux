@@ -70,7 +70,7 @@ function createGUI({name, list: selection, optional}) {
                     socket.emit('gui', {[name]: $(this).find(':selected').prop('value')});
                 })
             )
-        ).prop('formname', encodeGUIname(name))
+        ).attr('formname', encodeGUIname(name))
     );
 }
 
@@ -376,6 +376,7 @@ async function onhandshake(events) {
 
 function main() {
     roomid = location.pathname.split('/')[2];
+    packets = [];
     form = $('.input');
     button = $('.input > input[type=submit]');
     textbox = $('.input > input[type=text]');
