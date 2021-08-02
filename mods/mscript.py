@@ -150,7 +150,7 @@ class TrickOrTreater(NodeVisitor):
     def visit_variable(self, _, visited_children):
         return Code.Variable(visited_children[2])
     def visit_ifstat(self, _, visited_children):
-        return Code.IfStat(visited_children[2], visited_children[5])
+        return Code.IfStat(visited_children[2], visited_children[6])
     def visit_forstat(self, _, visited_children):
         return Code.ForStat(visited_children[4], visited_children[2], visited_children[6])
     def visit_set(self, _, visited_children):
