@@ -1,7 +1,6 @@
 from __future__ import annotations
 from mods.setupflask import client, sessions, usersinrooms
 from mods.utilities import addto, idname2key
-from mods.console import print
 from time import time
 
 class mafstdlib:
@@ -24,7 +23,7 @@ class mafstdlib:
             {'$push': {'events': ['system', packet]}}
         )
     def systemto(self, useridto, msg):
-        sid = sessions[useridto]
+        sid = list(sessions.keys())[list(sessions.values()).index(useridto)]
         self.socket.emit('system', {
             'timestamp': time(),
             'message': msg
@@ -42,7 +41,7 @@ class mafstdlib:
             {'$push': {'events': ['chat', packet]}}
         )
     def sendasto(self, useridas, username, useridto, msg):
-        sid = sessions[useridto]
+        sid = list(sessions.keys())[list(sessions.values()).index(useridto)]
         self.socket.emit('chat', {
             'timestamp': time(),
             'message': msg,
@@ -110,7 +109,8 @@ class mafstdlib:
         return string.format(*args)
     count = list.count
     def makegui(self, userid: str, name: str, names: list[str], values: list[str], optional: bool = None):
-        sid = sessions[userid]
+        print(userid, sessions)
+        sid = list(sessions.keys())[list(sessions.values()).index(userid)]
         gui = dict(zip(names, values))
         self.guis[idname2key(userid, name)] = gui
         self.socket.emit('gui', {'name': name, 'list': gui, 'optional': optional}, to=sid)
@@ -126,10 +126,10 @@ class mafstdlib:
         value = self.guiselection[key]
         return value
     def freezegui(self, userid: str, name: str):
-        sid = sessions[userid]
+        sid = list(sessions.keys())[list(sessions.values()).index(userid)]
         self.socket.emit('guifreeze', name, to=sid)
     def deletegui(self, userid: str, name: str):
-        sid = sessions[userid]
+        sid = list(sessions.keys())[list(sessions.values()).index(userid)]
         self.guis.pop(idname2key(userid, name))
         self.socket.emit('guidelete', name, to=sid)
     def apply(self, func, *args):
