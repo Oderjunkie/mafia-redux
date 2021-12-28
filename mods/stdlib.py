@@ -110,6 +110,8 @@ class mafstdlib:
     def format(self, string, *args):
         return string.format(*args)
     count = list.count
+    def getitems(self, dictn: dict) -> list[tuple[Any, Any]]:
+        return list(dictn.items())
     def makegui(self, userid: str, name: str, names: list[str], values: list[str], optional: Optional[str] = ''):
         print(userid, sessions)
         sid = list(sessions.keys())[list(sessions.values()).index(userid)]
