@@ -11,7 +11,7 @@ class mafstdlib:
         self.vars: dict[str, Any] = {}
         self.guis: dict[str, dict[str, Any]] = {}
         self.guiselection: dict[str, Any] = {}
-    from builtins import len, max, min, map, filter, zip, range, setattr as setprop, getattr as getprop, dict as intodict, list as intolist
+    from builtins import len, max, min, map, filter, zip, range, setattr as setprop, getattr as getprop, dict as intodict, list as intolist, repr as dbg
     from random import randint as rand
     from math import floor, ceil
     def system(self, msg):
